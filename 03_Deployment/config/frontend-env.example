@@ -1,0 +1,4 @@
+# Optional CARTO basemap key.
+# Without this key, maps use OpenStreetMap tiles.
+# Copy this file to frontend/.env.local if needed.
+VITE_CARTO_API_KEY=
