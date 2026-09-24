@@ -1,0 +1,148 @@
+export const ROUTES = {
+  HOME: 'home',
+  PRODUCTS: 'products',
+  PRODUCT_DETAIL: 'product-detail',
+  CART: 'cart',
+  CHECKOUT: 'checkout',
+  ORDERS: 'orders',
+  ORDER_DETAIL: 'order-detail',
+  PROFILE: 'profile',
+  REVIEW: 'review',
+  WISHLIST: 'wishlist',
+  RECOMMENDATION: 'recommendation',
+  LOGIN: 'login',
+  REGISTER: 'register',
+  FORGOT_PASSWORD: 'forgot-password',
+  RESET_PASSWORD: 'reset-password',
+
+  ADMIN_DASHBOARD: 'admin-dashboard',
+  ADMIN_PRODUCTS: 'admin-products',
+  ADMIN_PRODUCT_FORM: 'admin-product-form',
+  ADMIN_INVENTORY: 'admin-inventory',
+  ADMIN_ORDERS: 'admin-orders',
+  ADMIN_CUSTOMERS: 'admin-customers',
+  ADMIN_USERS: 'admin-users',
+  ADMIN_CATEGORIES: 'admin-categories',
+  ADMIN_BRANDS: 'admin-brands',
+  ADMIN_DISCOUNTS: 'admin-discounts',
+  ADMIN_REVIEWS: 'admin-reviews',
+  ADMIN_REPORTS: 'admin-reports',
+}
+
+export const CUSTOMER_NAV = [
+  ['Trang chủ', ROUTES.HOME],
+  ['Sản phẩm', ROUTES.PRODUCTS],
+  ['Giỏ hàng', ROUTES.CART],
+  ['Thanh toán', ROUTES.CHECKOUT],
+  ['Đơn hàng', ROUTES.ORDERS],
+  ['Hồ sơ', ROUTES.PROFILE],
+  ['Yêu thích', ROUTES.WISHLIST],
+  ['Gợi ý phong cách', ROUTES.RECOMMENDATION],
+]
+
+export const AUTH_NAV = [
+  ['Đăng nhập', ROUTES.LOGIN],
+  ['Đăng ký', ROUTES.REGISTER],
+]
+
+export const ADMIN_NAV = [
+  ['Tổng quan', ROUTES.ADMIN_DASHBOARD],
+  ['Sản phẩm', ROUTES.ADMIN_PRODUCTS],
+  ['Biểu mẫu sản phẩm', ROUTES.ADMIN_PRODUCT_FORM],
+  ['Tồn kho', ROUTES.ADMIN_INVENTORY],
+  ['Đơn hàng', ROUTES.ADMIN_ORDERS],
+  ['Khách hàng', ROUTES.ADMIN_CUSTOMERS],
+  ['Tài khoản', ROUTES.ADMIN_USERS],
+  ['Danh mục', ROUTES.ADMIN_CATEGORIES],
+  ['Thương hiệu', ROUTES.ADMIN_BRANDS],
+  ['Mã giảm giá', ROUTES.ADMIN_DISCOUNTS],
+  ['Đánh giá', ROUTES.ADMIN_REVIEWS],
+  ['Báo cáo', ROUTES.ADMIN_REPORTS],
+]
+
+export const ORDER_STATUSES = [
+  'PENDING',
+  'CONFIRMED',
+  'PROCESSING',
+  'SHIPPING',
+  'COMPLETED',
+  'RETURNED',
+  'CANCELLED',
+]
+
+export const demoProducts = [
+  {
+    id: 1,
+    name: 'Linen Relaxed Shirt',
+    brandName: 'Maison Wear',
+    categoryName: 'Ao',
+    basePrice: 520000,
+    salePrice: 449000,
+    material: 'Linen cotton',
+    fit: 'Relaxed',
+    gender: 'UNISEX',
+    colors: ['Ivory', 'Sage'],
+    sizes: ['S', 'M', 'L'],
+    averageRating: 4.8,
+    totalReviews: 36,
+    isNew: true,
+    isFeatured: true,
+  },
+  {
+    id: 2,
+    name: 'Tailored Wide Pants',
+    brandName: 'Urban Form',
+    categoryName: 'Quan',
+    basePrice: 690000,
+    salePrice: null,
+    material: 'Twill',
+    fit: 'Straight',
+    gender: 'WOMEN',
+    colors: ['Black', 'Sand'],
+    sizes: ['M', 'L', 'XL'],
+    averageRating: 4.6,
+    totalReviews: 22,
+    isNew: false,
+    isFeatured: true,
+  },
+  {
+    id: 3,
+    name: 'Pleated Midi Dress',
+    brandName: 'Studio Muse',
+    categoryName: 'Vay',
+    basePrice: 840000,
+    salePrice: 759000,
+    material: 'Poly blend',
+    fit: 'Regular',
+    gender: 'WOMEN',
+    colors: ['Navy', 'Rose'],
+    sizes: ['S', 'M'],
+    averageRating: 4.9,
+    totalReviews: 41,
+    isNew: true,
+    isFeatured: false,
+  },
+]
+
+export const initialProductForm = {
+  brandId: '',
+  categoryId: '',
+  name: '',
+  description: '',
+  basePrice: '',
+  salePrice: '',
+
+  stockQty: 0,
+
+  hasVariants: false,
+
+  variants: [],
+
+  material: '',
+  fit: '',
+  gender: 'UNISEX',
+  status: 'ACTIVE',
+  isFeatured: false,
+  isNew: true,
+  images: [],
+}

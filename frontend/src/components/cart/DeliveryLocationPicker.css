@@ -1,0 +1,129 @@
+.delivery-location-picker {
+  --map-accent: #9d533b;
+  padding: 22px;
+  border: 1px solid #e7ded4;
+  border-radius: 22px;
+  background: #fcfaf7;
+  box-shadow: 0 8px 28px #49331f06;
+  color: #332b25;
+}
+.delivery-location-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 20px;
+  border: 1px solid #e7ded4;
+  border-radius: 14px;
+  background: #fcfaf7;
+  color: #332b25;
+}
+.delivery-location-placeholder strong {
+  display: block;
+  font-size: 15px;
+  margin-bottom: 5px;
+}
+.delivery-location-placeholder p {
+  max-width: 560px;
+  margin: 0;
+  color: #7f715f;
+  font-size: 12px;
+  line-height: 1.5;
+}
+.delivery-location-placeholder button,
+.delivery-location-placeholder span {
+  flex-shrink: 0;
+  padding: 11px 17px;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.delivery-location-placeholder button {
+  border: 0;
+  background: #9d533b;
+  color: white;
+  cursor: pointer;
+}
+.delivery-location-placeholder button:hover { background: #7e402c; }
+.delivery-location-placeholder span {
+  color: #8a7b6f;
+  background: #f1e7de;
+}
+.delivery-map-heading, .delivery-heading-copy { display: flex; align-items: center; gap: 12px; }
+.delivery-map-heading { justify-content: space-between; margin-bottom: 20px; }
+.delivery-heading-copy { min-width: 0; }
+.delivery-heading-copy strong { font-size: 16px; letter-spacing: -.3px; }
+.delivery-heading-copy p { margin: 5px 0 0; font-size: 12px; color: #8a7b6f; line-height: 1.5; }
+.delivery-heading-icon, .delivery-address-icon { display: grid; place-items: center; flex-shrink: 0; width: 42px; height: 42px; border-radius: 14px; background: #f1e7de; color: var(--map-accent); }
+.delivery-map-status { display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px; border: 1px solid #e6dfd5; border-radius: 100px; font-size: 10px; font-weight: 600; color: #7f715f; white-space: nowrap; }
+.delivery-map-status i { width: 6px; height: 6px; border-radius: 50%; background: #bb9063; }
+.delivery-map-status.is-confirmed { color: #416753; background: #edf5ee; border-color: #d9e7dc; }
+.delivery-map-status.is-confirmed i { background: #568563; }
+.delivery-location-picker .delivery-search { display: flex; align-items: center; gap: 10px; padding: 7px 7px 7px 15px; margin: 0 0 15px; border: 1px solid #e3d8cd; border-radius: 13px; background: #fff; box-shadow: 0 3px 10px #49331f04; }
+.delivery-search > svg { flex-shrink: 0; color: #9d8b7e; }
+.delivery-location-picker .delivery-search input { width: 100%; min-width: 0; padding: 7px 0; border: 0; border-radius: 0; background: transparent; box-shadow: none; font: inherit; font-size: 13px; }
+.delivery-location-picker .delivery-search:focus-within { border-color: #b88c76; outline: 3px solid #9d533b12; }
+.delivery-location-picker .delivery-search input:focus { outline: 0; }
+.delivery-location-picker .delivery-search button, .delivery-location-picker .delivery-confirm { display: inline-flex; justify-content: center; align-items: center; gap: 7px; padding: 11px 17px; border: 0; border-radius: 9px; background: var(--map-accent); color: white; font: inherit; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background .2s, box-shadow .2s; }
+.delivery-location-picker .delivery-search button:hover:not(:disabled), .delivery-location-picker .delivery-confirm:hover:not(:disabled) { background: #7e402c; box-shadow: 0 4px 10px #9d533b24; }
+.delivery-location-picker button:disabled { cursor: default; opacity: .5; }
+.delivery-location-picker .delivery-results { margin: 0 0 15px; padding: 5px; border: 1px solid #e5ddd4; border-radius: 12px; background: white; }
+.delivery-location-picker .delivery-results button { display: flex; align-items: center; gap: 12px; margin: 0; padding: 12px; border: 0; border-radius: 8px; background: transparent; color: #5c4d41; font: inherit; font-size: 13px; line-height: 1.5; cursor: pointer; }
+.delivery-results button svg { flex-shrink: 0; color: #aa7860; }
+.delivery-results button span:first-of-type { flex: 1; }
+.delivery-location-picker .delivery-results button:hover { background: #f7f1ea; }
+.delivery-location-picker .delivery-map-wrapper { position: relative; height: 390px; overflow: hidden; border-radius: 15px; border: 1px solid #e5dfd5; isolation: isolate; }
+.delivery-map-wrapper .leaflet-container, .shipment-map .leaflet-container { background: #eaece5; font-family: inherit; }
+.delivery-map-wrapper .leaflet-tile-pane, .shipment-map .leaflet-tile-pane { filter: saturate(.9) contrast(1.02); }
+.delivery-map-wrapper .leaflet-control-attribution, .shipment-map .leaflet-control-attribution { font-size: 9px; background: #ffffffdf; }
+.delivery-map-wrapper .leaflet-bar, .shipment-map .leaflet-bar { overflow: hidden; border: 1px solid #e4dcd2; border-radius: 11px; box-shadow: 0 3px 14px #41312415; }
+.delivery-map-wrapper .leaflet-bar a, .shipment-map .leaflet-bar a { width: 35px; height: 35px; line-height: 35px; color: #594336; border-color: #ebe5dd; }
+.delivery-map-wrapper .leaflet-bottom .leaflet-control-zoom { margin: 0 14px 16px 0; }
+.delivery-map-hint { position: absolute; z-index: 500; top: 15px; left: 15px; padding: 9px 13px; border: 1px solid #ffffffc9; border-radius: 8px; background: #ffffffeb; box-shadow: 0 2px 8px #4637290a; color: #6f665c; font-size: 11px; pointer-events: none; }
+.delivery-location-picker .delivery-locate { position: absolute; z-index: 500; left: 15px; bottom: 29px; display: flex; align-items: center; gap: 8px; padding: 11px 13px; border: 1px solid #e4ddd3; border-radius: 10px; background: white; box-shadow: 0 3px 14px #41312415; color: #645144; font: inherit; font-size: 12px; cursor: pointer; }
+.delivery-location-picker .delivery-locate:hover { background: #faf5ed; }
+.delivery-location-picker .delivery-fixed-pin { display: flex; flex-direction: column; align-items: center; z-index: 450; font-size: 12px; line-height: 1; filter: drop-shadow(0 5px 4px #58372225); }
+.delivery-fixed-pin svg { display: block; position: relative; z-index: 2; }
+.delivery-pin-label { padding: 8px 11px; margin-bottom: 7px; border-radius: 7px; background: #fff; border: 1px solid #e6d6c7; color: #794732; font-size: 11px; font-weight: 600; white-space: nowrap; }
+.delivery-pin-shadow { position: absolute; bottom: -4px; width: 20px; height: 7px; background: #63412840; border-radius: 50%; }
+.delivery-fixed-pin.is-moving .delivery-pin-label { opacity: .65; }
+.delivery-address-card { display: flex; align-items: center; gap: 12px; margin-top: 15px; padding: 17px; border: 1px solid #e8ded3; border-radius: 13px; background: #fff; }
+.delivery-address-card .delivery-address-icon { width: 36px; height: 36px; border-radius: 11px; }
+.delivery-address-copy { flex: 1; min-width: 0; }
+.delivery-address-eyebrow { display: block; color: #a68a75; font-size: 9px; letter-spacing: 1.5px; font-weight: 700; }
+.delivery-address-copy p { margin: 6px 0 0; color: #44372d; font-size: 13px; line-height: 1.6; font-weight: 500; overflow-wrap: anywhere; }
+.delivery-address-help { display: block; margin-top: 3px; font-size: 11px; line-height: 1.5; color: #9b8a7d; }
+.delivery-address-card.is-confirmed { border-color: #cbded0; background: #f7faf6; }
+.delivery-address-card.is-confirmed .delivery-address-icon { background: #e2eee2; color: #4a7154; }
+.delivery-address-card.is-confirmed .delivery-confirm { background: #e2eee2; color: #4a7154; opacity: 1; }
+.delivery-map-footer { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px; margin-top: 13px; }
+.delivery-map-footer small { margin-left: auto; font-size: 10px; color: #a39689; }
+.delivery-map-footer a { color: inherit; }
+.delivery-location-picker .delivery-map-footer button { display: flex; align-items: center; gap: 6px; padding: 0; background: transparent; border: 0; color: #926147; font: inherit; font-size: 11px; cursor: pointer; }
+.delivery-map-footer button svg { width: 15px; height: 15px; }
+.delivery-location-picker .delivery-map-error { padding: 10px 12px; margin: 12px 0 0; border-radius: 8px; background: #fff1e9; color: #a45030; font-size: 12px; line-height: 1.6; }
+.map-network-notice { position: absolute; z-index: 1001; top: 58px; left: 15px; right: 15px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px; border: 1px solid #e8d0b9; border-radius: 10px; background: #fffaf2; box-shadow: 0 4px 15px #58372212; color: #795134; font-size: 12px; line-height: 1.5; }
+.map-network-notice button { padding: 7px 10px; border: 1px solid #d8b89b; border-radius: 6px; background: white; color: #795134; font: inherit; white-space: nowrap; cursor: pointer; }
+@media (max-width: 680px) {
+  .delivery-location-placeholder {
+    align-items: stretch;
+    flex-direction: column;
+  }
+  .delivery-location-placeholder button,
+  .delivery-location-placeholder span {
+    width: 100%;
+    text-align: center;
+  }
+  .delivery-location-picker { padding: 14px; border-radius: 16px; }
+  .delivery-map-heading { align-items: flex-start; }
+  .delivery-heading-copy strong { font-size: 14px; }
+  .delivery-map-status { display: none; }
+  .delivery-location-picker .delivery-map-wrapper { height: 340px; }
+  .delivery-address-card { flex-wrap: wrap; padding: 13px; }
+  .delivery-location-picker .delivery-confirm { width: 100%; margin-top: 3px; }
+  .delivery-location-picker .delivery-search button { padding: 11px; }
+  .delivery-location-picker .delivery-search input { font-size: 16px; }
+  .delivery-map-hint { font-size: 10px; left: 10px; right: 10px; text-align: center; }
+}

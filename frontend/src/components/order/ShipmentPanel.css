@@ -1,0 +1,50 @@
+section.shipment-panel {
+  background: #fff;
+  border-color: #eadfd6;
+  border-radius: 20px;
+  padding: clamp(18px, 3vw, 30px);
+}
+.shipment-heading { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 22px; }
+.shipment-heading h3 { margin: 5px 0 0; font-size: 22px; }
+.shipment-eyebrow { color: #946c55; font-size: 10px; font-weight: 700; letter-spacing: .16em; }
+.shipment-status-card { display: flex; gap: 16px; padding: 22px; background: #f8f4ef; border: 1px solid #ede3d9; border-radius: 14px; }
+.shipment-status-symbol { display: grid; place-items: center; flex: 0 0 42px; height: 42px; border-radius: 50%; background: #9d533b; color: white; font-size: 24px; }
+.shipment-status-card h4 { margin: 0 0 6px; font-size: 18px; color: #4c3326; }
+.shipment-status-card p { margin: 0; color: #75675c; line-height: 1.65; font-size: 14px; }
+.shipment-status-card.is-exception { background: #fff4ec; border-color: #f1d3bc; }
+.shipment-progress { display: flex; list-style: none; padding: 0; margin: 28px 0; gap: 8px; }
+.shipment-progress li { flex: 1; position: relative; display: flex; flex-direction: column; gap: 8px; color: #817970; font-size: 12px; }
+.shipment-progress li::before { content: ''; position: absolute; top: 15px; left: 36px; right: 0; height: 2px; background: #e9e4de; }
+.shipment-progress li:last-child::before { display: none; }
+.shipment-progress li > span { display: grid; place-items: center; width: 32px; height: 32px; border: 1px solid #e5ded5; border-radius: 50%; background: #faf8f5; font-weight: 700; }
+.shipment-progress li small { font-size: 10px; }
+.shipment-progress li.is-done > span { background: #e8eee6; border-color: #e8eee6; color: #46603f; }
+.shipment-progress li.is-done::before { background: #b7c5b1; }
+.shipment-progress li.is-current { color: #8f4833; }
+.shipment-progress li.is-current > span { color: #fff; background: #9d533b; border-color: #9d533b; box-shadow: 0 0 0 4px #f5ebe5; }
+.shipment-facts { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 28px; padding: 22px 0; margin: 0; border-bottom: 1px solid #eee6df; }
+.shipment-facts dt { color: #857a70; font-size: 12px; margin-bottom: 7px; }
+.shipment-facts dd { margin: 0; color: #3f352d; font-size: 14px; line-height: 1.6; }
+.shipment-sync { color: #8d8177; font-size: 12px; margin: 14px 0 22px; }
+.shipment-error { padding: 12px; color: #963d28; background: #fff0e9; border-radius: 8px; }
+.shipment-history-heading { display: flex; gap: 12px; flex-wrap: wrap; align-items: baseline; margin-top: 26px; }
+.shipment-history-heading small { color: #8d8177; font-size: 11px; font-weight: 400; }
+.shipment-panel .shipment-timeline { list-style: none; padding: 0; margin: 20px 0 0; }
+.shipment-panel .shipment-timeline li { position: relative; display: grid; grid-template-columns: 155px 1fr; gap: 20px; padding: 0 0 26px 25px; border-left: 1px solid #e6ddd4; margin-left: 5px; }
+.shipment-panel .shipment-timeline li:last-child { border-left-color: transparent; padding-bottom: 0; }
+.shipment-timeline li::before { content: ''; position: absolute; left: -5px; top: 4px; width: 9px; height: 9px; border-radius: 50%; background: #cfbcae; }
+.shipment-timeline li.is-latest::before { background: #9d533b; box-shadow: 0 0 0 4px #f6eae1; }
+.shipment-timeline time { color: #83786f; font-size: 12px; line-height: 1.6; }
+.shipment-timeline strong { font-size: 14px; line-height: 1.6; }
+.shipment-timeline li.is-latest strong { color: #8d4833; }
+@media (max-width: 640px) {
+  .shipment-heading { align-items: flex-start; flex-direction: column; }
+  .shipment-heading button { align-self: flex-end; }
+  .shipment-status-card { padding: 16px; gap: 12px; }
+  .shipment-progress { flex-direction: column; gap: 0; }
+  .shipment-progress li { display: grid; grid-template-columns: 32px 1fr; column-gap: 12px; row-gap: 3px; padding-bottom: 18px; }
+  .shipment-progress li > span { grid-row: span 2; }
+  .shipment-progress li::before { top: 34px; bottom: 2px; left: 15px; width: 2px; height: auto; right: auto; }
+  .shipment-facts { grid-template-columns: 1fr; gap: 16px; }
+  .shipment-panel .shipment-timeline li { grid-template-columns: 1fr; gap: 5px; }
+}
