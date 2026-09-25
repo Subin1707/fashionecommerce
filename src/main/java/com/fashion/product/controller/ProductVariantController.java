@@ -2,7 +2,7 @@ package com.fashion.product.controller;
 
 import com.fashion.product.entity.ProductVariant;
 import com.fashion.product.dto.ProductVariantResponse;
-import com.fashion.admin.dto.CreateVariantRequest;
+import com.fashion.product.dto.CreateVariantRequest;
 import com.fashion.product.repository.ProductRepository;
 import com.fashion.product.service.ProductVariantService;
 import lombok.RequiredArgsConstructor;
