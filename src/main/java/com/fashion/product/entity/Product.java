@@ -13,11 +13,9 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -31,8 +29,6 @@ import java.util.List;
 @Table(name = "products")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Product {
 
@@ -134,5 +130,34 @@ public class Product {
                 .map(ProductImage::getImageUrl)
                 .findFirst()
                 .orElse(images.get(0).getImageUrl());
+    }
+
+    public Product() {
+        this.status = Product.$default$status();
+        this.isFeatured = Product.$default$isFeatured();
+        this.isNew = Product.$default$isNew();
+        this.variants = Product.$default$variants();
+        this.images = Product.$default$images();
+    }
+    public Product(final Long id, final Brand brand, final Category category, final String name, final String slug, final String shortDescription, final String description, final BigDecimal basePrice, final BigDecimal salePrice, final String material, final String fit, final String gender, final String status, final Boolean isFeatured, final Boolean isNew, final LocalDateTime createdAt, final LocalDateTime updatedAt, final List<ProductVariant> variants, final List<ProductImage> images) {
+        this.id = id;
+        this.brand = brand;
+        this.category = category;
+        this.name = name;
+        this.slug = slug;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.basePrice = basePrice;
+        this.salePrice = salePrice;
+        this.material = material;
+        this.fit = fit;
+        this.gender = gender;
+        this.status = status;
+        this.isFeatured = isFeatured;
+        this.isNew = isNew;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.variants = variants;
+        this.images = images;
     }
 }

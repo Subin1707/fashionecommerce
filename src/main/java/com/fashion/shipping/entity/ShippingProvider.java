@@ -6,18 +6,14 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "shipping_providers")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ShippingProvider {
     @Id
@@ -35,4 +31,14 @@ public class ShippingProvider {
 
     @Column(nullable = false, length = 20)
     private String status;
+
+    public ShippingProvider() {
+    }
+    public ShippingProvider(final Long id, final String name, final String code, final String logoUrl, final String status) {
+        this.id = id;
+        this.name = name;
+        this.code = code;
+        this.logoUrl = logoUrl;
+        this.status = status;
+    }
 }

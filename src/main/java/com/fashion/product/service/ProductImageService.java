@@ -3,14 +3,12 @@ package com.fashion.product.service;
 import com.fashion.product.entity.Product;
 import com.fashion.product.entity.ProductImage;
 import com.fashion.product.repository.ProductImageRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ProductImageService {
 
     private final ProductImageRepository productImageRepository;
@@ -28,5 +26,9 @@ public class ProductImageService {
     @Transactional
     public ProductImage createImage(ProductImage productImage) {
         return productImageRepository.save(productImage);
+    }
+
+    public ProductImageService(final ProductImageRepository productImageRepository) {
+        this.productImageRepository = productImageRepository;
     }
 }

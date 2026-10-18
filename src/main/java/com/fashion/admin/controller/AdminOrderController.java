@@ -5,7 +5,6 @@ import com.fashion.admin.dto.UpdateOrderStatusRequest;
 import com.fashion.admin.service.AdminOrderService;
 import java.time.LocalDateTime;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/admin/orders")
-@RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminOrderController {
 
@@ -63,5 +61,9 @@ public class AdminOrderController {
             @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime to) {
         List<AdminOrderDto> orders = adminOrderService.getOrdersForDateRange(from, to);
         return ResponseEntity.ok(orders);
+    }
+
+    public AdminOrderController(final AdminOrderService adminOrderService) {
+        this.adminOrderService = adminOrderService;
     }
 }

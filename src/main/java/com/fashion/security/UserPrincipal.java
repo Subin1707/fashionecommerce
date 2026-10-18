@@ -1,7 +1,6 @@
 package com.fashion.security;
 
 import com.fashion.user.entity.User;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -10,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-@RequiredArgsConstructor
+
 public class UserPrincipal implements UserDetails {
 
     private final User user;
@@ -62,5 +61,9 @@ public class UserPrincipal implements UserDetails {
     public boolean isEnabled() {
         return !"DISABLED".equalsIgnoreCase(user.getStatus())
             && !"INACTIVE".equalsIgnoreCase(user.getStatus());
+    }
+
+    public UserPrincipal(final User user) {
+        this.user = user;
     }
 }

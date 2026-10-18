@@ -17,7 +17,6 @@ import com.fashion.product.entity.Product;
 import com.fashion.product.repository.ProductRepository;
 import com.fashion.voucher.dto.VoucherValidationResult;
 import com.fashion.voucher.service.VoucherService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +26,6 @@ import java.time.Instant;
 import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class OrderService {
 
     private static final double SHIPPING_FEE = 30000.0;
@@ -299,5 +297,14 @@ public class OrderService {
         order.setCompletedAt(java.time.LocalDateTime.now());
         recordStatus(order.getId(), OrderStatus.COMPLETED, statusDescription(OrderStatus.COMPLETED));
         return orderRepository.save(order);
+    }
+
+    public OrderService(final CartRepository cartRepository, final ProductRepository productRepository, final OrderRepository orderRepository, final com.fashion.order.repository.OrderStatusHistoryRepository historyRepository, final EventPublisher eventPublisher, final VoucherService voucherService) {
+        this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
+        this.historyRepository = historyRepository;
+        this.eventPublisher = eventPublisher;
+        this.voucherService = voucherService;
     }
 }

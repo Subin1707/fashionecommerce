@@ -8,7 +8,6 @@ import com.fashion.admin.dto.UpdateProductRequest;
 import com.fashion.admin.dto.UpdateVariantRequest;
 import com.fashion.admin.service.AdminProductService;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -24,7 +23,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/admin/products")
-@RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminProductController {
 
@@ -90,5 +88,9 @@ public class AdminProductController {
     public ResponseEntity<Void> deleteVariant(@PathVariable Long variantId) {
         adminProductService.deleteVariant(variantId);
         return ResponseEntity.noContent().build();
+    }
+
+    public AdminProductController(final AdminProductService adminProductService) {
+        this.adminProductService = adminProductService;
     }
 }

@@ -3,7 +3,6 @@ package com.fashion.product.controller;
 import com.fashion.product.entity.Product;
 import com.fashion.product.dto.ProductResponse;
 import com.fashion.product.service.ProductService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
-@RequiredArgsConstructor
 public class ProductController {
 
     private final ProductService productService;
@@ -74,5 +72,10 @@ public class ProductController {
         response.setAverageRating(summary.getAverageRating());
         response.setTotalReviews(summary.getTotalReviews());
         return response;
+    }
+
+    public ProductController(final ProductService productService, final com.fashion.review.repository.ReviewRepository reviewRepository) {
+        this.productService = productService;
+        this.reviewRepository = reviewRepository;
     }
 }

@@ -6,7 +6,6 @@ import com.fashion.user.dto.UpdateProfileRequest;
 import com.fashion.user.entity.User;
 import com.fashion.user.service.UserService;
 import com.fashion.security.UserPrincipal;
-import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
-@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
@@ -71,5 +69,9 @@ public class UserController {
 
     private Long userId(Authentication authentication) {
         return ((UserPrincipal) authentication.getPrincipal()).getUserId();
+    }
+
+    public UserController(final UserService userService) {
+        this.userService = userService;
     }
 }

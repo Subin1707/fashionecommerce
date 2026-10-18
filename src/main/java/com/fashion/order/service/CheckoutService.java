@@ -23,12 +23,10 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 public class CheckoutService {
 
     private static final double SHIPPING_FEE = 30000.0;
@@ -319,5 +317,15 @@ public class CheckoutService {
 
     private String normalizeCouponCode(String couponCode) {
         return couponCode == null || couponCode.isBlank() ? null : couponCode.trim().toUpperCase();
+    }
+
+    public CheckoutService(final CartRepository cartRepository, final ProductRepository productRepository, final ProductVariantRepository productVariantRepository, final OrderRepository orderRepository, final com.fashion.order.repository.OrderStatusHistoryRepository historyRepository, final EventPublisher eventPublisher, final VoucherService voucherService) {
+        this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
+        this.productVariantRepository = productVariantRepository;
+        this.orderRepository = orderRepository;
+        this.historyRepository = historyRepository;
+        this.eventPublisher = eventPublisher;
+        this.voucherService = voucherService;
     }
 }

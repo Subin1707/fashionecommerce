@@ -6,8 +6,8 @@ import com.fashion.payment.service.PaymentService;
 import com.fashion.security.UserPrincipal;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Map;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -20,12 +20,14 @@ import java.time.Instant;
 
 @RestController
 @RequestMapping("/api/vnpay")
-@RequiredArgsConstructor
 public class VNPayController {
 
-    private final VNPayService vnPayService;
-    private final OrderRepository orderRepository;
-    private final PaymentService paymentService;
+    @Autowired
+    private VNPayService vnPayService;
+    @Autowired
+    private OrderRepository orderRepository;
+    @Autowired
+    private PaymentService paymentService;
 
     @Value("${vnpay.frontend-return-url:http://localhost:5173/orders}")
     private String frontendReturnUrl;

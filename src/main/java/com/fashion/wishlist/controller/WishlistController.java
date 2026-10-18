@@ -3,7 +3,6 @@ package com.fashion.wishlist.controller;
 import com.fashion.wishlist.entity.WishlistItem;
 import com.fashion.wishlist.service.WishlistService;
 import com.fashion.security.UserPrincipal;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -13,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/wishlist")
-@RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 public class WishlistController {
 
@@ -37,5 +35,9 @@ public class WishlistController {
 
     private Long userId(Authentication authentication) {
         return ((UserPrincipal) authentication.getPrincipal()).getUserId();
+    }
+
+    public WishlistController(final WishlistService wishlistService) {
+        this.wishlistService = wishlistService;
     }
 }

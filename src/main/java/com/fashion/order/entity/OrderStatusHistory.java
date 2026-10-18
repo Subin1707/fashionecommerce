@@ -7,10 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -18,8 +16,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "order_status_history")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class OrderStatusHistory {
 
@@ -39,4 +35,14 @@ public class OrderStatusHistory {
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    public OrderStatusHistory() {
+    }
+    public OrderStatusHistory(final Long id, final Long orderId, final String status, final String description, final LocalDateTime createdAt) {
+        this.id = id;
+        this.orderId = orderId;
+        this.status = status;
+        this.description = description;
+        this.createdAt = createdAt;
+    }
 }

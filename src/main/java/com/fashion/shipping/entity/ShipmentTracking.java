@@ -7,10 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -18,8 +16,6 @@ import org.hibernate.annotations.CreationTimestamp;
 @Table(name = "shipment_tracking")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ShipmentTracking {
     @Id
@@ -45,4 +41,17 @@ public class ShipmentTracking {
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    public ShipmentTracking() {
+    }
+    public ShipmentTracking(final Long id, final Long shipmentId, final String status, final String description, final String location, final Double latitude, final Double longitude, final LocalDateTime createdAt) {
+        this.id = id;
+        this.shipmentId = shipmentId;
+        this.status = status;
+        this.description = description;
+        this.location = location;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.createdAt = createdAt;
+    }
 }

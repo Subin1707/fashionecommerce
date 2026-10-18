@@ -10,18 +10,14 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "order_items")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class OrderItem {
 
@@ -57,4 +53,19 @@ public class OrderItem {
 
     @Column(nullable = false)
     private Double price;
+
+    public OrderItem() {
+    }
+    public OrderItem(final Long id, final Order order, final Long productId, final Long variantId, final String sku, final String productName, final String color, final String size, final Integer quantity, final Double price) {
+        this.id = id;
+        this.order = order;
+        this.productId = productId;
+        this.variantId = variantId;
+        this.sku = sku;
+        this.productName = productName;
+        this.color = color;
+        this.size = size;
+        this.quantity = quantity;
+        this.price = price;
+    }
 }

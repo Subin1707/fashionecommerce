@@ -2,17 +2,17 @@ package com.fashion.brand.service;
 
 import com.fashion.brand.entity.Brand;
 import com.fashion.brand.repository.BrandRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class BrandService {
 
-    private final BrandRepository brandRepository;
+    @Autowired
+    private BrandRepository brandRepository;
 
     @Transactional(readOnly = true)
     public List<Brand> getAllBrands() {
@@ -51,4 +51,5 @@ public class BrandService {
         }
         brandRepository.deleteById(id);
     }
+
 }

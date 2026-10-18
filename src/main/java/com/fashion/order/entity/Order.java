@@ -9,10 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -25,8 +23,6 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Order {
 
@@ -86,5 +82,27 @@ public class Order {
             items = new ArrayList<>();
         }
         return items;
+    }
+
+    public Order() {
+    }
+    public Order(final Long id, final Long userId, final Double totalAmount, final Double shippingFee, final Double discountAmount, final Double finalAmount, final String shippingAddress, final Double shippingLat, final Double shippingLng, final String paymentMethod, final String paymentStatus, final String orderStatus, final String couponCode, final LocalDateTime createdAt, final LocalDateTime updatedAt, final LocalDateTime completedAt, final List<OrderItem> items) {
+        this.id = id;
+        this.userId = userId;
+        this.totalAmount = totalAmount;
+        this.shippingFee = shippingFee;
+        this.discountAmount = discountAmount;
+        this.finalAmount = finalAmount;
+        this.shippingAddress = shippingAddress;
+        this.shippingLat = shippingLat;
+        this.shippingLng = shippingLng;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
+        this.orderStatus = orderStatus;
+        this.couponCode = couponCode;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.completedAt = completedAt;
+        this.items = items;
     }
 }

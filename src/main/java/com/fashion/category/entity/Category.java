@@ -9,11 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -23,8 +21,6 @@ import java.time.LocalDateTime;
 @Table(name = "categories")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Category {
 
@@ -59,5 +55,18 @@ public class Category {
         this.slug = slug;
         this.description = description;
         this.isActive = true;
+    }
+
+    public Category() {
+        this.isActive = Category.$default$isActive();
+    }
+    public Category(final Long id, final String name, final String slug, final String description, final Category parent, final Boolean isActive, final LocalDateTime createdAt) {
+        this.id = id;
+        this.name = name;
+        this.slug = slug;
+        this.description = description;
+        this.parent = parent;
+        this.isActive = isActive;
+        this.createdAt = createdAt;
     }
 }

@@ -4,14 +4,12 @@ import com.fashion.voucher.dto.VoucherRequest;
 import com.fashion.voucher.dto.VoucherValidationResult;
 import com.fashion.voucher.entity.Voucher;
 import com.fashion.voucher.repository.VoucherRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
 @Service
-@RequiredArgsConstructor
 public class VoucherService {
 
     private final VoucherRepository voucherRepository;
@@ -175,5 +173,9 @@ public class VoucherService {
                 .discountAmount(discountAmount)
                 .finalAmount(finalAmount)
                 .build();
+    }
+
+    public VoucherService(final VoucherRepository voucherRepository) {
+        this.voucherRepository = voucherRepository;
     }
 }

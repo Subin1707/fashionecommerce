@@ -4,7 +4,6 @@ import com.fashion.review.dto.CreateReviewRequest;
 import com.fashion.review.entity.Review;
 import com.fashion.review.service.ReviewService;
 import com.fashion.security.UserPrincipal;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -14,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/reviews")
-@RequiredArgsConstructor
 public class ReviewController {
 
     private final ReviewService reviewService;
@@ -61,5 +59,9 @@ public class ReviewController {
 
     private Long userId(Authentication authentication) {
         return ((UserPrincipal) authentication.getPrincipal()).getUserId();
+    }
+
+    public ReviewController(final ReviewService reviewService) {
+        this.reviewService = reviewService;
     }
 }

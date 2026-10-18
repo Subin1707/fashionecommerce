@@ -7,12 +7,10 @@ import com.fashion.shipping.enums.ShipmentStatus;
 import com.fashion.shipping.repository.*;
 import java.time.LocalDate;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
 public class ShipmentService {
     private final OrderRepository orders;
@@ -183,5 +181,16 @@ public class ShipmentService {
             case RETURNING -> "Đang hoàn hàng về shop";
             case RETURNED -> "Đã hoàn hàng về shop";
         };
+    }
+
+    public ShipmentService(final OrderRepository orders, final ShipmentRepository shipments, final ShippingProviderRepository providers, final ShipmentTrackingRepository tracking, final OrderStatusHistoryRepository history, final ShippingGateway gateway, final RoutingService routing, final ShipmentRoutePointRepository routePoints) {
+        this.orders = orders;
+        this.shipments = shipments;
+        this.providers = providers;
+        this.tracking = tracking;
+        this.history = history;
+        this.gateway = gateway;
+        this.routing = routing;
+        this.routePoints = routePoints;
     }
 }

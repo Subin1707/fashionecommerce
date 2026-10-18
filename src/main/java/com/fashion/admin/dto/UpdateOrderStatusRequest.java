@@ -1,15 +1,15 @@
 package com.fashion.admin.dto;
-
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class UpdateOrderStatusRequest {
 
     private String orderStatus;
+
+    public UpdateOrderStatusRequest() {
+    }
+    public UpdateOrderStatusRequest(final String orderStatus) {
+        this.orderStatus = orderStatus;
+    }
 }

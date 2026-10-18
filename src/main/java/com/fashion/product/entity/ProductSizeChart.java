@@ -10,10 +10,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -23,8 +21,6 @@ import lombok.Setter;
 )
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ProductSizeChart {
 
@@ -56,4 +52,18 @@ public class ProductSizeChart {
 
     @Column(name = "max_hip", nullable = false)
     private Double maxHip;
+
+    public ProductSizeChart() {
+    }
+    public ProductSizeChart(final Long id, final Product product, final String sizeLabel, final Double minChest, final Double maxChest, final Double minWaist, final Double maxWaist, final Double minHip, final Double maxHip) {
+        this.id = id;
+        this.product = product;
+        this.sizeLabel = sizeLabel;
+        this.minChest = minChest;
+        this.maxChest = maxChest;
+        this.minWaist = minWaist;
+        this.maxWaist = maxWaist;
+        this.minHip = minHip;
+        this.maxHip = maxHip;
+    }
 }

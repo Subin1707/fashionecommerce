@@ -4,14 +4,12 @@ import com.fashion.voucher.dto.VoucherRequest;
 import com.fashion.voucher.dto.VoucherValidationResult;
 import com.fashion.voucher.entity.Voucher;
 import com.fashion.voucher.service.VoucherService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/vouchers")
-@RequiredArgsConstructor
 public class VoucherController {
 
     private final VoucherService voucherService;
@@ -51,5 +49,9 @@ public class VoucherController {
     @PreAuthorize("hasAnyRole('ADMIN', 'CUSTOMER')")
     public ResponseEntity<VoucherValidationResult> validateVoucher(@RequestParam String code, @RequestParam Double orderValue) {
         return ResponseEntity.ok(voucherService.validateVoucher(code, orderValue));
+    }
+
+    public VoucherController(final VoucherService voucherService) {
+        this.voucherService = voucherService;
     }
 }

@@ -7,7 +7,6 @@ import com.fashion.order.repository.OrderRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
 public class AdminOrderService {
 
@@ -95,5 +93,10 @@ public class AdminOrderService {
             case "PROCESSING" -> newStatus.equals("SHIPPING");
             default -> false;
         };
+    }
+
+    public AdminOrderService(final OrderRepository orderRepository, final com.fashion.order.repository.OrderStatusHistoryRepository historyRepository) {
+        this.orderRepository = orderRepository;
+        this.historyRepository = historyRepository;
     }
 }

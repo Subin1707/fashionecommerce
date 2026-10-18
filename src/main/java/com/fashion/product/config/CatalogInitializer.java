@@ -12,7 +12,6 @@ import com.fashion.product.repository.ProductRepository;
 import com.fashion.product.repository.ProductVariantRepository;
 import java.math.BigDecimal;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
@@ -22,7 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Component
 @Profile("!test")
 @Order(2)
-@RequiredArgsConstructor
 public class CatalogInitializer implements CommandLineRunner {
 
     private final BrandRepository brandRepository;
@@ -314,5 +312,13 @@ public class CatalogInitializer implements CommandLineRunner {
     }
 
     private record ImageSeed(String variantSku, String url, String altText, boolean primary, Integer displayOrder) {
+    }
+
+    public CatalogInitializer(final BrandRepository brandRepository, final CategoryRepository categoryRepository, final ProductRepository productRepository, final ProductVariantRepository productVariantRepository, final ProductImageRepository productImageRepository) {
+        this.brandRepository = brandRepository;
+        this.categoryRepository = categoryRepository;
+        this.productRepository = productRepository;
+        this.productVariantRepository = productVariantRepository;
+        this.productImageRepository = productImageRepository;
     }
 }

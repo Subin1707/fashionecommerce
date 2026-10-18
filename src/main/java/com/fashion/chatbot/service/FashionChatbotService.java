@@ -9,13 +9,11 @@ import com.fashion.product.repository.ProductVariantRepository;
 import com.fashion.search.dto.ProductSearchRequest;
 import com.fashion.search.dto.ProductSearchResponse;
 import com.fashion.search.service.ProductSearchService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class FashionChatbotService {
 
     private final ProductRepository productRepository;
@@ -93,5 +91,12 @@ public class FashionChatbotService {
         }
 
         return "Tôi có thể hỗ trợ bạn tìm sản phẩm, tư vấn size, outfit và thông tin sản phẩm.";
+    }
+
+    public FashionChatbotService(final ProductRepository productRepository, final ProductVariantRepository productVariantRepository, final ProductSearchService productSearchService, final ChatbotQueryParser queryParser) {
+        this.productRepository = productRepository;
+        this.productVariantRepository = productVariantRepository;
+        this.productSearchService = productSearchService;
+        this.queryParser = queryParser;
     }
 }

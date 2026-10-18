@@ -73,4 +73,31 @@ public class ProductResponse {
                 .totalStock(product.getAvailableQuantity())
                 .build();
     }
+
+    ProductResponse(final Long id, final String name, final String slug, final String shortDescription, final String description, final BigDecimal basePrice, final BigDecimal salePrice, final String material, final String fit, final String gender, final String status, final Boolean isFeatured, final Boolean isNew, final Long brandId, final String brandName, final Long categoryId, final String categoryName, final String primaryImageUrl, final List<String> imageUrls, final List<String> sizes, final List<String> colors, final Integer totalStock, final Double averageRating, final Long totalReviews) {
+        this.id = id;
+        this.name = name;
+        this.slug = slug;
+        this.shortDescription = shortDescription;
+        this.description = description;
+        this.basePrice = basePrice;
+        this.salePrice = salePrice;
+        this.material = material;
+        this.fit = fit;
+        this.gender = gender;
+        this.status = status;
+        this.isFeatured = isFeatured;
+        this.isNew = isNew;
+        this.brandId = brandId;
+        this.brandName = brandName;
+        this.categoryId = categoryId;
+        this.categoryName = categoryName;
+        this.primaryImageUrl = primaryImageUrl;
+        this.imageUrls = imageUrls;
+        this.sizes = sizes;
+        this.colors = colors;
+        this.totalStock = totalStock;
+        this.averageRating = averageRating;
+        this.totalReviews = totalReviews;
+    }
 }

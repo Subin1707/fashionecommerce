@@ -2,16 +2,12 @@ package com.fashion.cart.dto;
 
 import com.fashion.cart.entity.CartItem;
 import com.fashion.product.entity.Product;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class CartItemResponse {
 
@@ -99,5 +95,19 @@ public class CartItemResponse {
                 .price(price)
                 .lineTotal(price * quantity)
                 .build();
+    }
+
+    public CartItemResponse() {
+    }
+    public CartItemResponse(final Long id, final Long productId, final Long variantId, final String productName, final String imageUrl, final String size, final Integer quantity, final Double price, final Double lineTotal) {
+        this.id = id;
+        this.productId = productId;
+        this.variantId = variantId;
+        this.productName = productName;
+        this.imageUrl = imageUrl;
+        this.size = size;
+        this.quantity = quantity;
+        this.price = price;
+        this.lineTotal = lineTotal;
     }
 }

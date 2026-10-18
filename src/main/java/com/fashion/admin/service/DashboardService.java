@@ -9,11 +9,9 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class DashboardService {
 
     private final OrderRepository orderRepository;
@@ -58,5 +56,12 @@ public class DashboardService {
                 .dateFrom(fromDate.toLocalDate())
                 .dateTo(toDate.toLocalDate())
                 .build();
+    }
+
+    public DashboardService(final OrderRepository orderRepository, final ProductRepository productRepository, final ProductVariantRepository productVariantRepository, final UserRepository userRepository) {
+        this.orderRepository = orderRepository;
+        this.productRepository = productRepository;
+        this.productVariantRepository = productVariantRepository;
+        this.userRepository = userRepository;
     }
 }

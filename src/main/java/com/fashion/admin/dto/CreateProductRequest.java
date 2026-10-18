@@ -2,15 +2,9 @@ package com.fashion.admin.dto;
 
 import java.math.BigDecimal;
 import java.util.List;
-
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class CreateProductRequest {
 
@@ -42,4 +36,25 @@ public class CreateProductRequest {
     private List<ProductImageDto> images;
 
     private List<ProductSizeChartDto> sizeCharts;
+
+    public CreateProductRequest() {
+    }
+    public CreateProductRequest(final Long brandId, final Long categoryId, final String name, final String description, final BigDecimal basePrice, final BigDecimal salePrice, final String material, final String fit, final String gender, final String status, final Boolean isFeatured, final Boolean isNew, final Integer stockQty, final List<CreateVariantRequest> variants, final List<ProductImageDto> images, final List<ProductSizeChartDto> sizeCharts) {
+        this.brandId = brandId;
+        this.categoryId = categoryId;
+        this.name = name;
+        this.description = description;
+        this.basePrice = basePrice;
+        this.salePrice = salePrice;
+        this.material = material;
+        this.fit = fit;
+        this.gender = gender;
+        this.status = status;
+        this.isFeatured = isFeatured;
+        this.isNew = isNew;
+        this.stockQty = stockQty;
+        this.variants = variants;
+        this.images = images;
+        this.sizeCharts = sizeCharts;
+    }
 }

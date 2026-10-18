@@ -25,7 +25,6 @@ import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.text.Normalizer;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -33,7 +32,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 @Transactional
 public class AdminProductService {
 
@@ -787,4 +785,15 @@ public class AdminProductService {
         }
     }
 
+
+    public AdminProductService(final ProductRepository productRepository, final ProductVariantRepository productVariantRepository, final ProductImageRepository productImageRepository, final ProductSizeChartRepository productSizeChartRepository, final BrandRepository brandRepository, final CategoryRepository categoryRepository, final ProductSearchService productSearchService, final EntityManager entityManager) {
+        this.productRepository = productRepository;
+        this.productVariantRepository = productVariantRepository;
+        this.productImageRepository = productImageRepository;
+        this.productSizeChartRepository = productSizeChartRepository;
+        this.brandRepository = brandRepository;
+        this.categoryRepository = categoryRepository;
+        this.productSearchService = productSearchService;
+        this.entityManager = entityManager;
+    }
 }

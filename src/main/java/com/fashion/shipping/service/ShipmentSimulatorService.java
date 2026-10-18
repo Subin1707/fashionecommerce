@@ -3,7 +3,6 @@ package com.fashion.shipping.service;
 import com.fashion.order.repository.OrderRepository;
 import com.fashion.shipping.repository.*;
 import java.util.List;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.scheduling.annotation.*;
@@ -13,7 +12,6 @@ import org.springframework.transaction.support.TransactionTemplate;
 @Service
 @EnableScheduling
 @ConditionalOnProperty(name = "fashion.shipping.simulator.enabled", havingValue = "true")
-@RequiredArgsConstructor
 @Slf4j
 public class ShipmentSimulatorService {
     private final ShipmentRepository shipments;
@@ -54,5 +52,13 @@ public class ShipmentSimulatorService {
             };
             if (target != null) service.update(orderId, new ShipmentService.UpdateRequest(target, null));
         });
+    }
+
+    public ShipmentSimulatorService(final ShipmentRepository shipments, final ShipmentRoutePointRepository points, final OrderRepository orders, final ShipmentService service, final TransactionTemplate transactions) {
+        this.shipments = shipments;
+        this.points = points;
+        this.orders = orders;
+        this.service = service;
+        this.transactions = transactions;
     }
 }

@@ -9,11 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -24,8 +22,6 @@ import java.time.LocalDateTime;
 @Table(name = "product_images")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ProductImage {
 
@@ -60,4 +56,19 @@ public class ProductImage {
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    public ProductImage() {
+        this.isPrimary = ProductImage.$default$isPrimary();
+        this.displayOrder = ProductImage.$default$displayOrder();
+    }
+    public ProductImage(final Long id, final Product product, final ProductVariant variant, final String imageUrl, final String altText, final Boolean isPrimary, final Integer displayOrder, final LocalDateTime createdAt) {
+        this.id = id;
+        this.product = product;
+        this.variant = variant;
+        this.imageUrl = imageUrl;
+        this.altText = altText;
+        this.isPrimary = isPrimary;
+        this.displayOrder = displayOrder;
+        this.createdAt = createdAt;
+    }
 }

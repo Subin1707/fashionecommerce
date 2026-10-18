@@ -6,14 +6,12 @@ import com.fashion.product.entity.ProductImage;
 import com.fashion.product.repository.ProductImageRepository;
 import com.fashion.product.repository.ProductRepository;
 import com.fashion.style.dto.StyleMatchRequest;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class StyleMatchService {
 
     private final ProductRepository productRepository;
@@ -82,5 +80,10 @@ public class StyleMatchService {
         }
         String normalizedProduct = productValue.toLowerCase();
         return normalizedProduct.contains(desiredValue) || desiredValue.contains(normalizedProduct);
+    }
+
+    public StyleMatchService(final ProductRepository productRepository, final ProductImageRepository productImageRepository) {
+        this.productRepository = productRepository;
+        this.productImageRepository = productImageRepository;
     }
 }

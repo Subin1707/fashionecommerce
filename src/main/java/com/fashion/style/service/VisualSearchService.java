@@ -16,13 +16,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@RequiredArgsConstructor
 public class VisualSearchService {
 
     private final ProductRepository productRepository;
@@ -126,5 +124,10 @@ public class VisualSearchService {
                 .status(product.getStatus()).brandName(product.getBrandName())
                 .categoryName(product.getCategory() == null ? null : product.getCategory().getName())
                 .build();
+    }
+
+    public VisualSearchService(final ProductRepository productRepository, final ObjectMapper objectMapper) {
+        this.productRepository = productRepository;
+        this.objectMapper = objectMapper;
     }
 }

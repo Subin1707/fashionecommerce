@@ -4,7 +4,6 @@ import com.fashion.product.entity.Product;
 import com.fashion.product.entity.ProductImage;
 import com.fashion.product.repository.ProductImageRepository;
 import com.fashion.product.repository.ProductRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +14,6 @@ import java.math.BigDecimal;
 import java.util.Locale;
 
 @Service
-@RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
@@ -153,5 +151,10 @@ public class ProductService {
             throw new IllegalArgumentException("Product not found with id: " + id);
         }
         productRepository.deleteById(id);
+    }
+
+    public ProductService(final ProductRepository productRepository, final ProductImageRepository productImageRepository) {
+        this.productRepository = productRepository;
+        this.productImageRepository = productImageRepository;
     }
 }

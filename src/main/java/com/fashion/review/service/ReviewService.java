@@ -7,7 +7,6 @@ import com.fashion.review.entity.Review;
 import com.fashion.review.repository.ReviewRepository;
 import com.fashion.messaging.EventPublisher;
 import com.fashion.messaging.event.ReviewCreatedEvent;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,7 +14,6 @@ import java.util.List;
 import java.time.Instant;
 
 @Service
-@RequiredArgsConstructor
 public class ReviewService {
 
     private final ReviewRepository reviewRepository;
@@ -145,5 +143,12 @@ public class ReviewService {
             throw new IllegalArgumentException("Review không tồn tại với ID: " + reviewId);
         }
         reviewRepository.deleteById(reviewId);
+    }
+
+    public ReviewService(final ReviewRepository reviewRepository, final ProductRepository productRepository, final EventPublisher eventPublisher, final com.fashion.order.repository.OrderItemRepository orderItemRepository) {
+        this.reviewRepository = reviewRepository;
+        this.productRepository = productRepository;
+        this.eventPublisher = eventPublisher;
+        this.orderItemRepository = orderItemRepository;
     }
 }

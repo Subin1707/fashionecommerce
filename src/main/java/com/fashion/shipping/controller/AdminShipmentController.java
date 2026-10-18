@@ -2,7 +2,6 @@ package com.fashion.shipping.controller;
 
 import com.fashion.shipping.service.ShipmentService;
 import com.fashion.shipping.entity.ShippingProvider;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 import java.util.List;
@@ -10,7 +9,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/admin")
 @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-@RequiredArgsConstructor
 public class AdminShipmentController {
     private final ShipmentService service;
     @GetMapping("/shipping-providers")
@@ -24,5 +22,9 @@ public class AdminShipmentController {
     @PatchMapping("/orders/{orderId}/shipment/simulate")
     public ShipmentService.TrackingView simulate(@PathVariable Long orderId, @RequestBody ShipmentService.UpdateRequest request) {
         return service.update(orderId, request);
+    }
+
+    public AdminShipmentController(final ShipmentService service) {
+        this.service = service;
     }
 }

@@ -5,7 +5,6 @@ import com.fashion.order.entity.Order;
 import com.fashion.order.service.OrderService;
 import com.fashion.payment.service.PaymentService;
 import com.fashion.security.UserPrincipal;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -21,7 +20,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/orders")
-@RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 public class OrderController {
 
@@ -55,5 +53,10 @@ public class OrderController {
     @PatchMapping("/{orderId}/receive")
     public ResponseEntity<Order> confirmReceived(@PathVariable Long orderId, Authentication authentication) {
         return ResponseEntity.ok(orderService.confirmReceived(orderId, userId(authentication)));
+    }
+
+    public OrderController(final OrderService orderService, final PaymentService paymentService) {
+        this.orderService = orderService;
+        this.paymentService = paymentService;
     }
 }

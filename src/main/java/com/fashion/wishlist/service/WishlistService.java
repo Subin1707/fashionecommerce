@@ -4,14 +4,12 @@ import com.fashion.product.entity.Product;
 import com.fashion.product.repository.ProductRepository;
 import com.fashion.wishlist.entity.WishlistItem;
 import com.fashion.wishlist.repository.WishlistRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class WishlistService {
 
     private final WishlistRepository wishlistRepository;
@@ -49,5 +47,10 @@ public class WishlistService {
                 .orElseThrow(() -> new IllegalArgumentException("Sản phẩm không có trong wishlist"));
 
         wishlistRepository.delete(item);
+    }
+
+    public WishlistService(final WishlistRepository wishlistRepository, final ProductRepository productRepository) {
+        this.wishlistRepository = wishlistRepository;
+        this.productRepository = productRepository;
     }
 }

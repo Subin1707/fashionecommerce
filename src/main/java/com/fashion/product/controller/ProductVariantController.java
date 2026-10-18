@@ -5,7 +5,6 @@ import com.fashion.product.dto.ProductVariantResponse;
 import com.fashion.product.dto.CreateVariantRequest;
 import com.fashion.product.repository.ProductRepository;
 import com.fashion.product.service.ProductVariantService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/products")
-@RequiredArgsConstructor
 public class ProductVariantController {
 
     private final ProductVariantService productVariantService;
@@ -50,5 +48,10 @@ public class ProductVariantController {
                 .product(product)
                 .build();
         return ResponseEntity.ok(ProductVariantResponse.fromEntity(productVariantService.createVariant(variant)));
+    }
+
+    public ProductVariantController(final ProductVariantService productVariantService, final ProductRepository productRepository) {
+        this.productVariantService = productVariantService;
+        this.productRepository = productRepository;
     }
 }

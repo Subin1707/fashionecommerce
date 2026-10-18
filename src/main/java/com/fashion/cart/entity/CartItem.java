@@ -12,10 +12,8 @@ import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
 import jakarta.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
@@ -24,8 +22,6 @@ import java.math.BigDecimal;
 @Table(name = "cart_items")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class CartItem {
 
@@ -85,11 +81,27 @@ public class CartItem {
             this.legacyPrice = price;
             return this;
         }
+
+        CartItemBuilder() {
+        }
     }
 
     @PrePersist
     @PreUpdate
     void syncLegacyPriceColumn() {
         legacyPrice = price == null ? null : price.doubleValue();
+    }
+
+    public CartItem() {
+    }
+    public CartItem(final Long id, final Cart cart, final Long productId, final Long variantId, final String size, final Integer quantity, final BigDecimal price, final Double legacyPrice) {
+        this.id = id;
+        this.cart = cart;
+        this.productId = productId;
+        this.variantId = variantId;
+        this.size = size;
+        this.quantity = quantity;
+        this.price = price;
+        this.legacyPrice = legacyPrice;
     }
 }

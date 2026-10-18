@@ -6,7 +6,6 @@ import com.fashion.user.dto.CreateUserRequest;
 import com.fashion.user.dto.UpdateProfileRequest;
 import com.fashion.user.repository.RoleRepository;
 import com.fashion.user.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
@@ -134,4 +132,10 @@ public class UserService {
         return normalized.startsWith("ROLE_") ? normalized.substring("ROLE_".length()) : normalized;
     }
 
+
+    public UserService(final UserRepository userRepository, final RoleRepository roleRepository, final PasswordEncoder passwordEncoder) {
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 }

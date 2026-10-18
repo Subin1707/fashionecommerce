@@ -4,7 +4,6 @@ import com.fashion.search.dto.ProductSearchRequest;
 import com.fashion.search.dto.ProductSearchResponse;
 import com.fashion.search.service.ProductSearchService;
 import java.math.BigDecimal;
-import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/search")
-@RequiredArgsConstructor
 public class ProductSearchController {
 
     private final ProductSearchService productSearchService;
@@ -62,5 +60,9 @@ public class ProductSearchController {
             @RequestParam(defaultValue = "10") int size) {
         Page<ProductSearchResponse> results = productSearchService.getTopRatedProducts(page, size);
         return ResponseEntity.ok(results);
+    }
+
+    public ProductSearchController(final ProductSearchService productSearchService) {
+        this.productSearchService = productSearchService;
     }
 }

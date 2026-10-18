@@ -4,7 +4,6 @@ import com.fashion.user.entity.Role;
 import com.fashion.user.entity.User;
 import com.fashion.user.repository.RoleRepository;
 import com.fashion.user.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Value;
 import java.util.Locale;
 
 @Component
-@RequiredArgsConstructor
 public class RoleInitializer implements CommandLineRunner {
 
     private final RoleRepository roleRepository;
@@ -100,5 +98,11 @@ public class RoleInitializer implements CommandLineRunner {
                         .role(customerRole)
                         .status("ACTIVE")
                         .build()));
+    }
+
+    public RoleInitializer(final RoleRepository roleRepository, final UserRepository userRepository, final PasswordEncoder passwordEncoder) {
+        this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 }

@@ -6,11 +6,9 @@ import com.fashion.smartsize.dto.SmartSizeResult;
 import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 @Service
-@RequiredArgsConstructor
 public class SmartSizeService {
 
     private static final Map<String, SizeRange> SIZE_CHART = new LinkedHashMap<>();
@@ -180,5 +178,9 @@ public class SmartSizeService {
             this.minHip = minHip;
             this.maxHip = maxHip;
         }
+    }
+
+    public SmartSizeService(final ProductRepository productRepository) {
+        this.productRepository = productRepository;
     }
 }

@@ -4,7 +4,6 @@ import com.fashion.admin.dto.DashboardDto;
 import com.fashion.admin.service.DashboardService;
 import java.time.LocalDateTime;
 import java.util.Optional;
-import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/admin/dashboard")
-@RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 public class DashboardController {
 
@@ -29,5 +27,9 @@ public class DashboardController {
                 Optional.ofNullable(dateFrom),
                 Optional.ofNullable(dateTo));
         return ResponseEntity.ok(dashboard);
+    }
+
+    public DashboardController(final DashboardService dashboardService) {
+        this.dashboardService = dashboardService;
     }
 }

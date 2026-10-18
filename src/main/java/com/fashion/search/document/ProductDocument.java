@@ -3,18 +3,14 @@ package com.fashion.search.document;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 @Document(indexName = "products", createIndex = false)
 public class ProductDocument {
@@ -87,4 +83,32 @@ public class ProductDocument {
 
     @Field(type = FieldType.Date)
     private LocalDateTime updatedAt;
+
+    public ProductDocument() {
+    }
+    public ProductDocument(final Long id, final String name, final String description, final String slug, final BigDecimal basePrice, final BigDecimal salePrice, final String material, final String fit, final String gender, final String status, final String brandName, final String categoryName, final String primaryImageUrl, final List<String> colors, final List<String> sizes, final Integer totalStock, final Double averageRating, final List<Float> embedding, final Integer totalReviews, final Boolean isFeatured, final Boolean isNew, final LocalDateTime createdAt, final LocalDateTime updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.slug = slug;
+        this.basePrice = basePrice;
+        this.salePrice = salePrice;
+        this.material = material;
+        this.fit = fit;
+        this.gender = gender;
+        this.status = status;
+        this.brandName = brandName;
+        this.categoryName = categoryName;
+        this.primaryImageUrl = primaryImageUrl;
+        this.colors = colors;
+        this.sizes = sizes;
+        this.totalStock = totalStock;
+        this.averageRating = averageRating;
+        this.embedding = embedding;
+        this.totalReviews = totalReviews;
+        this.isFeatured = isFeatured;
+        this.isNew = isNew;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

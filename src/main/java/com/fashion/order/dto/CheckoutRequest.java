@@ -1,14 +1,9 @@
 package com.fashion.order.dto;
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class CheckoutRequest {
     private String shippingAddress;
     private Double shippingLat;
@@ -21,4 +16,20 @@ public class CheckoutRequest {
     private Long variantId;
     private String size;
     private Integer quantity;
+
+    public CheckoutRequest() {
+    }
+    public CheckoutRequest(final String shippingAddress, final Double shippingLat, final Double shippingLng, final String paymentMethod, final Double shippingFee, final Double discountAmount, final String voucherCode, final Long productId, final Long variantId, final String size, final Integer quantity) {
+        this.shippingAddress = shippingAddress;
+        this.shippingLat = shippingLat;
+        this.shippingLng = shippingLng;
+        this.paymentMethod = paymentMethod;
+        this.shippingFee = shippingFee;
+        this.discountAmount = discountAmount;
+        this.voucherCode = voucherCode;
+        this.productId = productId;
+        this.variantId = variantId;
+        this.size = size;
+        this.quantity = quantity;
+    }
 }

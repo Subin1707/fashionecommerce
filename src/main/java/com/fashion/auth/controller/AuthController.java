@@ -6,7 +6,6 @@ import com.fashion.auth.dto.LoginResponse;
 import com.fashion.auth.dto.RegisterRequest;
 import com.fashion.auth.service.AuthService;
 import com.fashion.user.entity.User;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,10 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/auth")
-@RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
+
+    public AuthController(AuthService authService) {
+        this.authService = authService;
+    }
 
     @PostMapping("/register")
     public ResponseEntity<AuthMessageResponse> register(@RequestBody RegisterRequest request) {

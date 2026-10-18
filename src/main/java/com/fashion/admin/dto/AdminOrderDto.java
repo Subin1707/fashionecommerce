@@ -1,14 +1,9 @@
 package com.fashion.admin.dto;
 
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class AdminOrderDto {
 
@@ -37,4 +32,22 @@ public class AdminOrderDto {
     private LocalDateTime updatedAt;
 
     private LocalDateTime completedAt;
+
+    public AdminOrderDto() {
+    }
+    public AdminOrderDto(final Long id, final Long userId, final Double totalAmount, final Double shippingFee, final Double discountAmount, final Double finalAmount, final String shippingAddress, final String paymentMethod, final String paymentStatus, final String orderStatus, final LocalDateTime createdAt, final LocalDateTime updatedAt, final LocalDateTime completedAt) {
+        this.id = id;
+        this.userId = userId;
+        this.totalAmount = totalAmount;
+        this.shippingFee = shippingFee;
+        this.discountAmount = discountAmount;
+        this.finalAmount = finalAmount;
+        this.shippingAddress = shippingAddress;
+        this.paymentMethod = paymentMethod;
+        this.paymentStatus = paymentStatus;
+        this.orderStatus = orderStatus;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.completedAt = completedAt;
+    }
 }

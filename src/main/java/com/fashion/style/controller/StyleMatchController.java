@@ -5,7 +5,6 @@ import com.fashion.style.dto.StyleMatchRequest;
 import com.fashion.style.dto.VisualSearchResponse;
 import com.fashion.style.service.StyleMatchService;
 import com.fashion.style.service.VisualSearchService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/style")
-@RequiredArgsConstructor
 public class StyleMatchController {
 
     private final StyleMatchService styleMatchService;
@@ -34,5 +32,10 @@ public class StyleMatchController {
             @RequestParam(defaultValue = "10") int limit) {
         VisualSearchResponse response = visualSearchService.search(image, limit);
         return response.isEnabled() ? ResponseEntity.ok(response) : ResponseEntity.status(503).body(response);
+    }
+
+    public StyleMatchController(final StyleMatchService styleMatchService, final VisualSearchService visualSearchService) {
+        this.styleMatchService = styleMatchService;
+        this.visualSearchService = visualSearchService;
     }
 }

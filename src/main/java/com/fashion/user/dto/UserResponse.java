@@ -2,16 +2,12 @@ package com.fashion.user.dto;
 
 import com.fashion.user.entity.User;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class UserResponse {
     private Long id;
@@ -38,5 +34,20 @@ public class UserResponse {
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();
+    }
+
+    public UserResponse() {
+    }
+    public UserResponse(final Long id, final String fullName, final String email, final String phone, final String address, final String avatar, final String role, final String status, final LocalDateTime createdAt, final LocalDateTime updatedAt) {
+        this.id = id;
+        this.fullName = fullName;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.avatar = avatar;
+        this.role = role;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 }

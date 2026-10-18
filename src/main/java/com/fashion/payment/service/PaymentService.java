@@ -14,12 +14,10 @@ import com.fashion.product.repository.ProductVariantRepository;
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.Objects;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
-@RequiredArgsConstructor
 public class PaymentService {
 
     private final OrderRepository orderRepository;
@@ -170,5 +168,13 @@ public class PaymentService {
         }
         String orderId = transactionReference.split("_", 2)[0];
         return Long.valueOf(orderId);
+    }
+
+    public PaymentService(final OrderRepository orderRepository, final EventPublisher eventPublisher, final CartRepository cartRepository, final ProductVariantRepository productVariantRepository, final OrderStatusHistoryRepository historyRepository) {
+        this.orderRepository = orderRepository;
+        this.eventPublisher = eventPublisher;
+        this.cartRepository = cartRepository;
+        this.productVariantRepository = productVariantRepository;
+        this.historyRepository = historyRepository;
     }
 }

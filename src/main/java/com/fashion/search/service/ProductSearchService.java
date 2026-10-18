@@ -10,7 +10,6 @@ import com.fashion.search.repository.ProductSearchRepository;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Slf4j
 @Service
-@RequiredArgsConstructor
 public class ProductSearchService {
 
     private final ProductSearchRepository productSearchRepository;
@@ -303,4 +301,10 @@ public class ProductSearchService {
         return normalized == null ? null : "%" + normalized + "%";
     }
 
+
+    public ProductSearchService(final ProductSearchRepository productSearchRepository, final ProductRepository productRepository, final ReviewRepository reviewRepository) {
+        this.productSearchRepository = productSearchRepository;
+        this.productRepository = productRepository;
+        this.reviewRepository = reviewRepository;
+    }
 }

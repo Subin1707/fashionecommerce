@@ -1,15 +1,10 @@
 package com.fashion.voucher.dto;
-
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class VoucherValidationResult {
     private boolean valid;
@@ -17,4 +12,14 @@ public class VoucherValidationResult {
     private String message;
     private double discountAmount;
     private double finalAmount;
+
+    public VoucherValidationResult() {
+    }
+    public VoucherValidationResult(final boolean valid, final String code, final String message, final double discountAmount, final double finalAmount) {
+        this.valid = valid;
+        this.code = code;
+        this.message = message;
+        this.discountAmount = discountAmount;
+        this.finalAmount = finalAmount;
+    }
 }

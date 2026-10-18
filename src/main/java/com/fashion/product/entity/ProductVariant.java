@@ -10,11 +10,9 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Builder.Default;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -30,8 +28,6 @@ import java.time.LocalDateTime;
 )
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ProductVariant {
 
@@ -72,4 +68,22 @@ public class ProductVariant {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    public ProductVariant() {
+        this.stockQty = ProductVariant.$default$stockQty();
+        this.priceAdjustment = ProductVariant.$default$priceAdjustment();
+        this.isActive = ProductVariant.$default$isActive();
+    }
+    public ProductVariant(final Long id, final Product product, final String sku, final String color, final String size, final Integer stockQty, final BigDecimal priceAdjustment, final Boolean isActive, final LocalDateTime createdAt, final LocalDateTime updatedAt) {
+        this.id = id;
+        this.product = product;
+        this.sku = sku;
+        this.color = color;
+        this.size = size;
+        this.stockQty = stockQty;
+        this.priceAdjustment = priceAdjustment;
+        this.isActive = isActive;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

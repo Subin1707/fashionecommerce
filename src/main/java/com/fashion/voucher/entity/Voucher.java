@@ -6,10 +6,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,8 +18,6 @@ import java.time.LocalDateTime;
 @Table(name = "vouchers")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Voucher {
 
@@ -60,4 +56,20 @@ public class Voucher {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    public Voucher() {
+    }
+    public Voucher(final Long id, final String code, final String discountType, final Double discountValue, final Double minOrderValue, final Double maxDiscount, final LocalDateTime startDate, final LocalDateTime endDate, final String status, final LocalDateTime createdAt, final LocalDateTime updatedAt) {
+        this.id = id;
+        this.code = code;
+        this.discountType = discountType;
+        this.discountValue = discountValue;
+        this.minOrderValue = minOrderValue;
+        this.maxDiscount = maxDiscount;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.status = status;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

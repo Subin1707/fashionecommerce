@@ -2,7 +2,6 @@ package com.fashion.category.service;
 
 import com.fashion.category.entity.Category;
 import com.fashion.category.repository.CategoryRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -11,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class CategoryService {
 
     private final CategoryRepository categoryRepository;
@@ -74,5 +72,9 @@ public class CategoryService {
             throw new RuntimeException("Category not found with id: " + id);
         }
         categoryRepository.deleteById(id);
+    }
+
+    public CategoryService(final CategoryRepository categoryRepository) {
+        this.categoryRepository = java.util.Objects.requireNonNull(categoryRepository, "categoryRepository must not be null");
     }
 }

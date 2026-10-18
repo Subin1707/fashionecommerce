@@ -1,14 +1,9 @@
 package com.fashion.search.dto;
 
 import java.math.BigDecimal;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ProductSearchRequest {
     private String keyword;
@@ -19,4 +14,17 @@ public class ProductSearchRequest {
     private BigDecimal minPrice;
     private BigDecimal maxPrice;
     private Double minRating;
+
+    public ProductSearchRequest() {
+    }
+    public ProductSearchRequest(final String keyword, final String category, final String style, final String size, final String color, final BigDecimal minPrice, final BigDecimal maxPrice, final Double minRating) {
+        this.keyword = keyword;
+        this.category = category;
+        this.style = style;
+        this.size = size;
+        this.color = color;
+        this.minPrice = minPrice;
+        this.maxPrice = maxPrice;
+        this.minRating = minRating;
+    }
 }

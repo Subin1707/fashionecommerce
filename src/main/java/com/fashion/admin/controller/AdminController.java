@@ -3,7 +3,6 @@ package com.fashion.admin.controller;
 import com.fashion.user.entity.User;
 import com.fashion.user.dto.UserResponse;
 import com.fashion.user.service.UserService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -12,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/admin")
-@RequiredArgsConstructor
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
 
@@ -55,4 +53,8 @@ public class AdminController {
         return ResponseEntity.ok(UserResponse.fromEntity(userService.saveUser(user)));
     }
 
+
+    public AdminController(final UserService userService) {
+        this.userService = userService;
+    }
 }

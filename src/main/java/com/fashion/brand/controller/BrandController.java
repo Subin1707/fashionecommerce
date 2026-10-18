@@ -2,7 +2,6 @@ package com.fashion.brand.controller;
 
 import com.fashion.brand.entity.Brand;
 import com.fashion.brand.service.BrandService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +10,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/brands")
-@RequiredArgsConstructor
 public class BrandController {
 
     private final BrandService brandService;
+
+    public BrandController(BrandService brandService) {
+        this.brandService = brandService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Brand>> getAllBrands() {

@@ -1,14 +1,9 @@
 package com.fashion.order.dto;
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class CreateOrderRequest {
     private String shippingAddress;
     private Double shippingLat;
@@ -18,4 +13,17 @@ public class CreateOrderRequest {
     private Double discountAmount;
     private String voucherCode;
     private String note;
+
+    public CreateOrderRequest() {
+    }
+    public CreateOrderRequest(final String shippingAddress, final Double shippingLat, final Double shippingLng, final String paymentMethod, final Double shippingFee, final Double discountAmount, final String voucherCode, final String note) {
+        this.shippingAddress = shippingAddress;
+        this.shippingLat = shippingLat;
+        this.shippingLng = shippingLng;
+        this.paymentMethod = paymentMethod;
+        this.shippingFee = shippingFee;
+        this.discountAmount = discountAmount;
+        this.voucherCode = voucherCode;
+        this.note = note;
+    }
 }

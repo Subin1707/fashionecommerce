@@ -9,10 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -22,8 +20,6 @@ import java.util.List;
 @Table(name = "carts")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Cart {
 
@@ -42,5 +38,13 @@ public class Cart {
             items = new ArrayList<>();
         }
         return items;
+    }
+
+    public Cart() {
+    }
+    public Cart(final Long id, final Long userId, final List<CartItem> items) {
+        this.id = id;
+        this.userId = userId;
+        this.items = items;
     }
 }

@@ -3,17 +3,12 @@ package com.fashion.cart.dto;
 import com.fashion.cart.entity.Cart;
 
 import java.util.List;
-
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class CartResponse {
 
@@ -49,5 +44,14 @@ public class CartResponse {
                 .items(items)
                 .total(total)
                 .build();
+    }
+
+    public CartResponse() {
+    }
+    public CartResponse(final Long id, final Long userId, final List<CartItemResponse> items, final Double total) {
+        this.id = id;
+        this.userId = userId;
+        this.items = items;
+        this.total = total;
     }
 }

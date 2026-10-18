@@ -2,7 +2,6 @@ package com.fashion.messaging;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.AmqpException;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-@RequiredArgsConstructor
 public class EventPublisher {
 
     private final RabbitTemplate rabbitTemplate;
@@ -27,5 +25,10 @@ public class EventPublisher {
         } catch (AmqpException exception) {
             log.warn("Could not publish optional event {}; order transaction will continue", routingKey, exception);
         }
+    }
+
+    public EventPublisher(final RabbitTemplate rabbitTemplate, final ObjectMapper objectMapper) {
+        this.rabbitTemplate = rabbitTemplate;
+        this.objectMapper = objectMapper;
     }
 }

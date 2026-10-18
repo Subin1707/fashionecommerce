@@ -3,14 +3,12 @@ package com.fashion.product.service;
 import com.fashion.product.entity.Product;
 import com.fashion.product.entity.ProductVariant;
 import com.fashion.product.repository.ProductVariantRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
 public class ProductVariantService {
 
     private final ProductVariantRepository productVariantRepository;
@@ -28,5 +26,9 @@ public class ProductVariantService {
     @Transactional
     public ProductVariant createVariant(ProductVariant variant) {
         return productVariantRepository.save(variant);
+    }
+
+    public ProductVariantService(final ProductVariantRepository productVariantRepository) {
+        this.productVariantRepository = productVariantRepository;
     }
 }

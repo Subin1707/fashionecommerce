@@ -1,14 +1,9 @@
 package com.fashion.chatbot.dto;
 
 import java.math.BigDecimal;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
-
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class ChatbotFilters {
     private String keyword;
@@ -17,4 +12,15 @@ public class ChatbotFilters {
     private String color;
     private String size;
     private BigDecimal maxPrice;
+
+    public ChatbotFilters() {
+    }
+    public ChatbotFilters(final String keyword, final String category, final String style, final String color, final String size, final BigDecimal maxPrice) {
+        this.keyword = keyword;
+        this.category = category;
+        this.style = style;
+        this.color = color;
+        this.size = size;
+        this.maxPrice = maxPrice;
+    }
 }

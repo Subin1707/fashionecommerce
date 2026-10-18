@@ -17,13 +17,11 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
 @Service
-@RequiredArgsConstructor
 public class CartService {
 
     private final CartRepository cartRepository;
@@ -220,5 +218,11 @@ public class CartService {
                 .comparing((ProductImage image) -> !Boolean.TRUE.equals(image.getIsPrimary()))
                 .thenComparing(image -> image.getDisplayOrder() == null ? 0 : image.getDisplayOrder())
                 .thenComparing(image -> image.getId() == null ? Long.MAX_VALUE : image.getId());
+    }
+
+    public CartService(final CartRepository cartRepository, final ProductRepository productRepository, final ProductImageRepository productImageRepository) {
+        this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
+        this.productImageRepository = productImageRepository;
     }
 }

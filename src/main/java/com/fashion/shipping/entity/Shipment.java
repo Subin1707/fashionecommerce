@@ -8,10 +8,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -20,8 +18,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 @Table(name = "shipments")
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Shipment {
     @Id
@@ -70,4 +66,27 @@ public class Shipment {
     @UpdateTimestamp
     @Column(nullable = false)
     private LocalDateTime updatedAt;
+
+    public Shipment() {
+        this.routeIndex = Shipment.$default$routeIndex();
+    }
+    public Shipment(final Long id, final Long orderId, final Long providerId, final String trackingCode, final String status, final Double shippingFee, final Double weightKg, final LocalDate estimatedDelivery, final Double pickupLat, final Double pickupLng, final Double deliveryLat, final Double deliveryLng, final Double currentLat, final Double currentLng, final Integer routeIndex, final LocalDateTime createdAt, final LocalDateTime updatedAt) {
+        this.id = id;
+        this.orderId = orderId;
+        this.providerId = providerId;
+        this.trackingCode = trackingCode;
+        this.status = status;
+        this.shippingFee = shippingFee;
+        this.weightKg = weightKg;
+        this.estimatedDelivery = estimatedDelivery;
+        this.pickupLat = pickupLat;
+        this.pickupLng = pickupLng;
+        this.deliveryLat = deliveryLat;
+        this.deliveryLng = deliveryLng;
+        this.currentLat = currentLat;
+        this.currentLng = currentLng;
+        this.routeIndex = routeIndex;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

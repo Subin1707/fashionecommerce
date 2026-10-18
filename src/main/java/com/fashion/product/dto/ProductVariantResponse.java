@@ -32,4 +32,16 @@ public class ProductVariantResponse {
                 .updatedAt(variant.getUpdatedAt())
                 .build();
     }
+
+    ProductVariantResponse(final Long id, final String sku, final String color, final String size, final Integer stockQty, final BigDecimal priceAdjustment, final Boolean isActive, final LocalDateTime createdAt, final LocalDateTime updatedAt) {
+        this.id = id;
+        this.sku = sku;
+        this.color = color;
+        this.size = size;
+        this.stockQty = stockQty;
+        this.priceAdjustment = priceAdjustment;
+        this.isActive = isActive;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+    }
 }

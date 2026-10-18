@@ -7,10 +7,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -23,8 +21,6 @@ import java.time.LocalDateTime;
 )
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 @Builder
 public class Review {
 
@@ -70,4 +66,24 @@ public class Review {
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+
+    public Review() {
+        this.isVerified = Review.$default$isVerified();
+        this.media = Review.$default$media();
+    }
+    public Review(final Long id, final Long userId, final Long productId, final Long orderId, final Long orderItemId, final Boolean isVerified, final String sellerReply, final LocalDateTime repliedAt, final java.util.List<String> media, final Short rating, final String comment, final String status, final LocalDateTime createdAt) {
+        this.id = id;
+        this.userId = userId;
+        this.productId = productId;
+        this.orderId = orderId;
+        this.orderItemId = orderItemId;
+        this.isVerified = isVerified;
+        this.sellerReply = sellerReply;
+        this.repliedAt = repliedAt;
+        this.media = media;
+        this.rating = rating;
+        this.comment = comment;
+        this.status = status;
+        this.createdAt = createdAt;
+    }
 }

@@ -1,14 +1,9 @@
 package com.fashion.review.dto;
-
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
 public class CreateReviewRequest {
     private Integer rating;
     private String comment;
@@ -18,5 +13,14 @@ public class CreateReviewRequest {
     public CreateReviewRequest(Integer rating, String comment) {
         this.rating = rating;
         this.comment = comment;
+    }
+
+    public CreateReviewRequest() {
+    }
+    public CreateReviewRequest(final Integer rating, final String comment, final Long orderItemId, final java.util.List<String> media) {
+        this.rating = rating;
+        this.comment = comment;
+        this.orderItemId = orderItemId;
+        this.media = media;
     }
 }

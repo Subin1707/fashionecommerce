@@ -4,7 +4,6 @@ import com.fashion.cart.dto.CartItemRequest;
 import com.fashion.cart.dto.CartResponse;
 import com.fashion.cart.service.CartService;
 import com.fashion.security.UserPrincipal;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -19,11 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/cart")
-@RequiredArgsConstructor
 @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
 public class CartController {
 
     private final CartService cartService;
+
+    public CartController(CartService cartService) {
+        this.cartService = cartService;
+    }
 
     @GetMapping
     public ResponseEntity<CartResponse> getCart(Authentication authentication) {
@@ -53,4 +55,5 @@ public class CartController {
     private Long customerId(Authentication authentication) {
         return ((UserPrincipal) authentication.getPrincipal()).getUserId();
     }
+
 }
