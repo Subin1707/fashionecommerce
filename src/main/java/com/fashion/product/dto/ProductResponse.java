@@ -67,8 +67,10 @@ public class ProductResponse {
                 .primaryImageUrl(primaryImageUrl)
                 .imageUrls(imageUrls == null ? List.of() : imageUrls)
                 .sizes(product.getVariants() == null ? List.of() : product.getVariants().stream()
+                        .filter(variant -> Boolean.TRUE.equals(variant.getIsActive()))
                         .map(variant -> variant.getSize()).filter(java.util.Objects::nonNull).distinct().toList())
                 .colors(product.getVariants() == null ? List.of() : product.getVariants().stream()
+                        .filter(variant -> Boolean.TRUE.equals(variant.getIsActive()))
                         .map(variant -> variant.getColor()).filter(java.util.Objects::nonNull).distinct().toList())
                 .totalStock(product.getAvailableQuantity())
                 .build();

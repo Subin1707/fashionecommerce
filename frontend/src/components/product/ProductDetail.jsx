@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { formatCurrency } from '../../utils/formatCurrency'
 import * as productService from '../../services/productService'
 import { selectProductVariant } from '../../utils/selectProductVariant'
+import { SafeImage } from '../common/SafeImage'
 
 export function ProductDetail({ product, onAdd, onBuyNow, isAdding = false, isBuying = false, onBack, onToggleWishlist, isWishlisted = false, isTogglingWishlist = false }) {
   const [fetchedVariants, setFetchedVariants] = useState([])
@@ -96,7 +97,7 @@ export function ProductDetail({ product, onAdd, onBuyNow, isAdding = false, isBu
             {hasSale && <span>Ưu đãi</span>}
           </div>
           {heroImage ? (
-            <img src={heroImage} alt={product.name} />
+            <SafeImage src={heroImage} alt={product.name} fallbackLabel="Product photo" />
           ) : (
             <div className="detail-image-fallback">
               <strong>{product.categoryName || 'Fashion'}</strong>
@@ -113,7 +114,7 @@ export function ProductDetail({ product, onAdd, onBuyNow, isAdding = false, isBu
               className={`detail-thumbnail ${image === heroImage ? 'active' : ''}`}
               onClick={() => image && setSelectedImage(image)}
             >
-              {image ? <img src={image} alt={`${product.name} ${index + 1}`} /> : <span>{index + 1}</span>}
+              {image ? <SafeImage src={image} alt={`${product.name} ${index + 1}`} fallbackLabel="Product" /> : <span>{index + 1}</span>}
             </button>
           ))}
         </div>

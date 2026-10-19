@@ -1,11 +1,13 @@
 import { apiRequest } from './api'
+import { repairCategory } from '../utils/repairCatalogText'
 
-export function getCategories() {
-  return apiRequest('/api/categories')
+export async function getCategories() {
+  const data = await apiRequest('/api/categories')
+  return Array.isArray(data) ? data.map(repairCategory) : data
 }
 
-export function getCategoryById(id) {
-  return apiRequest(`/api/categories/${id}`)
+export async function getCategoryById(id) {
+  return repairCategory(await apiRequest(`/api/categories/${id}`))
 }
 
 export function createCategory(payload) {

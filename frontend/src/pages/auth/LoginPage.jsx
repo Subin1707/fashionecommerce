@@ -8,6 +8,15 @@ export function LoginPage({ setNotice, setRoute }) {
   const [form, setForm] = useState({ email: '', password: '' })
   const [showPassword, setShowPassword] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [feedback] = useState(() => {
+    try {
+      const stored = sessionStorage.getItem('fashion:auth-feedback')
+      sessionStorage.removeItem('fashion:auth-feedback')
+      return stored ? JSON.parse(stored) : null
+    } catch {
+      return null
+    }
+  })
 
   async function submit(event) {
     event.preventDefault()
@@ -27,6 +36,7 @@ export function LoginPage({ setNotice, setRoute }) {
 
   return (
     <AuthLayout title={<>Đăng nhập<br /><em>tài khoản</em></>} active={ROUTES.LOGIN} setRoute={setRoute}>
+      {feedback && <p className={`auth-feedback ${feedback.type}`} role="status">{feedback.message}</p>}
       <form className="form-grid auth-form" onSubmit={submit}>
         <label>Email<input autoComplete="email" placeholder="tên@email.com" value={form.email} onChange={(event) => setForm({ ...form, email: event.target.value })} /></label>
         <label>Mật khẩu

@@ -5,12 +5,14 @@ export function ProductFilters({
   sort,
   onQueryChange,
   onFiltersChange,
+  onFilterFieldChange,
   onSortChange,
   onReset,
   onSubmit,
 }) {
+  const childParentIds = new Set(categories.map((cat) => cat.parent?.id).filter(Boolean))
   const categoryOptions = categories.length > 0
-    ? categories.filter((cat) => cat.isActive !== false)
+    ? categories.filter((cat) => cat.isActive !== false && (cat.parent?.id || !childParentIds.has(cat.id)))
     : [
         { name: 'Áo' },
         { name: 'Quần' },
@@ -32,40 +34,33 @@ export function ProductFilters({
         <option value="">Tất cả danh mục</option>
         {categoryOptions.map((cat) => (
           <option key={cat.id || cat.name} value={cat.name}>
-            {cat.name}
+            {cat.parent?.name ? `${cat.parent.name} · ${cat.name}` : cat.name}
           </option>
         ))}
       </select>
 
-      <select value={filters.size} onChange={(event) => onFiltersChange({ ...filters, size: event.target.value })}>
-        <option value="">Size</option>
-        <option>S</option>
-        <option>M</option>
-        <option>L</option>
-        <option>XL</option>
-        <option>28</option>
-        <option>30</option>
-        <option>32</option>
-      </select>
-
+      <input
+        placeholder="Size"
+        value={filters.size}
+        onChange={(event) => onFilterFieldChange({ ...filters, size: event.target.value })}
+      />
       <input
         placeholder="Màu sắc"
         value={filters.color}
-        onChange={(event) => onFiltersChange({ ...filters, color: event.target.value })}
+        onChange={(event) => onFilterFieldChange({ ...filters, color: event.target.value })}
       />
-
       <input
         inputMode="numeric"
         placeholder="Giá từ"
         value={filters.minPrice}
-        onChange={(event) => onFiltersChange({ ...filters, minPrice: event.target.value })}
+        onChange={(event) => onFilterFieldChange({ ...filters, minPrice: event.target.value })}
       />
 
       <input
         inputMode="numeric"
         placeholder="Giá đến"
         value={filters.maxPrice}
-        onChange={(event) => onFiltersChange({ ...filters, maxPrice: event.target.value })}
+        onChange={(event) => onFilterFieldChange({ ...filters, maxPrice: event.target.value })}
       />
 
       <select value={sort} onChange={(event) => onSortChange(event.target.value)}>

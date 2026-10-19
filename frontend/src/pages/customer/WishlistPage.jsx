@@ -4,6 +4,7 @@ import * as productService from '../../services/productService'
 import * as wishlistService from '../../services/wishlistService'
 import { ROUTES } from '../../utils/constants'
 import { formatCurrency } from '../../utils/formatCurrency'
+import { SafeImage } from '../../components/common/SafeImage'
 
 export function WishlistPage({ setNotice, setRoute }) {
   const hasAuthToken = Boolean(getStoredAuth()?.token)
@@ -138,7 +139,7 @@ function WishlistCard({ item, product, removing, onRemove, onView }) {
     <article className="wishlist-card">
       <div className="wishlist-product-image">
         {product?.primaryImageUrl ? (
-          <img src={product.primaryImageUrl} alt={product.name} loading="lazy" />
+          <SafeImage src={product.primaryImageUrl} alt={product.name} fallbackLabel="Fashion item" />
         ) : (
           <span>#{item.productId}</span>
         )}

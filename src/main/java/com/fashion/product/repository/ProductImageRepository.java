@@ -18,6 +18,7 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Long
         String getImageUrl();
         Boolean getIsPrimary();
         Integer getDisplayOrder();
+        Long getVariantId();
     }
 
     List<ProductImage> findByProduct(Product product);
@@ -29,7 +30,8 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Long
                    image.id as id,
                    image.imageUrl as imageUrl,
                    image.isPrimary as isPrimary,
-                   image.displayOrder as displayOrder
+                   image.displayOrder as displayOrder,
+                   image.variant.id as variantId
             from ProductImage image
             where image.product.id in :productIds
             order by image.product.id, image.isPrimary desc, image.displayOrder, image.id

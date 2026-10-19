@@ -1,7 +1,9 @@
 import { apiRequest } from './api'
+import { repairBrand } from '../utils/repairCatalogText'
 
-export function getBrands() {
-  return apiRequest('/api/brands')
+export async function getBrands() {
+  const data = await apiRequest('/api/brands')
+  return Array.isArray(data) ? data.map(repairBrand) : data
 }
 
 export function createBrand(payload) {

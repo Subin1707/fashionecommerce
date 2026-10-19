@@ -31,6 +31,7 @@ export function CheckoutPage({ setNotice, setRoute }) {
   const [validationError, setValidationError] = useState('')
   const [voucherMessage, setVoucherMessage] = useState('')
   const [voucherLoading, setVoucherLoading] = useState(false)
+  const [createdOrder, setCreatedOrder] = useState(null)
 
   function showValidationError(message) {
     setValidationError(message)
@@ -123,8 +124,12 @@ export function CheckoutPage({ setNotice, setRoute }) {
         return
       }
 
-      setNotice?.(`Đặt hàng #${order.id} thành công.`)
-      setRoute?.(`${ROUTES.ORDER_DETAIL}?id=${order.id}`)
+      if (checkout.paymentMethod === 'BANK_TRANSFER' || checkout.paymentMethod === 'E_WALLET') {
+        setCreatedOrder(order)
+      } else {
+        setNotice?.(`Đặt hàng #${order.id} thành công.`)
+        setRoute?.(`${ROUTES.ORDER_DETAIL}?id=${order.id}`)
+      }
     } catch (error) {
       showValidationError(`Thanh toán chưa thành công: ${error.message}`)
     } finally {
@@ -161,8 +166,9 @@ export function CheckoutPage({ setNotice, setRoute }) {
     }
   }
 
-  return (
-    <CheckoutForm
+  return createdOrder ? (
+      <PaymentInstructions order={createdOrder} paymentMethod={checkout.paymentMethod} />
+    ) : <CheckoutForm
       checkout={checkout}
       total={checkoutTotal}
       itemCount={checkoutItemCount}
@@ -177,6 +183,43 @@ export function CheckoutPage({ setNotice, setRoute }) {
       onApplyVoucher={applyVoucher}
       onSubmit={submitCheckout}
     />
+}
+
+function PaymentInstructions({ order, paymentMethod }) {
+  const isBankTransfer = paymentMethod === 'BANK_TRANSFER'
+  const bankCode = import.meta.env.VITE_PAYMENT_BANK_CODE
+  const accountNumber = import.meta.env.VITE_PAYMENT_ACCOUNT_NUMBER
+  const accountName = import.meta.env.VITE_PAYMENT_ACCOUNT_NAME
+  const transferContent = `DH${order.id}`
+  const qrUrl = isBankTransfer && bankCode && accountNumber
+    ? `https://img.vietqr.io/image/${encodeURIComponent(bankCode)}-${encodeURIComponent(accountNumber)}-qr_only.png?amount=${Math.round(Number(order.finalAmount || 0))}&addInfo=${encodeURIComponent(transferContent)}&accountName=${encodeURIComponent(accountName || '')}`
+    : ''
+
+  return (
+    <section className="payment-instructions">
+      <p className="eyebrow">Đơn hàng #{order.id}</p>
+      <h1>{isBankTransfer ? 'Thông tin chuyển khoản' : 'Hướng dẫn thanh toán ví điện tử'}</h1>
+      <p>Đơn hàng đã được tạo và đang chờ xác nhận thanh toán. Trạng thái sẽ cập nhật sau khi cửa hàng đối soát.</p>
+      <strong className="payment-instructions-total">Tổng thanh toán: {new Intl.NumberFormat('vi-VN').format(Number(order.finalAmount || 0))} ₫</strong>
+      {isBankTransfer ? (
+        <>
+          {qrUrl && <img className="payment-qr-image" src={qrUrl} alt="Mã QR chuyển khoản" />}
+          {bankCode && accountNumber ? (
+            <dl className="payment-account-details">
+              <div><dt>Ngân hàng</dt><dd>{bankCode}</dd></div>
+              <div><dt>Số tài khoản</dt><dd>{accountNumber}</dd></div>
+              <div><dt>Chủ tài khoản</dt><dd>{accountName || 'Vui lòng xác nhận với cửa hàng'}</dd></div>
+              <div><dt>Nội dung chuyển khoản</dt><dd>{transferContent}</dd></div>
+            </dl>
+          ) : (
+            <p role="status">Cửa hàng chưa cấu hình tài khoản nhận tiền. Vui lòng liên hệ cửa hàng để lấy thông tin chuyển khoản; không chuyển tiền vào tài khoản chưa được xác nhận.</p>
+          )}
+        </>
+      ) : (
+        <p>Vui lòng mở ứng dụng ví điện tử và liên hệ cửa hàng để nhận thông tin thanh toán. Đơn hàng chưa được đánh dấu đã thanh toán.</p>
+      )}
+      <p>Sau khi chuyển khoản, cửa hàng sẽ xác nhận đơn hàng. Nội dung chuyển khoản giúp đối chiếu đơn chính xác.</p>
+    </section>
   )
 }
 

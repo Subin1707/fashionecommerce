@@ -1,11 +1,12 @@
 import { apiRequest, pageContent } from './api'
+import { repairProduct } from '../utils/repairCatalogText'
 
 export function getDashboard() {
   return apiRequest('/api/admin/dashboard')
 }
 
 export async function getAdminProducts({ page = 0, size = 100 } = {}) {
-  return pageContent(await apiRequest(`/api/admin/products?page=${page}&size=${size}`))
+  return pageContent(await apiRequest(`/api/admin/products?page=${page}&size=${size}`)).map(repairProduct)
 }
 
 export async function getAdminInventoryProducts({ page = 0, size = 100 } = {}) {

@@ -3,6 +3,7 @@ import { useCart } from '../../hooks/useCart'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { ROUTES } from '../../utils/constants'
 import * as productService from '../../services/productService'
+import { SafeImage } from '../../components/common/SafeImage'
 import './CartPage.css'
 
 export function CartPage({ setNotice, setRoute }) {
@@ -370,7 +371,7 @@ export function CartPage({ setNotice, setRoute }) {
                   title="Nhấn để xem chi tiết sản phẩm"
                 >
                   {image ? (
-                    <img src={image} alt={name} loading="lazy" />
+                    <SafeImage src={image} alt={name} fallbackLabel="Fashion item" />
                   ) : (
                     <div className="item-image-placeholder">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">

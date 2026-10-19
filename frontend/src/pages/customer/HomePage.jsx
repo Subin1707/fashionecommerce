@@ -1,5 +1,6 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { FashionMark } from '../../components/common/FashionMark'
+import { SafeImage } from '../../components/common/SafeImage'
 import * as brandService from '../../services/brandService'
 import { ROUTES } from '../../utils/constants'
 
@@ -298,7 +299,7 @@ export function HomePage({ route, setNotice, setRoute }) {
               <article className="fashion-brand-card" key={brand.id}>
                 <span className="fashion-brand-logo">
                   {brand.logoUrl
-                    ? <img src={brand.logoUrl} alt="" loading="lazy" />
+                    ? <SafeImage src={brand.logoUrl} alt={brand.name} fallbackLabel={brand.name?.slice(0, 2) || 'BR'} />
                     : <FashionMark className="fashion-brand-fallback" />}
                 </span>
                 <strong>{brand.name}</strong>

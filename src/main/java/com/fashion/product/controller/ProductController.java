@@ -113,12 +113,29 @@ public class ProductController {
         }
 
         ProductImageRepository.ProductImageSummary primaryImage = images.stream()
+                .filter(image -> image.getImageUrl() != null && !image.getImageUrl().isBlank())
+                .filter(image -> image.getVariantId() == null)
                 .filter(image -> Boolean.TRUE.equals(image.getIsPrimary()))
                 .min(Comparator
                         .comparing((ProductImageRepository.ProductImageSummary image) ->
                                 image.getDisplayOrder() == null ? 0 : image.getDisplayOrder())
                         .thenComparing(image -> image.getId() == null ? Long.MAX_VALUE : image.getId()))
-                .orElse(images.getFirst());
+                .orElseGet(() -> images.stream()
+                        .filter(image -> image.getImageUrl() != null && !image.getImageUrl().isBlank())
+                        .filter(image -> image.getVariantId() == null)
+                        .findFirst()
+                        .orElseGet(() -> images.stream()
+                                .filter(image -> image.getImageUrl() != null && !image.getImageUrl().isBlank())
+                                .filter(image -> Boolean.TRUE.equals(image.getIsPrimary()))
+                                .findFirst()
+                                .orElseGet(() -> images.stream()
+                                        .filter(image -> image.getImageUrl() != null && !image.getImageUrl().isBlank())
+                                        .findFirst()
+                                        .orElse(null))));
+
+        if (primaryImage == null) {
+            return List.of();
+        }
 
         return images.stream()
                 .sorted(Comparator
@@ -126,7 +143,7 @@ public class ProductController {
                         .thenComparing(image -> image.getDisplayOrder() == null ? 0 : image.getDisplayOrder())
                         .thenComparing(image -> image.getId() == null ? Long.MAX_VALUE : image.getId()))
                 .map(ProductImageRepository.ProductImageSummary::getImageUrl)
-                .filter(Objects::nonNull)
+                .filter(url -> url != null && !url.isBlank())
                 .distinct()
                 .toList();
     }

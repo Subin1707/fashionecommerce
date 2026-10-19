@@ -1,3 +1,5 @@
+import { SafeImage } from '../common/SafeImage'
+
 export function AdminProductForm({
   value,
   onChange,
@@ -8,6 +10,11 @@ export function AdminProductForm({
   categories = [],
   saving = false,
 }) {
+  const parentCategoryIds = new Set(categories.map((category) => category.parent?.id).filter(Boolean))
+  const assignableCategories = categories.filter((category) => (
+    category.isActive !== false && (category.parent?.id || !parentCategoryIds.has(category.id))
+  ))
+
   const images = Array.isArray(value.images) ? value.images : []
 
   function updateField(field, fieldValue) {
@@ -87,8 +94,10 @@ export function AdminProductForm({
             required
           >
             <option value="">Chọn danh mục</option>
-            {categories.filter((category) => category.isActive !== false).map((category) => (
-              <option key={category.id} value={category.id}>{category.name}</option>
+            {assignableCategories.map((category) => (
+              <option key={category.id} value={category.id}>
+                {category.parent?.name ? `${category.parent.name} · ${category.name}` : category.name}
+              </option>
             ))}
           </select>
         </label>
@@ -324,7 +333,7 @@ export function AdminProductForm({
             {images.map((image, index) => (
               <div className="admin-product-image-row" key={`${image.id || 'new'}-${index}`}>
                 <div className="admin-product-image-preview">
-                  {image.imageUrl ? <img src={image.imageUrl} alt={image.altText || value.name || 'Ảnh sản phẩm'} /> : <span>Ảnh</span>}
+                  <SafeImage src={image.imageUrl} alt={image.altText || value.name || 'Ảnh sản phẩm'} fallbackLabel="Product photo" />
                 </div>
 
                 <div className="admin-product-image-fields">

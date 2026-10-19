@@ -1,6 +1,7 @@
 import { lazy, Suspense, useState } from 'react'
 import { paymentMethods } from '../../services/paymentService'
 import { formatCurrency } from '../../utils/formatCurrency'
+import { SafeImage } from '../common/SafeImage'
 
 const DeliveryLocationPicker = lazy(() => import('./DeliveryLocationPicker').then((module) => ({
   default: module.DeliveryLocationPicker,
@@ -14,10 +15,9 @@ const paymentLabels = {
 }
 
 const paymentNotes = {
-  COD: 'Kiểm tra hàng trước khi thanh toán.',
-  BANK_TRANSFER: 'Thông tin chuyển khoản sẽ được gửi sau khi đặt hàng.',
-  E_WALLET: 'Phù hợp khi bạn muốn thanh toán nhanh.',
-  VNPAY: 'Thanh toán qua cổng VNPay Sandbox.',
+  COD: 'Ki?m tra h?ng tr??c khi thanh to?n.',
+  BANK_TRANSFER: 'QR v? th?ng tin chuy?n kho?n s? hi?n sau khi t?o ??n h?ng.',
+  VNPAY: 'Thanh to?n qua c?ng VNPay Sandbox.',
 }
 
 export function CheckoutForm({
@@ -243,7 +243,7 @@ function OrderItem({ imageUrl, name, meta, sku, quantity, price }) {
   return (
     <div className="checkout-order-item">
       <div className="checkout-order-image">
-        {imageUrl ? <img src={imageUrl} alt={name} /> : <span>SP</span>}
+        <SafeImage src={imageUrl} alt={name} fallbackLabel="Fashion item" />
       </div>
       <div>
         <strong>{name || 'Sản phẩm'}</strong>

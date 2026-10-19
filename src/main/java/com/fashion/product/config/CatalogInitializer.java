@@ -32,26 +32,16 @@ public class CatalogInitializer implements CommandLineRunner {
     @Override
     @Transactional
     public void run(String... args) {
-        Brand urbanVogue = ensureBrand(
-                "Urban Vogue",
-                "urban-vogue",
-                "Streetwear hiện đại, dễ mặc hằng ngày.",
-                "https://images.unsplash.com/photo-1775704847874-1f9f403e4edb?auto=format&fit=crop&w=240&q=80");
-        Brand monarchStudio = ensureBrand(
-                "Monarch Studio",
-                "monarch-studio",
-                "Những item polished cho công sở và cuối tuần.",
-                "https://images.unsplash.com/photo-1684974833710-dbabcbf884df?auto=format&fit=crop&w=240&q=80");
-        Brand northPeak = ensureBrand(
-                "North Peak",
-                "north-peak",
-                "Outerwear nhẹ, bền và năng động.",
-                "https://images.unsplash.com/photo-1773145297071-3cff5c9d143e?auto=format&fit=crop&w=240&q=80");
-        Brand atelierMuse = ensureBrand(
-                "Atelier Muse",
-                "atelier-muse",
-                "Đầm và phụ kiện tối giản, thanh lịch.",
-                "https://images.unsplash.com/photo-1577660002965-04865592fc60?auto=format&fit=crop&w=240&q=80");
+        Brand zumi = ensureBrand("ZUMI", "zumi", "Thương hiệu thời trang Việt với sản phẩm cotton compact sản xuất trong nước.", null);
+        Brand mazzola = ensureBrand("Mazzola", "mazzola", "Thương hiệu Việt chuyên denim với phom dáng hiện đại và chất liệu bền.", null);
+        Brand heboz = ensureBrand("HEBOZ", "heboz", "Thời trang nam Việt Nam với các thiết kế ứng dụng cho đời sống đô thị.", null);
+        Brand hity = ensureBrand("Hity", "hity", "Thương hiệu thiết kế Việt chú trọng chất liệu tự nhiên và phom dáng thanh lịch.", null);
+        Brand h2t = ensureBrand("H2T Store", "h2t-store", "Thời trang trẻ Việt Nam, tập trung vào sản phẩm denim và trang phục thường ngày.", null);
+        Brand gianSaigon = ensureBrand("GIAN Sài Gòn", "gian-sai-gon", "Local brand Sài Gòn với các thiết kế dệt gân và phom dáng tối giản.", null);
+        Brand vascara = ensureBrand("Vascara", "vascara", "Thương hiệu phụ kiện Việt Nam với túi xách và giày dép cho nữ.", null);
+        Brand bitis = ensureBrand("Biti's Hunter", "bitis-hunter", "Giày thể thao Việt Nam thiết kế cho di chuyển và sử dụng hằng ngày.", null);
+        Brand rafoz = ensureBrand("RAFOZ", "rafoz", "Local brand Việt với trang phục pique và polo nam.", null);
+        Brand lethnic = ensureBrand("LETHNIC", "lethnic", "Đồ da thủ công Việt Nam, thiết kế tối giản từ da bò thật.", null);
 
         Category tShirts = ensureCategory("Áo thun", "ao-thun", "Áo thun cotton, knit và jersey cho outfit hằng ngày.");
         Category pants = ensureCategory("Quần", "quan", "Jeans, trousers và quần ống rộng dễ phối đồ.");
@@ -60,12 +50,12 @@ public class CatalogInitializer implements CommandLineRunner {
         Category accessories = ensureCategory("Phụ kiện", "phu-kien", "Túi, sneaker và phụ kiện hoàn thiện outfit.");
 
         seedProduct(
-                urbanVogue,
+                zumi,
                 tShirts,
-                "Áo thun Essential Cotton",
+                "Áo thun cotton compact Sài Gòn",
                 "ao-thun-basic",
-                "Cotton tee mềm, thoáng và dễ phối.",
-                "Áo thun cotton cao cấp với form regular gọn gàng, phù hợp đi học, đi làm và xuống phố.",
+                "Áo thun cổ tròn từ cotton compact, phom regular và bề mặt vải mịn.",
+                "Áo thun ZUMI sản xuất tại Việt Nam từ cotton compact 100%, bề mặt mịn, thoáng và giữ phom sau nhiều lần giặt. Cổ bo gọn, tay ngắn và thân áo regular dễ phối với denim hoặc quần kaki. Ảnh chụp riêng sản phẩm trên nền sáng, không dùng ảnh người mẫu.",
                 BigDecimal.valueOf(320000),
                 BigDecimal.valueOf(280000),
                 "Cotton 100%",
@@ -76,18 +66,16 @@ public class CatalogInitializer implements CommandLineRunner {
                 List.of(
                         variant("ATB-001-BLK-S", "Black", "S", 24, 0),
                         variant("ATB-001-BLK-M", "Black", "M", 28, 0),
-                        variant("ATB-001-WHT-M", "White", "M", 22, 0)),
-                List.of(
-                        image("ATB-001-WHT-M", "https://images.unsplash.com/photo-1577660002965-04865592fc60?auto=format&fit=crop&w=1200&q=85", "Áo thun cotton trắng với denim jacket", true, 1),
-                        image("ATB-001-BLK-M", "https://images.unsplash.com/photo-1775704847874-1f9f403e4edb?auto=format&fit=crop&w=1200&q=85", "Áo thun basic phối cùng jeans", false, 2)));
+                        variant("ATB-001-BLK-L", "Black", "L", 22, 0)),
+                List.of(image("ATB-001-BLK-M", "https://zumifashion.com/Uploads/images/product/item/ao-thun-cotton-100-compact-mau-den/f0c66747-48d0-42df-a25c-efa050c5eed4.jpg", "Áo thun cotton compact Sài Gòn màu đen, ảnh sản phẩm", true, 1)));
 
         seedProduct(
-                monarchStudio,
+                mazzola,
                 pants,
-                "Quần jean Relaxed Blue",
+                "Quần jean nam xanh đậm Mazzola",
                 "quan-jean-relaxed",
-                "Denim relaxed, ống đứng vừa phải.",
-                "Quần jean denim xanh form relaxed, co giãn nhẹ, giữ form đẹp cho outfit hằng ngày.",
+                "Quần jean denim xanh đậm, phom relaxed và thiết kế năm túi cổ điển.",
+                "Quần jean Mazzola màu xanh chàm đậm với phom relaxed, cạp vừa và ống đứng thoải mái. Denim cotton bền, đường may tương phản và thiết kế năm túi tiện dụng. Có các cỡ eo 28, 30 và 32; phù hợp mặc hằng ngày cùng áo thun hoặc sơ mi.",
                 BigDecimal.valueOf(620000),
                 BigDecimal.valueOf(560000),
                 "Denim cotton blend",
@@ -99,15 +87,15 @@ public class CatalogInitializer implements CommandLineRunner {
                         variant("QJR-001-BLU-28", "Blue", "28", 18, 0),
                         variant("QJR-001-BLU-30", "Blue", "30", 20, 0),
                         variant("QJR-001-BLU-32", "Blue", "32", 16, 0)),
-                List.of(image("QJR-001-BLU-30", "https://images.unsplash.com/photo-1684974833710-dbabcbf884df?auto=format&fit=crop&w=1200&q=85", "Quần jean relaxed trong outfit denim", true, 1)));
+                List.of(image("QJR-001-BLU-30", "https://cdn.hstatic.net/products/1000133495/4_8c237b78d8dd4946a6168c251c26f64c.jpg", "Quần jean nam xanh đậm Mazzola, ảnh sản phẩm", true, 1)));
 
         seedProduct(
-                northPeak,
+                heboz,
                 jackets,
-                "Áo khoác Bomber Urban",
+                "Áo khoác bomber gió đen HEBOZ",
                 "ao-khoac-bomber",
-                "Bomber nhẹ cho ngày se lạnh.",
-                "Áo khoác bomber chất nylon mềm, lót thoáng, hợp phong cách streetwear hiện đại.",
+                "Bomber vải gió màu đen, cổ bo và túi khóa kéo ở tay.",
+                "Áo khoác bomber HEBOZ dùng vải gió nhẹ, khóa kéo thân trước, cổ tay và gấu bo rib. Túi khóa kéo ở tay áo giúp cất đồ nhỏ gọn; lớp trong thoáng, thích hợp khoác ngoài khi đi lại hoặc trong thời tiết se mát. Ảnh chụp riêng sản phẩm, thể hiện rõ phom áo và chi tiết khóa.",
                 BigDecimal.valueOf(780000),
                 BigDecimal.valueOf(690000),
                 "Nylon twill",
@@ -119,15 +107,15 @@ public class CatalogInitializer implements CommandLineRunner {
                         variant("AKB-001-BLK-M", "Black", "M", 14, 0),
                         variant("AKB-001-BLK-L", "Black", "L", 12, 0),
                         variant("AKB-001-OLV-M", "Olive", "M", 10, 20000)),
-                List.of(image("AKB-001-BLK-M", "https://images.unsplash.com/photo-1773145297071-3cff5c9d143e?auto=format&fit=crop&w=1200&q=85", "Áo khoác bomber đen chụp ngoài trời", true, 1)));
+                List.of(image("AKB-001-BLK-M", "https://cdn.hstatic.net/products/1000333546/_o_kho_c_heboz_bomber_gi__3m_-_0003026__3__10f40a853cbe47d3a24d5f77ef88b1a3_master.jpg", "Áo khoác bomber gió đen HEBOZ, ảnh sản phẩm", true, 1)));
 
         seedProduct(
-                atelierMuse,
+                hity,
                 dresses,
-                "Đầm Midi Linen Sand",
+                "Đầm linen cổ tim dáng midi Hity",
                 "dam-midi-linen",
-                "Đầm midi linen thanh lịch.",
-                "Đầm midi linen pha cotton, dáng A-line nhẹ nhàng cho công sở và cafe cuối tuần.",
+                "Đầm linen màu cát, cổ tim và dáng midi chữ A.",
+                "Đầm Hity may từ linen pha cotton, có bề mặt thoáng nhẹ và độ rủ tự nhiên. Cổ tim, tay ngắn và dáng midi chữ A tạo vẻ thanh lịch; hai cỡ S và M phù hợp mặc đi làm hoặc dạo phố. Giặt nhẹ và phơi trong bóng râm để giữ màu vải.",
                 BigDecimal.valueOf(760000),
                 BigDecimal.valueOf(670000),
                 "Linen cotton",
@@ -138,15 +126,15 @@ public class CatalogInitializer implements CommandLineRunner {
                 List.of(
                         variant("DML-001-SND-S", "Sand", "S", 11, 0),
                         variant("DML-001-SND-M", "Sand", "M", 13, 0)),
-                List.of(image("DML-001-SND-M", "https://images.unsplash.com/photo-1684974833710-dbabcbf884df?auto=format&fit=crop&w=1200&q=85", "Đầm midi linen phối cùng jacket denim", true, 1)));
+                List.of(image("DML-001-SND-M", "https://product.hstatic.net/1000154340/product/vai_lanh_do_dam_co_tim_kieu_vintage_co_dien_thoi_trang_thiet_ke_hity_2_dd759789d7d4499c91a79600b78dfaac_master.jpg", "Đầm linen cổ tim dáng midi Hity, ảnh sản phẩm", true, 1)));
 
         seedProduct(
-                urbanVogue,
+                h2t,
                 jackets,
-                "Áo khoác Denim Lightwash",
+                "Áo khoác denim xanh sáng H2T",
                 "ao-khoac-denim-lightwash",
-                "Denim jacket xanh sáng, dễ layer.",
-                "Áo khoác denim wash sáng, chất đứng form, hợp với áo thun và đầm basic.",
+                "Áo khoác denim xanh wash sáng, cổ bẻ và hai túi ngực có nắp.",
+                "Áo khoác denim H2T dáng regular, chất vải đứng phom với đường chần nổi. Thiết kế có hàng nút kim loại, hai túi ngực nắp gài và túi bên hông; lớp wash xanh sáng dễ phối với áo thun. Có hai cỡ S và M.",
                 BigDecimal.valueOf(860000),
                 BigDecimal.valueOf(749000),
                 "Denim 12oz",
@@ -157,15 +145,15 @@ public class CatalogInitializer implements CommandLineRunner {
                 List.of(
                         variant("ADL-001-BLU-S", "Light Blue", "S", 9, 0),
                         variant("ADL-001-BLU-M", "Light Blue", "M", 12, 0)),
-                List.of(image("ADL-001-BLU-M", "https://images.unsplash.com/photo-1577660002965-04865592fc60?auto=format&fit=crop&w=1200&q=85", "Áo khoác denim wash sáng", true, 1)));
+                List.of(image("ADL-001-BLU-M", "https://product.hstatic.net/200000201725/product/z5872947054935_d6ef51646576d3ce7b601aa75f51763e_1025ef55497d43c6b0ffb5131c93530c_master.jpg", "Áo khoác denim xanh sáng H2T, ảnh sản phẩm", true, 1)));
 
         seedProduct(
-                monarchStudio,
+                gianSaigon,
                 tShirts,
-                "Áo knit Tank Ivory",
+                "Áo tank dệt gân đỏ GIAN Sài Gòn",
                 "ao-knit-tank-ivory",
-                "Tank top knit ivory tối giản.",
-                "Áo tank knit cổ tròn, bề mặt mịn, mặc riêng hoặc layer với blazer và cardigan.",
+                "Áo tank dệt gân màu đỏ, cổ tròn và dáng ôm gọn.",
+                "Thiết kế GIAN Sài Gòn dùng vải dệt gân co giãn nhẹ, ôm vừa cơ thể mà vẫn thoải mái. Cổ tròn, nách khoét gọn và bề mặt gân dọc tạo điểm nhấn; có thể mặc riêng trong ngày nóng hoặc phối lớp cùng sơ mi và áo khoác mỏng.",
                 BigDecimal.valueOf(390000),
                 BigDecimal.valueOf(339000),
                 "Rib knit",
@@ -174,17 +162,17 @@ public class CatalogInitializer implements CommandLineRunner {
                 false,
                 true,
                 List.of(
-                        variant("AKT-001-IVR-S", "Ivory", "S", 15, 0),
-                        variant("AKT-001-IVR-M", "Ivory", "M", 17, 0)),
-                List.of(image("AKT-001-IVR-M", "https://images.unsplash.com/photo-1775704847874-1f9f403e4edb?auto=format&fit=crop&w=1200&q=85", "Áo tank ivory phối jeans", true, 1)));
+                        variant("AKT-001-RED-S", "Red", "S", 15, 0),
+                        variant("AKT-001-RED-M", "Red", "M", 17, 0)),
+                List.of(image("AKT-001-RED-M", "https://product.hstatic.net/200000911315/product/5_8828200c57404a6591ae5db7f2619de7_master.png", "Áo tank dệt gân đỏ GIAN Sài Gòn, ảnh sản phẩm", true, 1)));
 
         seedProduct(
-                atelierMuse,
+                vascara,
                 accessories,
-                "Túi Mini Crescent",
+                "Túi đeo chéo da đen Vascara",
                 "tui-mini-crescent",
-                "Túi đeo vai nhỏ gọn, sáng outfit.",
-                "Túi mini dáng crescent với quai đeo vai, phù hợp outfit tối giản và đi chơi.",
+                "Túi da màu đen nắp gập, khóa kim loại và dây đeo điều chỉnh.",
+                "Túi Vascara dáng hộp nhỏ làm từ da, nắp gập có khóa xoay kim loại màu vàng. Ngăn chính rộng vừa điện thoại và vật dụng cá nhân, kèm ngăn phụ bên trong. Dây đeo điều chỉnh để dùng như túi vai hoặc túi đeo chéo; lau sạch bằng khăn mềm sau khi sử dụng.",
                 BigDecimal.valueOf(520000),
                 BigDecimal.valueOf(459000),
                 "Vegan leather",
@@ -195,15 +183,15 @@ public class CatalogInitializer implements CommandLineRunner {
                 List.of(
                         variant("TMC-001-BLK-OS", "Black", "OS", 20, 0),
                         variant("TMC-001-TAN-OS", "Tan", "OS", 15, 0)),
-                List.of(image("TMC-001-BLK-OS", "https://images.unsplash.com/photo-1559563458-527698bf5295?auto=format&fit=crop&w=1200&q=85", "Túi mini crescent trong boutique", true, 1)));
+                List.of(image("TMC-001-BLK-OS", "https://www.vascara.com/uploads/cms_productmedia/2025/November/16/tui-deo-cheo-nap-gap-nhan-khoa-xoay-sho-0292-mau-den-0-765530-1763272361.jpg", "Túi đeo chéo da đen Vascara SHO 0292, ảnh sản phẩm", true, 1)));
 
         seedProduct(
-                northPeak,
+                bitis,
                 accessories,
-                "Sneaker Cloud Runner",
+                "Giày thể thao trắng Biti's Hunter",
                 "sneaker-cloud-runner",
-                "Sneaker êm chân, dễ đi cả ngày.",
-                "Sneaker đệm nhẹ với form clean, dễ phối cùng jeans, shorts và set casual.",
+                "Giày thể thao trắng, thân lưới thoáng và đế nhẹ cho sử dụng hằng ngày.",
+                "Biti's Hunter HSM009301TRG có thân giày trắng phối xám nhạt, lớp lưới thoáng khí và các mảng phủ tăng độ bền. Đế EVA nhẹ hỗ trợ giảm chấn khi đi bộ; cổ giày đệm êm và dây buộc giúp điều chỉnh độ ôm. Có các cỡ 39, 40 và 41.",
                 BigDecimal.valueOf(920000),
                 BigDecimal.valueOf(829000),
                 "Mesh, rubber",
@@ -215,7 +203,45 @@ public class CatalogInitializer implements CommandLineRunner {
                         variant("SCR-001-GRY-39", "Grey", "39", 8, 0),
                         variant("SCR-001-GRY-40", "Grey", "40", 9, 0),
                         variant("SCR-001-GRY-41", "Grey", "41", 7, 0)),
-                List.of(image("SCR-001-GRY-40", "https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=1200&q=85", "Sneaker xám chụp sản phẩm", true, 1)));
+                List.of(image("SCR-001-GRY-40", "https://cdn.hstatic.net/products/1000230642/hsm009301trg__3__795141aaf6be4051a5243099c41a1148.png", "Giày thể thao trắng Biti's Hunter HSM009301TRG, ảnh sản phẩm", true, 1)));
+
+        seedProduct(
+                rafoz,
+                tShirts,
+                "Áo polo pique nam Sông Hồng",
+                "ao-polo-pique-nam-song-hong",
+                "Polo pique màu be, cổ bẻ và nẹp hai nút.",
+                "Áo polo nam RAFOZ dùng vải pique dệt mắt nhỏ, thoáng khí và giữ bề mặt đứng phom. Cổ bẻ, nẹp hai nút và tay bo tạo vẻ gọn gàng cho cả ngày làm việc lẫn dịp cuối tuần. Mẫu màu be có các cỡ S, M và L; giặt mặt trái với màu tương tự để giữ màu vải.",
+                BigDecimal.valueOf(480000),
+                BigDecimal.valueOf(429000),
+                "Cotton pique",
+                "Regular",
+                "MALE",
+                true,
+                true,
+                List.of(
+                        variant("APS-001-BGE-S", "Beige", "S", 12, 0),
+                        variant("APS-001-BGE-M", "Beige", "M", 16, 0),
+                        variant("APS-001-BGE-L", "Beige", "L", 10, 0)),
+                List.of(image("APS-001-BGE-M", "https://product.hstatic.net/200000578961/product/00009672_89dda2a857204cdaac627b2dff4538be_master.jpg", "Áo polo pique nam RAFOZ màu be, ảnh sản phẩm", true, 1)));
+
+        seedProduct(
+                lethnic,
+                accessories,
+                "Ví gập da bò mềm thủ công",
+                "vi-gap-da-bo-mem-thu-cong",
+                "Ví gập da bò màu nâu, nhỏ gọn với nhiều ngăn thẻ.",
+                "Ví gập LETHNIC làm từ da bò sáp mềm, hoàn thiện thủ công tại Việt Nam. Thiết kế gọn có tám khe thẻ và một ngăn tiền giấy dài; bề mặt da lên màu tự nhiên theo thời gian sử dụng. Kích thước vừa túi quần, phù hợp dùng hằng ngày; tránh ngâm nước và dưỡng da định kỳ bằng khăn mềm.",
+                BigDecimal.valueOf(690000),
+                BigDecimal.valueOf(620000),
+                "Da bò sáp",
+                "One size",
+                "UNISEX",
+                false,
+                true,
+                List.of(variant("VGT-001-TAN-OS", "Tan", "OS", 18, 0)),
+                List.of(image("VGT-001-TAN-OS", "https://lethnic.vn/cdn/shop/products/Pasic_affc0d60-50c5-4d6c-a5df-95661d6ccf84_1200x1200.jpg?v=1619765600", "Ví gập da bò sáp LETHNIC màu nâu, ảnh sản phẩm", true, 1)));
+
     }
 
     private Brand ensureBrand(String name, String slug, String description, String logoUrl) {
@@ -287,7 +313,10 @@ public class CatalogInitializer implements CommandLineRunner {
         }
 
         productImageRepository.deleteAll(productImageRepository.findByProduct(savedProduct));
-        for (ImageSeed image : images) {
+        List<ImageSeed> usableImages = images == null ? List.of() : images.stream()
+                .filter(image -> image != null && image.url() != null && !image.url().isBlank())
+                .toList();
+        for (ImageSeed image : usableImages) {
             ProductImage productImage = ProductImage.builder()
                     .product(savedProduct)
                     .variant(productVariantRepository.findBySku(image.variantSku()).orElse(null))

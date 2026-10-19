@@ -17,6 +17,7 @@ export function RegisterPage({ setNotice, setRoute }) {
   const [errors, setErrors] = useState({})
   const [showPassword, setShowPassword] = useState(false)
   const [isSubmitting, setIsSubmitting] = useState(false)
+  const [feedback, setFeedback] = useState(null)
 
   async function submit(event) {
     event.preventDefault()
@@ -24,7 +25,7 @@ export function RegisterPage({ setNotice, setRoute }) {
     setErrors(nextErrors)
 
     if (Object.keys(nextErrors).length) {
-      setNotice('Vui lòng kiểm tra lại thông tin đăng ký.')
+      setFeedback({ type: 'error', message: 'Vui lòng kiểm tra lại thông tin đăng ký.' })
       return
     }
 
@@ -33,9 +34,13 @@ export function RegisterPage({ setNotice, setRoute }) {
       await authService.register(form)
       setForm(initialForm)
       setNotice('Đăng ký thành công, bạn có thể đăng nhập.')
+      sessionStorage.setItem('fashion:auth-feedback', JSON.stringify({
+        type: 'success',
+        message: 'Đăng ký thành công. Hãy đăng nhập bằng tài khoản vừa tạo.',
+      }))
       setRoute(ROUTES.LOGIN)
     } catch (error) {
-      setNotice(`Đăng ký thất bại: ${error.message}`)
+      setFeedback({ type: 'error', message: `Đăng ký thất bại: ${error.message}` })
     } finally {
       setIsSubmitting(false)
     }
@@ -43,6 +48,7 @@ export function RegisterPage({ setNotice, setRoute }) {
 
   return (
     <AuthLayout title={<>Tạo tài khoản<br /><em>của bạn</em></>} active={ROUTES.REGISTER} setRoute={setRoute}>
+      {feedback && <p className={`auth-feedback ${feedback.type}`} role="alert">{feedback.message}</p>}
       <form className="form-grid auth-form register-form" onSubmit={submit}>
         <label>Họ và tên
           <input value={form.fullName} onChange={(event) => setForm({ ...form, fullName: event.target.value })} />

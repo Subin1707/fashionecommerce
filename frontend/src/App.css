@@ -299,6 +299,26 @@ mark,
   align-items: stretch;
 }
 
+.product-toolbar > *,
+.product-toolbar .search-field {
+  min-width: 0;
+}
+
+.catalog-category-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.summary-pills {
+  align-items: center;
+}
+
+.summary-pills span {
+  white-space: nowrap;
+}
+
 .search-field {
   min-width: 0;
 }
@@ -381,6 +401,39 @@ mark,
 .product-image span {
   max-width: 100%;
   overflow-wrap: anywhere;
+}
+
+.product-image > .safe-image-unavailable {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(ellipse at 50% 28%, rgba(255, 255, 255, 0.9), transparent 42%),
+    linear-gradient(145deg, #f7dfe8, #ead1d9 55%, #e2d7d3);
+  color: #754357;
+}
+
+.catalog-load-more {
+  display: block;
+  min-width: 190px;
+  margin: 22px auto 4px;
+  padding: 12px 22px;
+  border: 1px solid rgba(173, 79, 114, 0.35);
+  border-radius: 999px;
+  background: #fff7fa;
+  color: #87455e;
+  font-weight: 750;
+}
+
+.catalog-load-more:hover {
+  background: #ad4f72;
+  color: #fff;
+}
+
+.catalog-loading-more {
+  margin: 18px 0 4px;
+  color: #754357;
+  text-align: center;
 }
 
 .card-row,
@@ -574,6 +627,8 @@ dd {
   gap: clamp(24px, 3vw, 48px);
   align-items: start;
 }
+
+.fashion-product-list-wrapper .product-detail-experience { min-width: 0; }
 
 .product-detail-gallery {
   position: sticky;
@@ -1157,6 +1212,24 @@ dd {
   position: sticky;
   top: 24px;
 }
+
+.payment-instructions {
+  width: min(720px, 100%);
+  margin: 32px auto;
+  padding: 32px;
+  border: 1px solid rgba(190, 112, 142, 0.35);
+  border-radius: 22px;
+  background: #fffafc;
+  box-shadow: 0 16px 40px rgba(72, 35, 48, 0.1);
+}
+
+.payment-instructions h1 { margin: 0 0 12px; }
+.payment-instructions-total { display: block; margin: 20px 0; font-size: 20px; }
+.payment-qr-image { display: block; width: min(320px, 100%); margin: 20px auto; }
+.payment-account-details { display: grid; gap: 10px; margin: 20px 0; }
+.payment-account-details div { display: flex; justify-content: space-between; gap: 18px; padding-bottom: 8px; border-bottom: 1px solid #eadde2; }
+.payment-account-details dt { color: #62545a; }
+.payment-account-details dd { margin: 0; font-weight: 700; text-align: right; overflow-wrap: anywhere; }
 
 .checkout-summary-heading {
   display: flex;
@@ -6008,6 +6081,9 @@ pre,
 .social-button { min-height: 42px; border: 1px solid #352f29; border-radius: 10px; color: #b2a69a; background: transparent; font-size: 12px; }
 .social-button:hover { border-color: #80643d; background: #1a1612; }
 .social-button b { margin-right: 8px; color: #d1aa68; font-size: 16px; }
+.auth-feedback { margin: 0 0 18px; padding: 13px 16px; border-radius: 12px; font-size: 14px; line-height: 1.5; }
+.auth-feedback.success { border: 1px solid #9ac9aa; background: #effaf2; color: #245c35; }
+.auth-feedback.error { border: 1px solid #e0a3a3; background: #fff3f3; color: #8d2929; }
 .auth-register-hint { padding-top: 24px; border-top: 1px solid #2c2722; color: #685f57; font-size: 11px; }
 .auth-legal { margin-top: 30px; color: #564e47; font-size: 10px; line-height: 1.6; }
 .register-form .auth-actions { margin-top: 4px; }
@@ -7398,6 +7474,10 @@ pre,
 }
 .detail-title-row h1 {
   min-width: 0;
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: none;
+  letter-spacing: -0.02em;
 }
 .detail-wishlist-toggle {
   flex: 0 0 48px;
@@ -8565,6 +8645,93 @@ pre,
   min-width: 0;
 }
 
+.fashion-product-list-wrapper .detail-title-row {
+  position: relative;
+  display: block;
+  padding-right: 46px;
+}
+
+.fashion-product-list-wrapper .detail-title-row h1 {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: clamp(28px, 3.3cqw, 42px);
+  font-weight: 700;
+  line-height: 1.18;
+  letter-spacing: -0.025em;
+  overflow-wrap: break-word;
+  word-break: normal;
+  hyphens: none;
+  text-wrap: pretty;
+}
+
+.fashion-product-list-wrapper .detail-title-row .detail-wishlist-toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 12px;
+  font-size: 20px;
+}
+
+.fashion-product-list-wrapper .detail-buy-panel {
+  gap: clamp(15px, 2cqw, 22px);
+  padding: clamp(20px, 2.6cqw, 34px);
+}
+
+.fashion-product-list-wrapper .detail-product-heading {
+  gap: 10px;
+}
+
+.fashion-product-list-wrapper .detail-product-heading > p:last-child {
+  margin: 0;
+}
+
+.fashion-product-list-wrapper .detail-purchase-row {
+  grid-template-columns: minmax(88px, 0.72fr) minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+  align-items: stretch;
+}
+
+.fashion-product-list-wrapper .detail-quantity-stepper {
+  height: 46px;
+  grid-template-columns: minmax(24px, 0.8fr) minmax(24px, 1fr) minmax(24px, 0.8fr);
+}
+
+.fashion-product-list-wrapper .detail-action-pair {
+  display: contents;
+}
+
+.fashion-product-list-wrapper .detail-buy-panel .detail-add-button,
+.fashion-product-list-wrapper .detail-buy-now-button {
+  min-height: 46px;
+  padding: 0 8px;
+  font-size: 11px;
+  line-height: 1.2;
+  white-space: normal;
+}
+
+.fashion-product-list-wrapper .detail-selection-note {
+  min-width: 0;
+  padding: 10px 12px;
+}
+
+.fashion-product-list-wrapper .detail-selection-note strong {
+  text-align: right;
+}
+
+.fashion-product-list-wrapper .detail-spec-grid {
+  margin-top: 0;
+}
+
+@container (max-width: 900px) {
+  .fashion-product-list-wrapper .detail-purchase-row {
+    grid-template-columns: minmax(82px, 0.65fr) minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
 .fashion-product-list-wrapper .detail-buy-panel .detail-add-button {
   border-color: #ad4f72;
   background: #fff5f8;
@@ -8616,6 +8783,10 @@ pre,
   .fashion-product-list-wrapper .detail-action-pair,
   .fashion-product-list-wrapper .detail-spec-grid {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .fashion-product-list-wrapper .detail-purchase-row {
+    grid-template-columns: minmax(76px, 0.6fr) minmax(0, 1fr) minmax(0, 1fr);
   }
 }
 
@@ -9012,6 +9183,38 @@ pre,
 .fashion-brand-fallback {
   width: 100%;
   height: 100%;
+}
+
+.safe-image-unavailable {
+  width: 100%;
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 18px;
+  overflow: hidden;
+  border-radius: inherit;
+  background: #f4f0ed;
+  color: #735e55;
+  text-align: center;
+}
+
+.safe-image-unavailable > span {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.safe-image-unavailable > strong {
+  max-width: 100%;
+  overflow: hidden;
+  font-size: 14px;
+  text-overflow: ellipsis;
 }
 
 .fashion-brand-card > strong {

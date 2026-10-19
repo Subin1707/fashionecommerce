@@ -1,4 +1,5 @@
 import { formatCurrency } from '../../utils/formatCurrency'
+import { SafeImage } from '../common/SafeImage'
 
 export function ProductCard({
   product,
@@ -21,11 +22,7 @@ export function ProductCard({
   return (
     <article className={`product-card ${selected ? 'selected' : ''}`} onClick={() => onSelect?.(product)}>
       <div className="product-image">
-        {product.primaryImageUrl ? (
-          <img src={product.primaryImageUrl} alt={product.name} loading="lazy" />
-        ) : (
-          <span>{product.categoryName?.slice(0, 2) || 'SP'}</span>
-        )}
+        <SafeImage src={product.primaryImageUrl} alt={product.name} fallbackLabel={product.categoryName || 'Fashion item'} />
         {onToggleWishlist && <button
           type="button"
           className={`wishlist-toggle ${isWishlisted ? 'active' : ''}`}

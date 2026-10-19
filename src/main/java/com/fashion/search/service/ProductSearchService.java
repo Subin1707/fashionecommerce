@@ -218,14 +218,18 @@ public class ProductSearchService {
             List<ProductVariant> variants) {
         List<String> sizes = variants != null
                 ? variants.stream()
-                .map(v -> v.getSize())
+                .filter(variant -> Boolean.TRUE.equals(variant.getIsActive()))
+                .map(ProductVariant::getSize)
+                .filter(java.util.Objects::nonNull)
                 .distinct()
                 .collect(Collectors.toList())
                 : List.of();
         
         List<String> colors = variants != null
                 ? variants.stream()
-                .map(v -> v.getColor())
+                .filter(variant -> Boolean.TRUE.equals(variant.getIsActive()))
+                .map(ProductVariant::getColor)
+                .filter(java.util.Objects::nonNull)
                 .distinct()
                 .collect(Collectors.toList())
                 : List.of();
@@ -247,6 +251,7 @@ public class ProductSearchService {
                 .colors(colors)
                 .sizes(sizes)
                 .totalStock(variants.stream()
+                        .filter(variant -> Boolean.TRUE.equals(variant.getIsActive()))
                         .map(ProductVariant::getStockQty)
                         .filter(java.util.Objects::nonNull)
                         .mapToInt(Integer::intValue)

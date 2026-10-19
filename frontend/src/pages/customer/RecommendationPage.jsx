@@ -4,6 +4,7 @@ import * as productService from '../../services/productService'
 import { ROUTES } from '../../utils/constants'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { useCart } from '../../hooks/useCart'
+import { SafeImage } from '../../components/common/SafeImage'
 
 const bodyFields = [
   { key: 'height', label: 'Chiều cao', unit: 'cm', min: 120, max: 210 },
@@ -68,7 +69,7 @@ export function RecommendationPage({ setNotice, setRoute }) {
     event.preventDefault()
     setSizeLoading(true)
     try {
-      const products = await productService.searchProducts({})
+      const { products } = await productService.searchProducts({})
       const product = products[0]
       if (!product) throw new Error('Chưa có sản phẩm thật để gợi ý kích cỡ.')
       setProductId(product.id)
@@ -325,7 +326,7 @@ function StyleProductCard({ product, onView }) {
   return (
     <article className="style-product-card">
       <div className="style-product-image">
-        {normalized.imageUrl ? <img src={normalized.imageUrl} alt={normalized.name} loading="lazy" /> : <span>SP</span>}
+        <SafeImage src={normalized.imageUrl} alt={normalized.name} fallbackLabel="Fashion item" />
       </div>
       <div>
         <p className="eyebrow">{normalized.brandName || 'Thương hiệu'}</p>
@@ -352,7 +353,7 @@ function OutfitCard({ outfit, onView, onAdd, adding }) {
           const normalized = normalizeProduct(product)
           return <div className="outfit-product" key={product.id}>
             <button type="button" className="outfit-product-image" onClick={() => onView(product)}>
-              {normalized.imageUrl ? <img src={normalized.imageUrl} alt={normalized.name} loading="lazy" /> : <span>SP</span>}
+              <SafeImage src={normalized.imageUrl} alt={normalized.name} fallbackLabel="Fashion item" />
             </button>
             <div><strong>{normalized.name}</strong><small>{sizeHint(product)} · {formatCurrency(priceOf(product))}</small></div>
           </div>

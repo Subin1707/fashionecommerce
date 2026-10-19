@@ -5,6 +5,7 @@ import * as brandService from '../../services/brandService'
 import * as categoryService from '../../services/categoryService'
 import { initialProductForm } from '../../utils/constants'
 import { formatCurrency } from '../../utils/formatCurrency'
+import { SafeImage } from '../../components/common/SafeImage'
 
 const statusLabels = {
   ACTIVE: 'Đang bán',
@@ -313,7 +314,7 @@ function AdminProductCard({ product, selected, onEdit, onHide, onRestore, onRemo
   return (
     <article className={`admin-product-card ${selected ? 'selected' : ''}`}>
       <div className="admin-product-card-media">
-        {imageUrl ? <img src={imageUrl} alt={product.name} /> : <span>Chưa có ảnh</span>}
+        <SafeImage src={imageUrl} alt={product.name} fallbackLabel="Fashion item" />
       </div>
 
       <div className="admin-product-card-head">

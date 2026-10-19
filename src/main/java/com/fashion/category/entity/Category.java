@@ -39,7 +39,7 @@ public class Category {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
-    @com.fasterxml.jackson.annotation.JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "parent"})
+    @com.fasterxml.jackson.annotation.JsonIgnore
     private Category parent;
 
     @Default

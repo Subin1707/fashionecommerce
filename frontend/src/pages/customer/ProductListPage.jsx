@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ProductCard } from '../../components/product/ProductCard'
 import { ProductDetail } from '../../components/product/ProductDetail'
 import { ProductFilters } from '../../components/product/ProductFilters'
@@ -17,20 +17,19 @@ export function ProductListPage({ setNotice, setRoute }) {
   const [categories, setCategories] = useState([])
   const [sort, setSort] = useState('featured')
   const [products, setProducts] = useState([])
+  const [totalPages, setTotalPages] = useState(1)
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [addingProductId, setAddingProductId] = useState(null)
   const [buyingProductId, setBuyingProductId] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
+  const searchRequestId = useRef(0)
   const [wishlistIds, setWishlistIds] = useState(new Set())
   const [togglingWishlistId, setTogglingWishlistId] = useState(null)
   const { isAdmin, isCustomer } = useAuth()
   const { addToCart } = useCart()
 
   useEffect(() => {
-    if (!isCustomer) {
-      setWishlistIds(new Set())
-      return
-    }
+    if (!isCustomer) return
     wishlistService.getWishlist()
       .then((items) => setWishlistIds(new Set(items.map((item) => String(item.productId)))))
       .catch(() => setWishlistIds(new Set()))
@@ -54,19 +53,42 @@ export function ProductListPage({ setNotice, setRoute }) {
     })
   }, [products, sort])
 
-  async function loadProducts(extra = filters) {
+  async function loadProducts(extra = filters, keyword = query) {
+    const requestId = ++searchRequestId.current
     setIsLoading(true)
     try {
-      const rows = await productService.searchProducts({ keyword: query, ...extra })
-      setProducts(rows)
-      setSelectedProduct(rows[0] || null)
-      setNotice(`${rows.length} sản phẩm sẵn sàng.`)
+      const result = await productService.searchProducts({ ...extra, keyword })
+      if (requestId !== searchRequestId.current) return
+      setProducts(result.products)
+      setTotalPages(result.totalPages)
+      setSelectedProduct(null)
+      setNotice(`${result.products.length} sản phẩm đã tải.`)
     } catch (error) {
+      if (requestId !== searchRequestId.current) return
       setProducts([])
       setSelectedProduct(null)
       setNotice(`Chưa đọc được /api/search: ${error.message}`)
     } finally {
-      setIsLoading(false)
+      if (requestId === searchRequestId.current) setIsLoading(false)
+    }
+  }
+
+  async function loadMoreProducts() {
+    if (isLoading || products.length === 0) return
+    const requestId = searchRequestId.current
+    setIsLoading(true)
+    try {
+      const result = await productService.searchProducts(
+        { ...filters, keyword: query },
+        { page: Math.ceil(products.length / 16), size: 16 },
+      )
+      if (requestId !== searchRequestId.current) return
+      setProducts((current) => [...current, ...result.products])
+      setTotalPages(result.totalPages)
+    } catch (error) {
+      setNotice(`Chưa tải thêm được sản phẩm: ${error.message}`)
+    } finally {
+      if (requestId === searchRequestId.current) setIsLoading(false)
     }
   }
 
@@ -74,7 +96,7 @@ export function ProductListPage({ setNotice, setRoute }) {
     setQuery('')
     setFilters(initialFilters)
     setSort('featured')
-    loadProducts(initialFilters)
+    loadProducts(initialFilters, '')
   }
 
   function handleSelectCategory(catName) {
@@ -85,7 +107,7 @@ export function ProductListPage({ setNotice, setRoute }) {
 
   async function handleAdd(product, variant) {
     if (isAdmin) {
-      setNotice('Gio hang chi danh cho tai khoan Customer. Admin vui long dung trang quan tri de van hanh san pham.')
+      setNotice('Giỏ hàng chỉ dành cho tài khoản Customer. Admin vui lòng dùng trang quản trị để vận hành sản phẩm.')
       return
     }
 
@@ -136,7 +158,7 @@ export function ProductListPage({ setNotice, setRoute }) {
 
   async function handleBuyNow(product, variant = null, quantity = 1) {
     if (isAdmin) {
-      setNotice('Mua hang va gio hang chi danh cho tai khoan Customer. Admin vui long dang xuat neu muon dat hang thu.')
+      setNotice('Mua hàng và giỏ hàng chỉ dành cho tài khoản Customer. Admin vui lòng đăng xuất nếu muốn đặt hàng thử.')
       return
     }
 
@@ -184,6 +206,7 @@ export function ProductListPage({ setNotice, setRoute }) {
   }
 
   return (
+    <div className="fashion-product-list-wrapper">
     <section className="store-grid upgraded-products">
       <div className="catalog-panel">
         <div className="catalog-summary">
@@ -206,14 +229,14 @@ export function ProductListPage({ setNotice, setRoute }) {
             >
               Tất cả
             </button>
-            {categories.filter((c) => c.isActive !== false).map((cat) => (
+            {getLeafCategories(categories).filter((c) => c.isActive !== false).map((cat) => (
               <button
                 key={cat.id}
                 type="button"
                 className={`category-pill-btn ${filters.category === cat.name ? 'active' : ''}`}
                 onClick={() => handleSelectCategory(cat.name)}
               >
-                {cat.name}
+                {cat.parent?.name ? `${cat.parent.name} · ${cat.name}` : cat.name}
               </button>
             ))}
           </div>
@@ -225,7 +248,11 @@ export function ProductListPage({ setNotice, setRoute }) {
           categories={categories}
           sort={sort}
           onQueryChange={setQuery}
-          onFiltersChange={setFilters}
+          onFilterFieldChange={setFilters}
+          onFiltersChange={(nextFilters) => {
+            setFilters(nextFilters)
+            loadProducts(nextFilters)
+          }}
           onSortChange={setSort}
           onReset={resetFilters}
           onSubmit={(event) => { event.preventDefault(); loadProducts() }}
@@ -252,6 +279,12 @@ export function ProductListPage({ setNotice, setRoute }) {
             />
           ))}
         </div>
+        {!isLoading && products.length > 0 && Math.ceil(products.length / 16) < totalPages && (
+          <button type="button" className="catalog-load-more" onClick={loadMoreProducts}>
+            Xem thêm sản phẩm
+          </button>
+        )}
+        {isLoading && products.length > 0 && <p className="catalog-loading-more" role="status">Đang tải thêm sản phẩm...</p>}
       </div>
 
       {selectedProduct && (
@@ -269,6 +302,7 @@ export function ProductListPage({ setNotice, setRoute }) {
         />
       )}
     </section>
+    </div>
   )
 }
 
@@ -291,4 +325,9 @@ function totalStock(products) {
   return products.reduce((sum, product) => (
     sum + Number(product.totalStock || product.variants?.reduce((inner, variant) => inner + Number(variant.stockQty || 0), 0) || 0)
   ), 0)
+}
+
+function getLeafCategories(categories) {
+  const parentIds = new Set(categories.map((category) => category.parent?.id).filter(Boolean))
+  return categories.filter((category) => category.parent?.id || !parentIds.has(category.id))
 }
