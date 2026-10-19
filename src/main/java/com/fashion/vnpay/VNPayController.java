@@ -5,6 +5,7 @@ import com.fashion.order.repository.OrderRepository;
 import com.fashion.payment.service.PaymentService;
 import com.fashion.security.UserPrincipal;
 import jakarta.servlet.http.HttpServletRequest;
+import java.net.URI;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,13 @@ public class VNPayController {
     @Autowired
     private PaymentService paymentService;
 
-    @Value("${vnpay.frontend-return-url:http://localhost:5173/orders}")
+    @Value("${vnpay.public-base-url:}")
+    private String publicBaseUrl;
+
+    @Value("${vnpay.return-url:}")
+    private String configuredReturnUrl;
+
+    @Value("${vnpay.frontend-return-url:}")
     private String frontendReturnUrl;
 
     @PostMapping("/orders/{orderId}")
@@ -48,7 +55,9 @@ public class VNPayController {
             throw new IllegalArgumentException("Đơn hàng không ở trạng thái chờ thanh toán");
         }
 
-        String returnUrl = VNPayConfig.vnp_Returnurl;
+        String returnUrl = configuredReturnUrl == null || configuredReturnUrl.isBlank()
+                ? publicBaseUrl(request) + "/api/vnpay/return"
+                : configuredReturnUrl.trim();
         String transactionReference = orderId + "_" + Instant.now().toEpochMilli();
         String url = vnPayService.createOrder(order.getFinalAmount(), "Thanh toan don hang " + orderId,
             transactionReference, returnUrl, VNPayConfig.getIpAddress(request));
@@ -78,9 +87,50 @@ public class VNPayController {
             }
         }
 
-        String result = frontendReturnUrl + "?payment=" + (paid ? "success" : "failed")
+        String destination = frontendReturnUrl == null || frontendReturnUrl.isBlank()
+                ? publicBaseUrl(request) + "/#orders"
+                : frontendReturnUrl.trim();
+        String result = destination + "?payment=" + (paid ? "success" : "failed")
                 + "&orderId=" + extractOrderId(txnRef);
         return ResponseEntity.status(302).header("Location", result).build();
+    }
+
+    private String publicBaseUrl(HttpServletRequest request) {
+        if (publicBaseUrl != null && !publicBaseUrl.isBlank()) {
+            String configured = publicBaseUrl.trim().replaceAll("/+$", "");
+            URI uri = URI.create(configured);
+            if (!("https".equalsIgnoreCase(uri.getScheme()) || "http".equalsIgnoreCase(uri.getScheme()))
+                    || uri.getHost() == null || uri.getRawQuery() != null || uri.getRawFragment() != null) {
+                throw new IllegalStateException("VNPAY_PUBLIC_BASE_URL must be an HTTP(S) origin.");
+            }
+            return configured;
+        }
+
+        String host = request.getHeader("X-Forwarded-Host");
+        if (host == null || host.isBlank()) {
+            host = request.getHeader("Host");
+        }
+        if (host == null || host.isBlank()) {
+            throw new IllegalStateException("Public payment URL is missing. Configure VNPAY_PUBLIC_BASE_URL.");
+        }
+        host = host.split(",", 2)[0].trim();
+
+        boolean localHost = host.matches("(?i)(localhost|127\\.0\\.0\\.1)(:\\d{1,5})?");
+        boolean cloudflareQuickTunnel = host.matches("(?i)[a-z0-9-]+\\.trycloudflare\\.com");
+        if (!localHost && !cloudflareQuickTunnel) {
+            throw new IllegalStateException(
+                    "Configure VNPAY_PUBLIC_BASE_URL for this public host before starting a payment.");
+        }
+
+        String protocol = request.getHeader("X-Forwarded-Proto");
+        if (protocol == null || protocol.isBlank()) {
+            protocol = cloudflareQuickTunnel ? "https" : request.getScheme();
+        }
+        protocol = protocol.split(",", 2)[0].trim().toLowerCase(java.util.Locale.ROOT);
+        if (!"https".equals(protocol) && !"http".equals(protocol)) {
+            throw new IllegalStateException("The forwarded payment URL protocol is invalid.");
+        }
+        return protocol + "://" + host;
     }
 
     private String extractOrderId(String transactionReference) {

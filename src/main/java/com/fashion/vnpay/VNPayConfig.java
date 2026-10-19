@@ -25,11 +25,7 @@ public class VNPayConfig {
 
     @Value("${vnpay.return-url}")
     public void setVnpReturnurl(String value) {
-                if (value == null || value.isBlank() || value.contains("<") || value.contains(">")) {
-                        vnp_Returnurl = "http://localhost:8081/api/vnpay/return";
-                        return;
-                }
-                vnp_Returnurl = value;
+        vnp_Returnurl = value == null ? "" : value.trim();
     }
 
     @Value("${vnpay.tmn-code}")

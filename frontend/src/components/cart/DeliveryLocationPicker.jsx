@@ -50,6 +50,7 @@ export function DeliveryLocationPicker({ latitude, longitude, address, onChange 
   const [draft, setDraft] = useState(null)
   const [resolving, setResolving] = useState(false)
   const [locating, setLocating] = useState(false)
+  const [locationAccuracy, setLocationAccuracy] = useState(null)
   const mounted = useRef(false)
   const timer = useRef(null)
   const revision = useRef(0)
@@ -69,21 +70,46 @@ export function DeliveryLocationPicker({ latitude, longitude, address, onChange 
 
   function locate() {
     if (!navigator.geolocation) { setError('Trình duyệt chưa hỗ trợ định vị. Bạn có thể tìm địa chỉ bên dưới.'); return }
+    if (!window.isSecureContext) {
+      setError('Trình duyệt chỉ cho phép định vị trên HTTPS hoặc localhost. Hãy mở trang bằng HTTPS hoặc nhập địa chỉ để tìm kiếm.')
+      return
+    }
     setLocating(true)
     setError('')
     navigator.geolocation.getCurrentPosition(({ coords }) => {
       if (!mounted.current) return
+      revision.current++
+      clearTimeout(timer.current)
+      selectedTarget.current = null
+      const location = {
+        latitude: coords.latitude,
+        longitude: coords.longitude,
+      }
+      setLocationAccuracy(coords.accuracy)
+      setDraft({
+        ...location,
+        displayName: `Vị trí thiết bị (độ chính xác khoảng ${Math.round(coords.accuracy)} m)`,
+      })
+      setResolving(false)
+      setError('')
+      center.current = [coords.latitude, coords.longitude]
       setTarget({ latitude: coords.latitude, longitude: coords.longitude })
       setLocating(false)
-    }, () => {
+    }, (positionError) => {
       if (!mounted.current) return
-      setError('Chưa lấy được vị trí. Hãy cho phép truy cập vị trí hoặc nhập địa chỉ để tìm kiếm.')
+      const messages = {
+        1: 'Quyền truy cập vị trí đang bị chặn. Hãy cho phép Location cho trang web trong biểu tượng cài đặt cạnh thanh địa chỉ, rồi bấm “Vị trí của tôi” lần nữa.',
+        2: 'Thiết bị chưa xác định được vị trí. Hãy bật dịch vụ vị trí/GPS hoặc tìm địa chỉ trên bản đồ.',
+        3: 'Lấy vị trí quá thời gian chờ. Hãy bật GPS, thử lại hoặc tìm địa chỉ trên bản đồ.',
+      }
+      setError(messages[positionError.code] || 'Chưa lấy được vị trí. Hãy cho phép truy cập vị trí hoặc nhập địa chỉ để tìm kiếm.')
       setLocating(false)
-    }, { timeout: 10000, maximumAge: 60000, enableHighAccuracy: true })
+    }, { timeout: 30000, maximumAge: 0, enableHighAccuracy: true })
   }
 
   function moving() {
     if (selectedTarget.current) return
+    setLocationAccuracy(null)
     revision.current++
     clearTimeout(timer.current)
     setDraft(null)
@@ -111,13 +137,12 @@ export function DeliveryLocationPicker({ latitude, longitude, address, onChange 
         if (mounted.current && version === revision.current) setDraft({ ...result, latitude: lat, longitude: lng })
       } catch (err) {
         if (mounted.current && version === revision.current) {
-          const fallbackAddress = address?.trim()
-          if (fallbackAddress) {
-            setDraft({ displayName: fallbackAddress, latitude: lat, longitude: lng })
-            setError('Không lấy được tên địa chỉ tự động. Tọa độ ghim vẫn được giữ, bạn có thể xác nhận địa chỉ đã nhập.')
-          } else {
-            setError(`${err.message} Hãy nhập địa chỉ giao hàng rồi thử lại.`)
-          }
+          setDraft({
+            displayName: `Vị trí đã chọn (${lat.toFixed(6)}, ${lng.toFixed(6)})`,
+            latitude: lat,
+            longitude: lng,
+          })
+          setError(`Không lấy được tên địa chỉ tự động: ${err.message} Tọa độ ghim vẫn được giữ; hãy nhập địa chỉ giao hàng nếu cần rồi xác nhận.`)
         }
       } finally {
         if (mounted.current && version === revision.current) setResolving(false)
@@ -167,6 +192,7 @@ export function DeliveryLocationPicker({ latitude, longitude, address, onChange 
       {results.map((result, index) => <li key={index}>
         <button type="button" onClick={() => {
           selectedTarget.current = result
+          setLocationAccuracy(null)
           setDraft(result)
           setResolving(false)
           setTarget(result)
@@ -198,6 +224,10 @@ export function DeliveryLocationPicker({ latitude, longitude, address, onChange 
       <span className="delivery-address-icon"><MapIcon name={confirmed ? 'check' : 'pin'} /></span>
       <div className="delivery-address-copy"><span className="delivery-address-eyebrow">{confirmed ? 'SẴN SÀNG NHẬN HÀNG' : 'ĐỊA CHỈ NHẬN HÀNG'}</span>
         {resolving ? <p>Đang xác định địa chỉ<span className="delivery-loading-dots">...</span></p> : <p>{draft?.displayName || address || 'Bạn muốn nhận hàng ở đâu?'}</p>}
+        {draft && <span className="delivery-address-help">
+          Tọa độ ghim: {draft.latitude.toFixed(6)}, {draft.longitude.toFixed(6)}
+          {locationAccuracy != null && ` · GPS sai số khoảng ${Math.round(locationAccuracy)} m`}
+        </span>}
         {!draft && !resolving && <span className="delivery-address-help">Tìm một địa điểm hoặc chọn vị trí ngay dưới ghim.</span>}
       </div>
       <button className="delivery-confirm" type="button" disabled={!draft || resolving || confirmed} onClick={() => {

@@ -1,5 +1,6 @@
 package com.fashion.product.repository;
 
+import com.fashion.admin.dto.InventoryProductDto;
 import com.fashion.product.entity.Product;
 import java.math.BigDecimal;
 import java.util.List;
@@ -14,9 +15,47 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
+    @Query(
+            value = """
+                    select new com.fashion.admin.dto.InventoryProductDto(
+                        p.id,
+                        p.name,
+                        p.slug,
+                        b.name,
+                        c.name,
+                        coalesce(sum(v.stockQty), 0L)
+                    )
+                    from Product p
+                    join p.brand b
+                    join p.category c
+                    left join p.variants v
+                    group by p.id, p.name, p.slug, b.name, c.name
+                    order by p.id
+                    """,
+            countQuery = "select count(p) from Product p"
+    )
+    Page<InventoryProductDto> findInventorySummaries(Pageable pageable);
+
     @Override
     @EntityGraph(attributePaths = {"brand", "category", "variants"})
     List<Product> findAll();
+
+    @EntityGraph(attributePaths = {"brand", "category", "variants"})
+    @Query("""
+            select distinct p
+            from Product p
+            where upper(p.status) = 'ACTIVE'
+              and exists (
+                  select v.id
+                  from ProductVariant v
+                  where v.product = p and v.stockQty > 0
+              )
+            """)
+    List<Product> findActiveProductsInStock();
+
+    @Override
+    @EntityGraph(attributePaths = {"brand", "category"})
+    Page<Product> findAll(Pageable pageable);
 
     @Override
     @EntityGraph(attributePaths = {"brand", "category", "variants"})
@@ -31,7 +70,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @EntityGraph(attributePaths = {"brand", "category", "variants"})
     List<Product> findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(String name, String description);
 
-    @EntityGraph(attributePaths = {"brand", "category", "variants"})
+    @EntityGraph(attributePaths = {"brand", "category"})
     @Query(
             value = """
                     select distinct p

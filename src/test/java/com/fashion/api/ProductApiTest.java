@@ -5,7 +5,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fashion.product.controller.ProductController;
+import com.fashion.product.repository.ProductImageRepository;
 import com.fashion.product.service.ProductService;
+import com.fashion.review.repository.ReviewRepository;
 import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,12 +21,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 class ProductApiTest {
 
     @Mock ProductService productService;
-    @Mock com.fashion.review.repository.ReviewRepository reviewRepository;
+    @Mock ProductImageRepository productImageRepository;
+    @Mock ReviewRepository reviewRepository;
     private MockMvc mockMvc;
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(new ProductController(productService, reviewRepository)).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(
+                new ProductController(productService, productImageRepository, reviewRepository))
+                .build();
     }
 
     @Test

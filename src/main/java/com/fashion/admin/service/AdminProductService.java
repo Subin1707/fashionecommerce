@@ -4,6 +4,7 @@ import com.fashion.admin.dto.AdminProductDto;
 import com.fashion.admin.dto.AdminProductVariantDto;
 import com.fashion.admin.dto.CreateProductRequest;
 import com.fashion.admin.dto.CreateVariantRequest;
+import com.fashion.admin.dto.InventoryProductDto;
 import com.fashion.admin.dto.ProductImageDto;
 import com.fashion.admin.dto.ProductSizeChartDto;
 import com.fashion.admin.dto.UpdateProductRequest;
@@ -24,6 +25,7 @@ import com.fashion.search.service.ProductSearchService;
 import jakarta.persistence.EntityManager;
 import java.util.List;
 import java.text.Normalizer;
+import java.util.Map;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -46,7 +48,33 @@ public class AdminProductService {
 
     public Page<AdminProductDto> getAllProducts(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        return productRepository.findAll(pageable).map(this::convertToAdminDto);
+        Page<Product> productPage = productRepository.findAll(pageable);
+        List<Product> products = productPage.getContent();
+        if (products.isEmpty()) {
+            return productPage.map(this::convertToAdminDto);
+        }
+
+        Map<Long, List<ProductVariant>> variantsByProduct = productVariantRepository.findByProductIn(products)
+                .stream()
+                .collect(Collectors.groupingBy(variant -> variant.getProduct().getId()));
+        Map<Long, List<ProductImage>> imagesByProduct = productImageRepository.findByProductIn(products)
+                .stream()
+                .collect(Collectors.groupingBy(image -> image.getProduct().getId()));
+        Map<Long, List<ProductSizeChart>> sizeChartsByProduct =
+                productSizeChartRepository.findByProductInOrderByIdAsc(products)
+                        .stream()
+                        .collect(Collectors.groupingBy(chart -> chart.getProduct().getId()));
+
+        return productPage.map(product -> convertToAdminDto(
+                product,
+                variantsByProduct.getOrDefault(product.getId(), List.of()),
+                imagesByProduct.getOrDefault(product.getId(), List.of()),
+                sizeChartsByProduct.getOrDefault(product.getId(), List.of())));
+    }
+
+    public Page<InventoryProductDto> getInventoryProducts(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return productRepository.findInventorySummaries(pageable);
     }
 
     public AdminProductDto getProductById(Long productId) {
@@ -294,12 +322,21 @@ public class AdminProductService {
 
     private AdminProductDto convertToAdminDto(Product product) {
         List<ProductVariant> variants = productVariantRepository.findByProduct(product);
+        return convertToAdminDto(
+                product,
+                variants,
+                productImageRepository.findByProduct(product),
+                productSizeChartRepository.findByProductOrderByIdAsc(product));
+    }
+
+    private AdminProductDto convertToAdminDto(
+            Product product,
+            List<ProductVariant> variants,
+            List<ProductImage> images,
+            List<ProductSizeChart> sizeCharts) {
         Long totalStock = variants.stream()
                 .mapToLong(v -> v.getStockQty() != null ? v.getStockQty() : 0L)
                 .sum();
-
-        List<ProductImage> images = productImageRepository.findByProduct(product);
-        List<ProductSizeChart> sizeCharts = productSizeChartRepository.findByProductOrderByIdAsc(product);
 
         return AdminProductDto.builder()
                 .id(product.getId())

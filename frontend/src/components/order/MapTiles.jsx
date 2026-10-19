@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { TileLayer } from 'react-leaflet'
 
 const cartoKey = import.meta.env.VITE_CARTO_API_KEY?.trim()
@@ -21,22 +21,35 @@ export function MapTiles() {
   const [failed, setFailed] = useState(false)
   const [sourceIndex, setSourceIndex] = useState(0)
   const loaded = useRef(false)
+  const switchingSource = useRef(false)
   const fallbackTimer = useRef(null)
   const source = tileSources[sourceIndex]
 
+  const switchSource = useCallback(() => {
+    if (switchingSource.current) return
+    switchingSource.current = true
+    if (sourceIndex < tileSources.length - 1) {
+      setSourceIndex(sourceIndex + 1)
+    } else {
+      setFailed(true)
+    }
+  }, [sourceIndex])
+
   useEffect(() => {
     loaded.current = false
+    switchingSource.current = false
     clearTimeout(fallbackTimer.current)
     fallbackTimer.current = setTimeout(() => {
-      if (!loaded.current && sourceIndex < tileSources.length - 1) setSourceIndex((value) => value + 1)
-    }, 3500)
+      if (!loaded.current) switchSource()
+    }, 8000)
     return () => clearTimeout(fallbackTimer.current)
-  }, [sourceIndex])
+  }, [sourceIndex, switchSource])
 
   function retry() {
     setFailed(false)
     loaded.current = false
-    setSourceIndex((value) => value < tileSources.length - 1 ? value + 1 : 0)
+    switchingSource.current = false
+    setSourceIndex(sourceIndex < tileSources.length - 1 ? sourceIndex + 1 : 0)
   }
 
   return <>
@@ -45,10 +58,7 @@ export function MapTiles() {
       url={source.url} maxZoom={19}
       eventHandlers={{
         tileload: () => { loaded.current = true },
-        tileerror: () => {
-          if (sourceIndex < tileSources.length - 1) retry()
-          else setFailed(true)
-        },
+        tileerror: switchSource,
       }} />
     {failed && <div className="map-network-notice" role="status">
       <span>Một phần bản đồ chưa tải được. Kiểm tra kết nối và thử lại.</span>

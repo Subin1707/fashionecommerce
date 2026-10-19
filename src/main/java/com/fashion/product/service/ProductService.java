@@ -79,10 +79,8 @@ public class ProductService {
         BigDecimal sourcePrice = source.getDisplayPrice();
         int resultLimit = Math.max(1, Math.min(limit, 10));
 
-        return productRepository.findAll().stream()
+        return productRepository.findActiveProductsInStock().stream()
                 .filter(product -> !product.getId().equals(source.getId()))
-                .filter(product -> "ACTIVE".equalsIgnoreCase(product.getStatus()))
-                .filter(product -> product.getAvailableQuantity() > 0)
                 .map(product -> new SimilarProduct(product, similarityScore(source, product, sourcePrice)))
                 .sorted(Comparator.comparingInt(SimilarProduct::score).reversed()
                         .thenComparing(item -> item.product().getId()))

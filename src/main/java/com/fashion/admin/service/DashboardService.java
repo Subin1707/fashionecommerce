@@ -6,6 +6,7 @@ import com.fashion.product.repository.ProductRepository;
 import com.fashion.product.repository.ProductVariantRepository;
 import com.fashion.user.repository.UserRepository;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
@@ -23,8 +24,7 @@ public class DashboardService {
         LocalDateTime fromDate = dateFrom.orElseGet(() -> LocalDateTime.now().minusMonths(1));
         LocalDateTime toDate = dateTo.orElseGet(() -> LocalDateTime.now().with(LocalTime.MAX));
 
-        BigDecimal totalRevenue = orderRepository.getTotalRevenueBetweenDates(fromDate, toDate)
-                .orElse(BigDecimal.ZERO);
+        BigDecimal totalRevenue = toMoney(orderRepository.getTotalRevenueBetweenDates(fromDate, toDate));
 
         Long totalOrders = orderRepository.count();
         Long totalProducts = productRepository.count();
@@ -35,13 +35,12 @@ public class DashboardService {
         LocalDateTime todayStart = LocalDateTime.now().with(LocalTime.MIN);
         LocalDateTime todayEnd = LocalDateTime.now().with(LocalTime.MAX);
 
-        BigDecimal revenueToday = orderRepository.getTotalRevenueBetweenDates(todayStart, todayEnd)
-                .orElse(BigDecimal.ZERO);
+        BigDecimal revenueToday = toMoney(orderRepository.getTotalRevenueBetweenDates(todayStart, todayEnd));
 
         Long ordersToday = orderRepository.countByCreatedAtBetween(todayStart, todayEnd);
 
         BigDecimal averageOrderValue = totalOrders > 0
-                ? totalRevenue.divide(BigDecimal.valueOf(totalOrders))
+                ? totalRevenue.divide(BigDecimal.valueOf(totalOrders), 2, RoundingMode.HALF_UP)
                 : BigDecimal.ZERO;
 
         return DashboardDto.builder()
@@ -56,6 +55,10 @@ public class DashboardService {
                 .dateFrom(fromDate.toLocalDate())
                 .dateTo(toDate.toLocalDate())
                 .build();
+    }
+
+    private BigDecimal toMoney(Optional<Double> amount) {
+        return amount.map(BigDecimal::valueOf).orElse(BigDecimal.ZERO);
     }
 
     public DashboardService(final OrderRepository orderRepository, final ProductRepository productRepository, final ProductVariantRepository productVariantRepository, final UserRepository userRepository) {

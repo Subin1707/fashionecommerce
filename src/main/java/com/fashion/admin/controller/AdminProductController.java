@@ -4,6 +4,7 @@ import com.fashion.admin.dto.AdminProductDto;
 import com.fashion.admin.dto.AdminProductVariantDto;
 import com.fashion.admin.dto.CreateProductRequest;
 import com.fashion.admin.dto.CreateVariantRequest;
+import com.fashion.admin.dto.InventoryProductDto;
 import com.fashion.admin.dto.UpdateProductRequest;
 import com.fashion.admin.dto.UpdateVariantRequest;
 import com.fashion.admin.service.AdminProductService;
@@ -34,6 +35,13 @@ public class AdminProductController {
             @RequestParam(defaultValue = "10") int size) {
         Page<AdminProductDto> products = adminProductService.getAllProducts(page, size);
         return ResponseEntity.ok(products);
+    }
+
+    @GetMapping("/inventory")
+    public ResponseEntity<Page<InventoryProductDto>> getInventoryProducts(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "100") int size) {
+        return ResponseEntity.ok(adminProductService.getInventoryProducts(page, size));
     }
 
     @GetMapping("/{productId}")

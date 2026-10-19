@@ -62,6 +62,7 @@ export function AppRoutes({ route, setRoute, setNotice }) {
       page = (
         <HomePage
           {...props}
+          route={currentRoute}
         />
       )
       break
@@ -248,7 +249,6 @@ export function AppRoutes({ route, setRoute, setNotice }) {
       page = (
         <AdminRoutes
           route={route}
-          setRoute={setRoute}
           setNotice={setNotice}
         />
       )
@@ -259,7 +259,6 @@ export function AppRoutes({ route, setRoute, setNotice }) {
 
 function AdminRoutes({
   route,
-  setRoute,
   setNotice,
 }) {
   let page = (
@@ -358,10 +357,7 @@ function AdminRoutes({
 
   return (
     <AdminRoute>
-      <AdminLayout
-        route={route}
-        setRoute={setRoute}
-      >
+      <AdminLayout>
         {page}
       </AdminLayout>
     </AdminRoute>

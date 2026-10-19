@@ -27,6 +27,7 @@ section.shipment-panel {
 .shipment-facts dd { margin: 0; color: #3f352d; font-size: 14px; line-height: 1.6; }
 .shipment-sync { color: #8d8177; font-size: 12px; margin: 14px 0 22px; }
 .shipment-error { padding: 12px; color: #963d28; background: #fff0e9; border-radius: 8px; }
+.shipment-map-message { padding: 14px; color: #76513e; background: #f8f4ef; border: 1px solid #ede3d9; border-radius: 10px; line-height: 1.6; }
 .shipment-history-heading { display: flex; gap: 12px; flex-wrap: wrap; align-items: baseline; margin-top: 26px; }
 .shipment-history-heading small { color: #8d8177; font-size: 11px; font-weight: 400; }
 .shipment-panel .shipment-timeline { list-style: none; padding: 0; margin: 20px 0 0; }

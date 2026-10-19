@@ -8,6 +8,10 @@ export async function getAdminProducts({ page = 0, size = 100 } = {}) {
   return pageContent(await apiRequest(`/api/admin/products?page=${page}&size=${size}`))
 }
 
+export async function getAdminInventoryProducts({ page = 0, size = 100 } = {}) {
+  return pageContent(await apiRequest(`/api/admin/products/inventory?page=${page}&size=${size}`))
+}
+
 export function createAdminProduct(payload) {
   return apiRequest('/api/admin/products', {
     method: 'POST',
@@ -80,4 +84,3 @@ export function deleteAdminProductVariant(variantId) {
     method: 'DELETE',
   })
 }
-

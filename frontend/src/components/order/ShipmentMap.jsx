@@ -19,8 +19,14 @@ function FitRoute({ positions }) {
 
 export function ShipmentMap({ shipment, route = [] }) {
   const positions = useMemo(() => route.map((point) => [point.latitude, point.longitude]), [route])
-  if ([shipment?.currentLat, shipment?.currentLng, shipment?.pickupLat, shipment?.pickupLng,
-    shipment?.deliveryLat, shipment?.deliveryLng].some((value) => value == null)) return null
+  const latitudes = [shipment?.currentLat, shipment?.pickupLat, shipment?.deliveryLat]
+  const longitudes = [shipment?.currentLng, shipment?.pickupLng, shipment?.deliveryLng]
+  if (latitudes.some((value) => value == null || !Number.isFinite(Number(value)) || Math.abs(Number(value)) > 90)
+    || longitudes.some((value) => value == null || !Number.isFinite(Number(value)) || Math.abs(Number(value)) > 180)) {
+    return <p className="shipment-map-message" role="status">
+      Chưa có đủ tọa độ để hiển thị bản đồ. Vui lòng kiểm tra địa chỉ giao hàng và cập nhật lại vận đơn.
+    </p>
+  }
   const pickup = [shipment.pickupLat, shipment.pickupLng]
   const current = [shipment.currentLat, shipment.currentLng]
   const destination = [shipment.deliveryLat, shipment.deliveryLng]

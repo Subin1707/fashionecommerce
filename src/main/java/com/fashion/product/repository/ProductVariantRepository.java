@@ -15,6 +15,7 @@ import java.util.Optional;
 @Repository
 public interface ProductVariantRepository extends JpaRepository<ProductVariant, Long> {
     List<ProductVariant> findByProduct(Product product);
+    List<ProductVariant> findByProductIn(List<Product> products);
     Optional<ProductVariant> findBySku(String sku);
     Optional<ProductVariant> findByProductAndColorIgnoreCaseAndSizeIgnoreCase(Product product, String color, String size);
     boolean existsByProductAndColorIgnoreCaseAndSizeIgnoreCase(Product product, String color, String size);

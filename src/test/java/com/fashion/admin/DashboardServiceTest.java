@@ -46,7 +46,7 @@ class DashboardServiceTest {
     void testGetDashboardWithDefaultDates() {
         when(orderRepository.getTotalRevenueBetweenDates(org.mockito.ArgumentMatchers.any(), 
                 org.mockito.ArgumentMatchers.any()))
-                .thenReturn(Optional.of(BigDecimal.valueOf(10000)));
+                .thenReturn(Optional.of(10000.0));
         when(orderRepository.count()).thenReturn(50L);
         when(productRepository.count()).thenReturn(100L);
         when(userRepository.countByRole_NameIgnoreCase("CUSTOMER")).thenReturn(500L);
@@ -68,8 +68,11 @@ class DashboardServiceTest {
         LocalDateTime from = LocalDateTime.now().minusDays(7);
         LocalDateTime to = LocalDateTime.now();
 
+        when(orderRepository.getTotalRevenueBetweenDates(org.mockito.ArgumentMatchers.any(),
+                org.mockito.ArgumentMatchers.any()))
+                .thenReturn(Optional.of(0.0));
         when(orderRepository.getTotalRevenueBetweenDates(from, to))
-                .thenReturn(Optional.of(BigDecimal.valueOf(5000)));
+                .thenReturn(Optional.of(5000.0));
         when(orderRepository.count()).thenReturn(25L);
         when(productRepository.count()).thenReturn(75L);
         when(userRepository.countByRole_NameIgnoreCase("CUSTOMER")).thenReturn(250L);
@@ -83,5 +86,23 @@ class DashboardServiceTest {
         assertNotNull(dashboard);
         assertEquals(25L, dashboard.getTotalOrders());
         assertEquals(75L, dashboard.getTotalProducts());
+    }
+
+    @Test
+    void testAverageOrderValueRoundsRepeatingDecimals() {
+        when(orderRepository.getTotalRevenueBetweenDates(org.mockito.ArgumentMatchers.any(),
+                org.mockito.ArgumentMatchers.any()))
+                .thenReturn(Optional.of(100.0));
+        when(orderRepository.count()).thenReturn(3L);
+        when(productRepository.count()).thenReturn(1L);
+        when(userRepository.countByRole_NameIgnoreCase("CUSTOMER")).thenReturn(1L);
+        when(productVariantRepository.sumStockQuantity()).thenReturn(1L);
+        when(orderRepository.countByCreatedAtBetween(org.mockito.ArgumentMatchers.any(),
+                org.mockito.ArgumentMatchers.any()))
+                .thenReturn(0L);
+
+        DashboardDto dashboard = dashboardService.getDashboard(Optional.empty(), Optional.empty());
+
+        assertEquals(new BigDecimal("33.33"), dashboard.getAverageOrderValue());
     }
 }

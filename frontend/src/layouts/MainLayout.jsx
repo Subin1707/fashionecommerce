@@ -1,6 +1,7 @@
 import { ADMIN_NAV, CUSTOMER_NAV, ROUTES } from '../utils/constants'
 import { useAuth } from '../hooks/useAuth'
 import { useCart } from '../hooks/useCart'
+import { FashionMark } from '../components/common/FashionMark'
 
 export function MainLayout({ route, setRoute, notice, children }) {
   const { auth, isAdmin, logout } = useAuth()
@@ -36,9 +37,7 @@ export function MainLayout({ route, setRoute, notice, children }) {
             className="guest-brand"
             onClick={() => setRoute(ROUTES.HOME)}
           >
-            <span className="guest-brand-logo">
-              F
-            </span>
+            <FashionMark className="guest-brand-logo" />
 
             <span className="guest-brand-info">
               <strong>FASHION</strong>
@@ -51,6 +50,7 @@ export function MainLayout({ route, setRoute, notice, children }) {
             <button
               type="button"
               className={route === ROUTES.HOME ? 'active' : ''}
+              aria-current={route === ROUTES.HOME ? 'page' : undefined}
               onClick={() => setRoute(ROUTES.HOME)}
             >
               Trang chủ
@@ -59,6 +59,7 @@ export function MainLayout({ route, setRoute, notice, children }) {
             <button
               type="button"
               className={route === ROUTES.PRODUCTS ? 'active' : ''}
+              aria-current={route === ROUTES.PRODUCTS ? 'page' : undefined}
               onClick={() => setRoute(ROUTES.PRODUCTS)}
             >
               Sản phẩm
@@ -66,14 +67,18 @@ export function MainLayout({ route, setRoute, notice, children }) {
 
             <button
               type="button"
-              onClick={() => setRoute(ROUTES.PRODUCTS)}
+              className={route === `${ROUTES.HOME}?section=collections` ? 'active' : ''}
+              aria-current={route === `${ROUTES.HOME}?section=collections` ? 'location' : undefined}
+              onClick={() => setRoute(`${ROUTES.HOME}?section=collections`)}
             >
               Bộ sưu tập
             </button>
 
             <button
               type="button"
-              onClick={() => setRoute(ROUTES.HOME)}
+              className={route === `${ROUTES.HOME}?section=brands` ? 'active' : ''}
+              aria-current={route === `${ROUTES.HOME}?section=brands` ? 'location' : undefined}
+              onClick={() => setRoute(`${ROUTES.HOME}?section=brands`)}
             >
               Thương hiệu
             </button>
@@ -110,12 +115,68 @@ export function MainLayout({ route, setRoute, notice, children }) {
         </section>
 
         <footer className="guest-footer">
-          <div>
-            <strong>FASHION</strong>
-            <span>Thời trang dành cho phong cách của bạn.</span>
+          <div className="guest-footer-main">
+            <section className="guest-footer-brand" aria-label="Giới thiệu FASHION">
+              <div className="guest-footer-brand-lockup">
+                <FashionMark className="guest-footer-mark" />
+                <div>
+                  <strong>FASHION</strong>
+                  <small>PREMIUM STORE</small>
+                </div>
+              </div>
+              <p>
+                Thời trang dành cho phong cách của bạn. Khám phá những lựa chọn
+                giúp bạn tự tin thể hiện chất riêng mỗi ngày.
+              </p>
+              <div className="guest-footer-tags" aria-label="Phong cách">
+                <span>Tinh tế</span>
+                <span>Hiện đại</span>
+                <span>Dễ phối</span>
+              </div>
+            </section>
+
+            <nav className="guest-footer-links" aria-label="Khám phá cửa hàng">
+              <h2>Khám phá</h2>
+              <button type="button" onClick={() => setRoute(ROUTES.HOME)}>
+                Trang chủ
+              </button>
+              <button type="button" onClick={() => setRoute(ROUTES.PRODUCTS)}>
+                Tất cả sản phẩm
+              </button>
+              <button type="button" onClick={() => setRoute(`${ROUTES.HOME}?section=collections`)}>
+                Bộ sưu tập
+              </button>
+            </nav>
+
+            <nav className="guest-footer-links" aria-label="Tài khoản">
+              <h2>Tài khoản</h2>
+              <button type="button" onClick={() => setRoute(ROUTES.LOGIN)}>
+                Đăng nhập
+              </button>
+              <button type="button" onClick={() => setRoute(ROUTES.REGISTER)}>
+                Tạo tài khoản
+              </button>
+              <p className="guest-footer-note">
+                Đăng nhập để tiếp tục quản lý trải nghiệm mua sắm của bạn.
+              </p>
+            </nav>
+
+            <section className="guest-footer-cta">
+              <span className="guest-footer-cta-label">BẮT ĐẦU KHÁM PHÁ</span>
+              <h2>Tìm món đồ dành riêng cho bạn</h2>
+              <p>Dạo quanh cửa hàng và tìm cảm hứng cho phong cách mới.</p>
+              <button type="button" onClick={() => setRoute(ROUTES.PRODUCTS)}>
+                Khám phá sản phẩm <span aria-hidden="true">→</span>
+              </button>
+            </section>
           </div>
 
-          <p>© 2026 Fashion Store</p>
+          <div className="guest-footer-bottom">
+            <p>© {new Date().getFullYear()} Fashion Store. Bảo lưu mọi quyền.</p>
+            <button type="button" onClick={() => setRoute(ROUTES.HOME)}>
+              Về đầu trang <span aria-hidden="true">↑</span>
+            </button>
+          </div>
         </footer>
       </main>
     )
@@ -128,10 +189,10 @@ export function MainLayout({ route, setRoute, notice, children }) {
   const navItems = isAdmin ? ADMIN_NAV : CUSTOMER_NAV
 
   return (
-    <main className="app-shell">
+    <main className={`app-shell ${isAdmin ? 'admin-shell' : 'customer-shell'}`}>
       <aside className="side-nav">
         <div className="brand-mark">
-          <span>F</span>
+          <FashionMark className="brand-mark-icon" />
 
           <div>
             <strong>Thời trang cao cấp</strong>
@@ -139,11 +200,12 @@ export function MainLayout({ route, setRoute, notice, children }) {
           </div>
         </div>
 
-        <nav>
+        <nav aria-label={isAdmin ? 'Điều hướng quản trị' : 'Điều hướng khách hàng'}>
           {navItems.map(([label, value]) => (
             <button
               key={value}
               className={route === value ? 'active' : ''}
+              aria-current={route === value ? 'page' : undefined}
               onClick={() => setRoute(value)}
             >
               <span>{label}</span>

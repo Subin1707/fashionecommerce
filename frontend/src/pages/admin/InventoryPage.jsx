@@ -32,7 +32,7 @@ export function InventoryPage({ setNotice }) {
   const loadProducts = useCallback(async function loadProducts() {
     setLoadingProducts(true)
     try {
-      const rows = await adminService.getAdminProducts({ size: 100 })
+      const rows = await adminService.getAdminInventoryProducts({ size: 100 })
       setProducts(rows)
       setSelectedProduct((current) => {
         if (!current) return rows[0] || null

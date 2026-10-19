@@ -1,16 +1,23 @@
 package com.fashion.search.service;
 
 import com.fashion.product.entity.Product;
+import com.fashion.product.entity.ProductVariant;
+import com.fashion.product.repository.ProductImageRepository;
 import com.fashion.product.repository.ProductRepository;
+import com.fashion.product.repository.ProductVariantRepository;
 import com.fashion.review.repository.ReviewRepository;
 import com.fashion.search.document.ProductDocument;
 import com.fashion.search.dto.ProductSearchRequest;
 import com.fashion.search.dto.ProductSearchResponse;
 import com.fashion.search.repository.ProductSearchRepository;
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.Hibernate;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -24,6 +31,8 @@ public class ProductSearchService {
 
     private final ProductSearchRepository productSearchRepository;
     private final ProductRepository productRepository;
+    private final ProductImageRepository productImageRepository;
+    private final ProductVariantRepository productVariantRepository;
     private final ReviewRepository reviewRepository;
 
     @Transactional
@@ -31,9 +40,7 @@ public class ProductSearchService {
         log.info("Starting sync of products to Elasticsearch...");
         List<Product> allProducts = productRepository.findAll();
         
-        List<ProductDocument> documents = allProducts.stream()
-                .map(this::convertToDocument)
-                .collect(Collectors.toList());
+        List<ProductDocument> documents = convertToDocuments(allProducts);
 
         try {
             productSearchRepository.saveAll(documents);
@@ -56,7 +63,9 @@ public class ProductSearchService {
                 request.getMinPrice(),
                 request.getMaxPrice(),
                 pageable);
-        return products.map(product -> convertToResponse(convertToDocument(product)));
+        Map<Long, ProductDocument> documents = convertToDocuments(products.getContent()).stream()
+                .collect(Collectors.toMap(ProductDocument::getId, document -> document));
+        return products.map(product -> convertToResponse(documents.get(product.getId())));
     }
 
     @Transactional(readOnly = true)
@@ -73,10 +82,12 @@ public class ProductSearchService {
                             safeRating(left.getAverageRating())))
                     .collect(Collectors.toList());
         }
+        Map<Long, ReviewRepository.ProductRatingSummary> ratingSummaries = loadRatingSummaries(
+                allTopRated.stream().map(ProductDocument::getId).toList());
         for (ProductDocument document : allTopRated) {
-            var summary = reviewRepository.summarize(document.getId());
-            document.setAverageRating(summary.getAverageRating());
-            document.setTotalReviews(summary.getTotalReviews().intValue());
+            ReviewRepository.ProductRatingSummary summary = ratingSummaries.get(document.getId());
+            document.setAverageRating(summary == null ? 0.0 : summary.getAverageRating());
+            document.setTotalReviews(summary == null ? 0 : summary.getTotalReviews().intValue());
         }
         allTopRated.sort((left, right) -> Double.compare(safeRating(right.getAverageRating()), safeRating(left.getAverageRating())));
         List<ProductDocument> topRated = allTopRated
@@ -118,47 +129,106 @@ public class ProductSearchService {
                 ? productRepository.findAll()
                 : productRepository.findByNameContainingIgnoreCaseOrDescriptionContainingIgnoreCase(keyword, keyword);
 
-        return products.stream()
+        List<Product> activeProducts = products.stream()
                 .filter(product -> product.getStatus() != null && "ACTIVE".equalsIgnoreCase(product.getStatus()))
-                .map(this::convertToDocument)
-                .collect(Collectors.toList());
+                .toList();
+        return convertToDocuments(activeProducts);
     }
 
     private List<ProductDocument> activeProductsFromDatabase() {
-        return productRepository.findAll().stream()
+        List<Product> activeProducts = productRepository.findAll().stream()
                 .filter(product -> product.getStatus() != null && "ACTIVE".equalsIgnoreCase(product.getStatus()))
-                .map(this::convertToDocument)
-                .collect(Collectors.toList());
+                .toList();
+        return convertToDocuments(activeProducts);
     }
 
     private double safeRating(Double rating) {
         return rating != null ? rating : 0.0;
     }
 
-    private ProductDocument convertToDocument(Product product) {
-        List<String> sizes = product.getVariants() != null
-                ? product.getVariants().stream()
+    private List<ProductDocument> convertToDocuments(List<Product> products) {
+        if (products.isEmpty()) {
+            return List.of();
+        }
+
+        List<Long> productIds = products.stream().map(Product::getId).toList();
+        Map<Long, String> primaryImageUrls = loadPrimaryImageUrls(productIds);
+        Map<Long, List<ProductVariant>> variantsByProduct = loadVariants(products);
+
+        Map<Long, ReviewRepository.ProductRatingSummary> ratingSummaries = loadRatingSummaries(productIds);
+
+        return products.stream()
+                .map(product -> convertToDocument(
+                        product,
+                        primaryImageUrls.get(product.getId()),
+                        ratingSummaries.get(product.getId()),
+                        variantsByProduct.getOrDefault(product.getId(), List.of())))
+                .collect(Collectors.toList());
+    }
+
+    private Map<Long, List<ProductVariant>> loadVariants(List<Product> products) {
+        Map<Long, List<ProductVariant>> variantsByProduct = new HashMap<>();
+        List<Product> productsWithoutLoadedVariants = new ArrayList<>();
+
+        for (Product product : products) {
+            if (Hibernate.isInitialized(product.getVariants())) {
+                variantsByProduct.put(product.getId(), product.getVariants());
+            } else {
+                productsWithoutLoadedVariants.add(product);
+            }
+        }
+
+        for (int start = 0; start < productsWithoutLoadedVariants.size(); start += 500) {
+            List<Product> batch = productsWithoutLoadedVariants.subList(
+                    start,
+                    Math.min(start + 500, productsWithoutLoadedVariants.size()));
+            productVariantRepository.findByProductIn(batch).forEach(variant ->
+                    variantsByProduct.computeIfAbsent(
+                            variant.getProduct().getId(),
+                            ignored -> new ArrayList<>())
+                            .add(variant));
+        }
+        return variantsByProduct;
+    }
+
+    private Map<Long, String> loadPrimaryImageUrls(List<Long> productIds) {
+        Map<Long, String> imageUrls = new HashMap<>();
+        for (int start = 0; start < productIds.size(); start += 500) {
+            List<Long> batch = productIds.subList(start, Math.min(start + 500, productIds.size()));
+            productImageRepository.findSummariesByProductIdIn(batch).forEach(image ->
+                    imageUrls.putIfAbsent(image.getProductId(), image.getImageUrl()));
+        }
+        return imageUrls;
+    }
+
+    private Map<Long, ReviewRepository.ProductRatingSummary> loadRatingSummaries(List<Long> productIds) {
+        Map<Long, ReviewRepository.ProductRatingSummary> summaries = new HashMap<>();
+        for (int start = 0; start < productIds.size(); start += 500) {
+            List<Long> batch = productIds.subList(start, Math.min(start + 500, productIds.size()));
+            reviewRepository.summarizeProducts(batch)
+                    .forEach(summary -> summaries.put(summary.getProductId(), summary));
+        }
+        return summaries;
+    }
+
+    private ProductDocument convertToDocument(
+            Product product,
+            String primaryImageUrl,
+            ReviewRepository.ProductRatingSummary ratingSummary,
+            List<ProductVariant> variants) {
+        List<String> sizes = variants != null
+                ? variants.stream()
                 .map(v -> v.getSize())
                 .distinct()
                 .collect(Collectors.toList())
                 : List.of();
         
-        List<String> colors = product.getVariants() != null
-                ? product.getVariants().stream()
+        List<String> colors = variants != null
+                ? variants.stream()
                 .map(v -> v.getColor())
                 .distinct()
                 .collect(Collectors.toList())
                 : List.of();
-
-        Double avgRating = 0.0;
-        Integer totalReviews = 0;
-        try {
-            var summary = reviewRepository.summarize(product.getId());
-            avgRating = summary.getAverageRating();
-            totalReviews = summary.getTotalReviews().intValue();
-        } catch (Exception e) {
-            log.warn("Could not fetch reviews for product {}: {}", product.getId(), e.getMessage());
-        }
 
         return ProductDocument.builder()
                 .id(product.getId())
@@ -173,12 +243,16 @@ public class ProductSearchService {
                 .status(product.getStatus())
                 .brandName(product.getBrandName())
                 .categoryName(product.getCategory() != null ? product.getCategory().getName() : "")
-                .primaryImageUrl(product.getPrimaryImageUrl())
+                .primaryImageUrl(primaryImageUrl)
                 .colors(colors)
                 .sizes(sizes)
-                .totalStock(product.getAvailableQuantity())
-                .averageRating(avgRating)
-                .totalReviews(totalReviews)
+                .totalStock(variants.stream()
+                        .map(ProductVariant::getStockQty)
+                        .filter(java.util.Objects::nonNull)
+                        .mapToInt(Integer::intValue)
+                        .sum())
+                .averageRating(ratingSummary == null ? 0.0 : ratingSummary.getAverageRating())
+                .totalReviews(ratingSummary == null ? 0 : ratingSummary.getTotalReviews().intValue())
                 .isFeatured(product.getIsFeatured())
                 .isNew(product.getIsNew())
                 .createdAt(product.getCreatedAt())
@@ -302,9 +376,16 @@ public class ProductSearchService {
     }
 
 
-    public ProductSearchService(final ProductSearchRepository productSearchRepository, final ProductRepository productRepository, final ReviewRepository reviewRepository) {
+    public ProductSearchService(
+            final ProductSearchRepository productSearchRepository,
+            final ProductRepository productRepository,
+            final ProductImageRepository productImageRepository,
+            final ProductVariantRepository productVariantRepository,
+            final ReviewRepository reviewRepository) {
         this.productSearchRepository = productSearchRepository;
         this.productRepository = productRepository;
+        this.productImageRepository = productImageRepository;
+        this.productVariantRepository = productVariantRepository;
         this.reviewRepository = reviewRepository;
     }
 }

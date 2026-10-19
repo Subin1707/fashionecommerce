@@ -8,10 +8,22 @@ export default defineConfig({
     host: '0.0.0.0',
     port: 5173,
     strictPort: true,
+    allowedHosts: ['.trycloudflare.com'],
     proxy: {
       '/api': {
         target: 'http://localhost:8081',
         changeOrigin: true,
+        configure: (proxy) => {
+          proxy.on('proxyReq', (proxyRequest, request) => {
+            proxyRequest.removeHeader('origin')
+            proxyRequest.setHeader('X-Forwarded-Host', request.headers.host || '')
+            proxyRequest.setHeader(
+              'X-Forwarded-Proto',
+              request.headers['x-forwarded-proto']
+                || (request.headers.host?.endsWith('.trycloudflare.com') ? 'https' : 'http'),
+            )
+          })
+        },
       },
     },
   },

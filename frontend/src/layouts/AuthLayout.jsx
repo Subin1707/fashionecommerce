@@ -1,4 +1,5 @@
 import { ROUTES } from '../utils/constants'
+import { FashionMark } from '../components/common/FashionMark'
 
 export function AuthLayout({ title, active, setRoute, children }) {
   return (
@@ -16,7 +17,10 @@ export function AuthLayout({ title, active, setRoute, children }) {
           decoding="async"
         />
         <div className="auth-showcase-header">
-          <div className="auth-brand"><span>◇</span> FASHION</div>
+          <div className="auth-brand">
+            <FashionMark className="auth-brand-mark" />
+            <span className="auth-brand-name">FASHION</span>
+          </div>
           <div className="auth-badge">Members club</div>
         </div>
 
@@ -44,6 +48,16 @@ export function AuthLayout({ title, active, setRoute, children }) {
 
       <div className="auth-card-wrap">
         <div className="auth-card">
+          {setRoute && (
+            <button
+              type="button"
+              className="auth-back-home"
+              onClick={() => setRoute(ROUTES.HOME)}
+            >
+              <span aria-hidden="true">←</span>
+              Quay lại trang chủ
+            </button>
+          )}
           <p className="auth-kicker">Chào mừng trở lại</p>
           <h1>{title}</h1>
           <p className="auth-subtitle">Nơi phong cách riêng của bạn bắt đầu.</p>

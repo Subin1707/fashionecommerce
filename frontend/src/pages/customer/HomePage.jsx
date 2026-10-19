@@ -1,7 +1,80 @@
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { FashionMark } from '../../components/common/FashionMark'
+import * as brandService from '../../services/brandService'
 import { ROUTES } from '../../utils/constants'
-import { ProductListPage } from './ProductListPage'
 
-export function HomePage({ setNotice, setRoute }) {
+const ProductListPage = lazy(() => import('./ProductListPage').then((module) => ({
+  default: module.ProductListPage,
+})))
+
+export function HomePage({ route, setNotice, setRoute }) {
+  const brandSectionRef = useRef(null)
+  const productsSectionRef = useRef(null)
+  const [loadBrands, setLoadBrands] = useState(false)
+  const [loadProducts, setLoadProducts] = useState(false)
+  const [brands, setBrands] = useState([])
+  const [brandsLoading, setBrandsLoading] = useState(true)
+
+  useEffect(() => {
+    const sections = [
+      [brandSectionRef.current, setLoadBrands],
+      [productsSectionRef.current, setLoadProducts],
+    ]
+    const observers = sections.map(([section, setShouldLoad]) => {
+      if (!section) return null
+      const observer = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) {
+          setShouldLoad(true)
+          observer.disconnect()
+        }
+      }, { rootMargin: '400px 0px' })
+      observer.observe(section)
+      return observer
+    })
+
+    return () => observers.forEach((observer) => observer?.disconnect())
+  }, [])
+
+  useEffect(() => {
+    if (!loadBrands) return undefined
+    let isCurrent = true
+
+    brandService.getBrands()
+      .then((rows) => {
+        if (isCurrent) {
+          setBrands(Array.isArray(rows) ? rows.filter((brand) => brand.isActive !== false) : [])
+        }
+      })
+      .catch((error) => {
+        if (isCurrent) {
+          setNotice(`Chưa tải được danh sách thương hiệu: ${error.message}`)
+        }
+      })
+      .finally(() => {
+        if (isCurrent) {
+          setBrandsLoading(false)
+        }
+      })
+
+    return () => {
+      isCurrent = false
+    }
+  }, [loadBrands, setNotice])
+
+  useEffect(() => {
+    const section = new URLSearchParams(route?.split('?')[1] || '').get('section')
+    if (!['collections', 'brands'].includes(section)) return undefined
+
+    const frame = window.requestAnimationFrame(() => {
+      document.getElementById(`fashion-${section}`)?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      })
+    })
+
+    return () => window.cancelAnimationFrame(frame)
+  }, [route])
+
   return (
     <div className="fashion-home">
       {/* HERO */}
@@ -115,7 +188,7 @@ export function HomePage({ setNotice, setRoute }) {
       </section>
 
       {/* COLLECTION */}
-      <section className="fashion-collection-section">
+      <section className="fashion-collection-section" id="fashion-collections">
         <div className="fashion-section-heading">
           <div>
             <p className="fashion-kicker">
@@ -206,8 +279,40 @@ export function HomePage({ setNotice, setRoute }) {
         </div>
       </section>
 
+      <section className="fashion-brand-section" id="fashion-brands" ref={brandSectionRef}>
+        <div className="fashion-section-heading">
+          <div>
+            <p className="fashion-kicker">DẤU ẤN RIÊNG</p>
+            <h2>Thương hiệu nổi bật</h2>
+            <p className="fashion-section-description">
+              Những thương hiệu đang có mặt tại cửa hàng.
+            </p>
+          </div>
+        </div>
+
+        {brandsLoading ? (
+          <p className="fashion-brand-message" role="status">Đang tải thương hiệu...</p>
+        ) : brands.length > 0 ? (
+          <div className="fashion-brand-grid">
+            {brands.map((brand) => (
+              <article className="fashion-brand-card" key={brand.id}>
+                <span className="fashion-brand-logo">
+                  {brand.logoUrl
+                    ? <img src={brand.logoUrl} alt="" loading="lazy" />
+                    : <FashionMark className="fashion-brand-fallback" />}
+                </span>
+                <strong>{brand.name}</strong>
+                {brand.description && <p>{brand.description}</p>}
+              </article>
+            ))}
+          </div>
+        ) : (
+          <p className="fashion-brand-message">Hiện chưa có thương hiệu nào được hiển thị.</p>
+        )}
+      </section>
+
       {/* PRODUCT LIST FROM YOUR API */}
-      <section className="fashion-products-section">
+      <section className="fashion-products-section" ref={productsSectionRef}>
         <div className="fashion-section-heading">
           <div>
             <p className="fashion-kicker">
@@ -225,10 +330,13 @@ export function HomePage({ setNotice, setRoute }) {
         </div>
 
         <div className="fashion-product-list-wrapper">
-          <ProductListPage
-            setNotice={setNotice}
-            setRoute={setRoute}
-          />
+          {loadProducts ? (
+            <Suspense fallback={<p className="fashion-brand-message" role="status">Đang tải sản phẩm...</p>}>
+              <ProductListPage setNotice={setNotice} setRoute={setRoute} />
+            </Suspense>
+          ) : (
+            <p className="fashion-brand-message">Đang tải sản phẩm...</p>
+          )}
         </div>
       </section>
 

@@ -60,6 +60,7 @@ function App() {
     const nextValue = nextRoute || getRouteFromHash()
     window.location.hash = nextValue
     setRouteState(nextValue)
+    window.scrollTo(0, 0)
   }
 
   return (

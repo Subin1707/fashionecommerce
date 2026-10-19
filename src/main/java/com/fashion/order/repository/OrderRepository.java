@@ -46,5 +46,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Long countByCreatedAtBetween(LocalDateTime from, LocalDateTime to);
     
     @Query("SELECT SUM(o.finalAmount) FROM Order o WHERE o.createdAt BETWEEN :from AND :to")
-    Optional<BigDecimal> getTotalRevenueBetweenDates(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
+    Optional<Double> getTotalRevenueBetweenDates(@Param("from") LocalDateTime from, @Param("to") LocalDateTime to);
 }
