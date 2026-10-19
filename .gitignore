@@ -42,3 +42,4 @@ test_output.txt
 mvn_*summary*.txt
 *.sql
 *.lnk
+*.class
