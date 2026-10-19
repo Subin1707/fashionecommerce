@@ -41,12 +41,9 @@ export function RecommendationPage({ setNotice, setRoute }) {
   const [styleProducts, setStyleProducts] = useState([])
   const [outfits, setOutfits] = useState([])
   const [quiz, setQuiz] = useState({ occasion: 'Đi chơi', style: 'Minimal', gender: 'unisex', budget: 1000000, color: 'Trắng / Be', dislikedColor: '' })
-  const [chatMessage, setChatMessage] = useState('Gợi ý áo linen màu trắng cỡ M')
-  const [chatReply, setChatReply] = useState('')
   const [productId, setProductId] = useState(null)
   const [sizeLoading, setSizeLoading] = useState(false)
   const [styleLoading, setStyleLoading] = useState(false)
-  const [chatLoading, setChatLoading] = useState(false)
   const [addingOutfit, setAddingOutfit] = useState(null)
 
   const bodySummary = useMemo(() => {
@@ -69,8 +66,8 @@ export function RecommendationPage({ setNotice, setRoute }) {
     event.preventDefault()
     setSizeLoading(true)
     try {
-      const { products } = await productService.searchProducts({})
-      const product = products[0]
+      const products = await productService.getProducts()
+      const product = products.find((item) => item.status === 'ACTIVE') || products[0]
       if (!product) throw new Error('Chưa có sản phẩm thật để gợi ý kích cỡ.')
       setProductId(product.id)
       setSmartSize(await chatbotService.recommendSize(product.id, sizeForm))
@@ -92,7 +89,7 @@ export function RecommendationPage({ setNotice, setRoute }) {
         style: quiz.style,
         color: quiz.color,
         fashionType: quiz.gender,
-        pattern: quiz.occasion,
+        pattern: styleForm.pattern,
       })
       const filtered = (Array.isArray(products) ? products : [])
         .filter((product) => priceOf(product) <= Number(quiz.budget || Infinity))
@@ -105,24 +102,6 @@ export function RecommendationPage({ setNotice, setRoute }) {
       setNotice?.(`Không thể gợi ý phong cách: ${error.message}`)
     } finally {
       setStyleLoading(false)
-    }
-  }
-
-  async function askChatbot(event) {
-    event.preventDefault()
-    if (!chatMessage.trim()) {
-      setChatReply('Hãy nhập điều bạn muốn mặc hôm nay, ví dụ: đi cà phê, trẻ trung, ngân sách 800k.')
-      return
-    }
-    setChatLoading(true)
-    try {
-      const data = await chatbotService.askChatbot(chatMessage)
-      setChatReply(typeof data === 'string' ? data : data?.message || JSON.stringify(data))
-    } catch (error) {
-      setChatReply(buildLocalFashionAdvice(chatMessage, quiz))
-      setNotice?.(`Trợ lý đang dùng tư vấn nhanh tại trình duyệt: ${error.message}`)
-    } finally {
-      setChatLoading(false)
     }
   }
 
@@ -246,18 +225,6 @@ export function RecommendationPage({ setNotice, setRoute }) {
             </button>
           </form>
 
-          <form className="style-panel" onSubmit={askChatbot}>
-            <div className="style-panel-heading">
-              <div>
-                <p className="eyebrow">Trợ lý thời trang</p>
-                <h2>Hỏi nhanh</h2>
-              </div>
-            </div>
-            <textarea value={chatMessage} onChange={(event) => setChatMessage(event.target.value)} />
-            <button type="submit" disabled={chatLoading}>
-              {chatLoading ? 'Đang hỏi...' : 'Nhận tư vấn'}
-            </button>
-          </form>
         </div>
 
         <aside className="style-result-panel">
@@ -274,13 +241,6 @@ export function RecommendationPage({ setNotice, setRoute }) {
               <p>Chưa có kết quả. Hãy nhập số đo và bấm gợi ý kích cỡ.</p>
             )}
           </div>
-
-          {chatReply && (
-            <div className="style-chat-reply">
-              <p className="eyebrow">Tư vấn</p>
-              <p>{chatReply}</p>
-            </div>
-          )}
 
           <div className="style-products-panel">
             <div className="style-panel-heading">

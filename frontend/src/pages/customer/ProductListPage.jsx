@@ -9,7 +9,14 @@ import * as productService from '../../services/productService'
 import * as wishlistService from '../../services/wishlistService'
 import { ROUTES } from '../../utils/constants'
 
-const initialFilters = { category: '', size: '', color: '', minPrice: '', maxPrice: '' }
+const initialFilters = { categoryId: '', category: '', categoryName: '', size: '', color: '', minPrice: '', maxPrice: '' }
+const fallbackCategories = [
+  { slug: 'ao-thun', name: 'Áo thun' },
+  { slug: 'quan', name: 'Quần' },
+  { slug: 'ao-khoac', name: 'Áo khoác' },
+  { slug: 'dam', name: 'Đầm' },
+  { slug: 'phu-kien', name: 'Phụ kiện' },
+]
 
 export function ProductListPage({ setNotice, setRoute }) {
   const [query, setQuery] = useState('')
@@ -21,8 +28,12 @@ export function ProductListPage({ setNotice, setRoute }) {
   const [selectedProduct, setSelectedProduct] = useState(null)
   const [addingProductId, setAddingProductId] = useState(null)
   const [buyingProductId, setBuyingProductId] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const searchRequestId = useRef(0)
+  const searchController = useRef(null)
+  const currentFilters = useRef(initialFilters)
+  const currentQuery = useRef('')
+  const loadingMore = useRef(false)
   const [wishlistIds, setWishlistIds] = useState(new Set())
   const [togglingWishlistId, setTogglingWishlistId] = useState(null)
   const { isAdmin, isCustomer } = useAuth()
@@ -36,7 +47,7 @@ export function ProductListPage({ setNotice, setRoute }) {
   }, [isCustomer])
 
   useEffect(() => {
-    loadProducts({})
+    loadProducts(initialFilters)
     categoryService.getCategories()
       .then((rows) => setCategories(Array.isArray(rows) ? rows : []))
       .catch(() => {})
@@ -52,21 +63,29 @@ export function ProductListPage({ setNotice, setRoute }) {
       return Number(Boolean(right.isFeatured)) - Number(Boolean(left.isFeatured))
     })
   }, [products, sort])
+  const visibleCategories = categories.length ? categories : fallbackCategories
 
   async function loadProducts(extra = filters, keyword = query) {
+    currentFilters.current = extra
+    currentQuery.current = keyword
     const requestId = ++searchRequestId.current
+    loadingMore.current = false
+    searchController.current?.abort()
+    const controller = new AbortController()
+    searchController.current = controller
     setIsLoading(true)
     try {
-      const result = await productService.searchProducts({ ...extra, keyword })
+      const result = await productService.searchProducts(
+        { ...extra, keyword },
+        { page: 0, size: 16, signal: controller.signal },
+      )
       if (requestId !== searchRequestId.current) return
       setProducts(result.products)
       setTotalPages(result.totalPages)
-      setSelectedProduct(null)
       setNotice(`${result.products.length} sản phẩm đã tải.`)
     } catch (error) {
       if (requestId !== searchRequestId.current) return
-      setProducts([])
-      setSelectedProduct(null)
+      if (error.name === 'AbortError') return
       setNotice(`Chưa đọc được /api/search: ${error.message}`)
     } finally {
       if (requestId === searchRequestId.current) setIsLoading(false)
@@ -74,13 +93,16 @@ export function ProductListPage({ setNotice, setRoute }) {
   }
 
   async function loadMoreProducts() {
-    if (isLoading || products.length === 0) return
+    if (loadingMore.current || isLoading || products.length === 0) return
+    loadingMore.current = true
     const requestId = searchRequestId.current
+    const controller = new AbortController()
+    searchController.current = controller
     setIsLoading(true)
     try {
       const result = await productService.searchProducts(
         { ...filters, keyword: query },
-        { page: Math.ceil(products.length / 16), size: 16 },
+        { page: Math.ceil(products.length / 16), size: 16, signal: controller.signal },
       )
       if (requestId !== searchRequestId.current) return
       setProducts((current) => [...current, ...result.products])
@@ -88,6 +110,7 @@ export function ProductListPage({ setNotice, setRoute }) {
     } catch (error) {
       setNotice(`Chưa tải thêm được sản phẩm: ${error.message}`)
     } finally {
+      loadingMore.current = false
       if (requestId === searchRequestId.current) setIsLoading(false)
     }
   }
@@ -95,14 +118,32 @@ export function ProductListPage({ setNotice, setRoute }) {
   function resetFilters() {
     setQuery('')
     setFilters(initialFilters)
+    currentQuery.current = ''
+    currentFilters.current = initialFilters
     setSort('featured')
     loadProducts(initialFilters, '')
   }
 
   function handleSelectCategory(catName) {
-    const nextFilters = { ...filters, category: catName }
+    const nextFilters = {
+      ...filters,
+      categoryId: catName?.id ? String(catName.id) : '',
+      category: catName?.slug || '',
+      categoryName: catName?.name || '',
+    }
+    currentFilters.current = nextFilters
     setFilters(nextFilters)
     loadProducts(nextFilters)
+  }
+
+  function updateFilters(nextFilters) {
+    currentFilters.current = nextFilters
+    setFilters(nextFilters)
+  }
+
+  function updateQuery(nextQuery) {
+    currentQuery.current = nextQuery
+    setQuery(nextQuery)
   }
 
   async function handleAdd(product, variant) {
@@ -220,21 +261,23 @@ export function ProductListPage({ setNotice, setRoute }) {
           </div>
         </div>
 
-        {categories.length > 0 && (
+        {visibleCategories.length > 0 && (
           <div className="catalog-category-pills">
             <button
               type="button"
-              className={`category-pill-btn ${!filters.category ? 'active' : ''}`}
+              className={`category-pill-btn ${!filters.categoryId && !filters.category ? 'active' : ''}`}
               onClick={() => handleSelectCategory('')}
             >
               Tất cả
             </button>
-            {getLeafCategories(categories).filter((c) => c.isActive !== false).map((cat) => (
+            {visibleCategories.filter((category) => category.isActive !== false).map((cat) => (
               <button
-                key={cat.id}
+                key={cat.id || cat.slug}
                 type="button"
-                className={`category-pill-btn ${filters.category === cat.name ? 'active' : ''}`}
-                onClick={() => handleSelectCategory(cat.name)}
+                className={`category-pill-btn ${cat.id
+                  ? filters.categoryId === String(cat.id)
+                  : filters.category === cat.slug ? 'active' : ''}`}
+                onClick={() => handleSelectCategory(cat)}
               >
                 {cat.parent?.name ? `${cat.parent.name} · ${cat.name}` : cat.name}
               </button>
@@ -245,23 +288,23 @@ export function ProductListPage({ setNotice, setRoute }) {
         <ProductFilters
           query={query}
           filters={filters}
-          categories={categories}
+          categories={visibleCategories}
           sort={sort}
-          onQueryChange={setQuery}
-          onFilterFieldChange={setFilters}
-          onFiltersChange={(nextFilters) => {
-            setFilters(nextFilters)
-            loadProducts(nextFilters)
-          }}
+          onQueryChange={updateQuery}
+          onFilterFieldChange={updateFilters}
           onSortChange={setSort}
           onReset={resetFilters}
-          onSubmit={(event) => { event.preventDefault(); loadProducts() }}
+          onSubmit={(event, appliedFilters, appliedQuery) => {
+            event.preventDefault()
+            loadProducts(appliedFilters, appliedQuery)
+          }}
         />
 
-        {isLoading && <p className="empty-state">Đang tải sản phẩm...</p>}
+        {isLoading && products.length === 0 && <p className="empty-state" role="status">Đang tải sản phẩm...</p>}
         {!isLoading && sortedProducts.length === 0 && <p className="empty-state">Chưa có sản phẩm phù hợp.</p>}
+        {isLoading && products.length > 0 && <p className="catalog-loading-more" role="status">Đang cập nhật danh sách...</p>}
 
-        <div className="product-grid">
+        <div className="product-grid" aria-busy={isLoading}>
           {sortedProducts.map((product) => (
             <ProductCard
               key={product.id}
@@ -284,7 +327,6 @@ export function ProductListPage({ setNotice, setRoute }) {
             Xem thêm sản phẩm
           </button>
         )}
-        {isLoading && products.length > 0 && <p className="catalog-loading-more" role="status">Đang tải thêm sản phẩm...</p>}
       </div>
 
       {selectedProduct && (
@@ -327,7 +369,3 @@ function totalStock(products) {
   ), 0)
 }
 
-function getLeafCategories(categories) {
-  const parentIds = new Set(categories.map((category) => category.parent?.id).filter(Boolean))
-  return categories.filter((category) => category.parent?.id || !parentIds.has(category.id))
-}

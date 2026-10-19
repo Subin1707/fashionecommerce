@@ -19,7 +19,6 @@ body {
   background:
     radial-gradient(ellipse at 8% 4%, rgba(255, 225, 235, 0.9), transparent 42%),
     linear-gradient(135deg, #fff8fa 0%, #fff1f5 48%, #fff8f3 100%);
-  background-attachment: fixed;
 }
 
 body::before {
@@ -32,7 +31,7 @@ body::before {
     radial-gradient(ellipse at 55% 12%, rgba(255, 218, 233, 0.24), transparent 30%);
   content: "";
   pointer-events: none;
-  animation: ambient-light-drift 28s ease-in-out infinite alternate;
+  animation: none;
 }
 
 #root {
@@ -61,5 +60,24 @@ textarea:focus-visible {
 @media (prefers-reduced-motion: reduce) {
   body::before {
     animation: none;
+  }
+}
+
+@media (max-width: 700px), (update: slow) {
+  body {
+    background: #fff6f8;
+  }
+
+  body::before {
+    display: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

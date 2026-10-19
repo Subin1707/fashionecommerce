@@ -16,7 +16,6 @@ PHOTOS = {
     112: "https://sakurafashion.vn/upload/sanpham/large/81692-ao-len-cardigan-mong-mua-he-cho-nu-1.jpg",  # cardigan
     113: "https://salt.tikicdn.com/cache/550x550/ts/product/14/b1/79/4ebc7ace18f6acdacbb00ecd0209a22b.jpg",  # linen set
     114: "https://down-vn.img.susercontent.com/file/vn-11134207-7qukw-lfcl37oor69wdb",  # jeans
-    115: "https://dosi-in.com/images/detailed/404/dosiin-ssstutter-quan-dai-nu-ssstutter-chat-khaki-ong-gap-culottes-pants-404697404697.jpg",  # women's khaki pants
     116: "https://pos.nvncdn.com/d0f3ca-7136/ps/20250109_GaFzo4OcRI.jpeg?v=1736401344",  # pleated skirt
     117: "https://cdn.hstatic.net/products/1000197303/pro_hoa_02_2_8c69674181864641906a98bec7a1d6e3.jpg",  # floral midi dress
     118: "https://product.hstatic.net/1000406613/product/z5350004102661_37fdfefca3d1f6030c7d1e619ab722ff_c50a290a6a8045a6b65822c83bcaab76.jpg",  # linen maxi
@@ -46,7 +45,7 @@ PHOTOS = {
     142: "https://ddreamer.com.vn/cdn/shop/files/silverjewelry-ddreamerjewelry-0484.jpg?v=1749312950",  # lotus necklace
     143: "https://chus.vn/images/detailed/248/10710_07_F5.jpg",  # silk scarf
     144: "https://down-vn.img.susercontent.com/file/vn-11134207-7ra0g-m92sct4ar81u4b",  # cotton socks
-    145: "https://hoangphuconline.vn/media/magefan_blog/2021/11/giay-ananas-1.jpg",  # canvas sneakers
+    145: "/images/catalog/sneaker-vai-trang.svg",  # lightweight local fallback for unreliable canvas sneaker photo
     146: "https://cdn.hstatic.net/products/1000230642/hsw011000xdg__6__72a30cb8afc34154855eefff4cb88b05_large.jpg",  # cushioned running shoes
     147: "https://product.hstatic.net/1000347349/product/giay-nam-scorpion-28me.16-4_694c8f3f5157496cb42f09fa777df949_master.jpg",  # leather loafers
     148: "https://mediaelly.sgp1.digitaloceanspaces.com/uploads/2024/03/22092831/giay-nu-thoi-trang-elly-eg254-13-1-1024x1024.jpg",  # block heels
@@ -64,8 +63,8 @@ PHOTOS = {
 
 
 def main():
-    if len(PHOTOS) != 50 or len(set(PHOTOS.values())) != 50:
-        raise ValueError("Expected 50 sample products with 50 unique image URLs")
+    if len(PHOTOS) != 49 or len(set(PHOTOS.values())) != 49:
+        raise ValueError("Expected 49 active sample products with 49 unique image URLs")
 
     conninfo = os.getenv(
         "DATABASE_URL",
@@ -82,9 +81,9 @@ def main():
                 (image_url, product_id),
             )
             changed += cur.rowcount
-        if changed != 50:
-            raise RuntimeError(f"Expected to update 50 placeholder images; updated {changed}")
-    print(f"Updated {changed} demo product images; all 50 URLs are unique.")
+        if changed != 49:
+            raise RuntimeError(f"Expected to update 49 placeholder images; updated {changed}")
+    print(f"Updated {changed} demo product images; all 49 URLs are unique.")
 
 
 if __name__ == "__main__":

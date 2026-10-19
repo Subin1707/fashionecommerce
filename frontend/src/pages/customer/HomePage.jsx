@@ -4,22 +4,16 @@ import { SafeImage } from '../../components/common/SafeImage'
 import * as brandService from '../../services/brandService'
 import { ROUTES } from '../../utils/constants'
 
-const ProductListPage = lazy(() => import('./ProductListPage').then((module) => ({
-  default: module.ProductListPage,
-})))
-
 export function HomePage({ route, setNotice, setRoute }) {
   const brandSectionRef = useRef(null)
   const productsSectionRef = useRef(null)
   const [loadBrands, setLoadBrands] = useState(false)
-  const [loadProducts, setLoadProducts] = useState(false)
   const [brands, setBrands] = useState([])
   const [brandsLoading, setBrandsLoading] = useState(true)
 
   useEffect(() => {
     const sections = [
       [brandSectionRef.current, setLoadBrands],
-      [productsSectionRef.current, setLoadProducts],
     ]
     const observers = sections.map(([section, setShouldLoad]) => {
       if (!section) return null
@@ -331,13 +325,13 @@ export function HomePage({ route, setNotice, setRoute }) {
         </div>
 
         <div className="fashion-product-list-wrapper">
-          {loadProducts ? (
-            <Suspense fallback={<p className="fashion-brand-message" role="status">Đang tải sản phẩm...</p>}>
-              <ProductListPage setNotice={setNotice} setRoute={setRoute} />
-            </Suspense>
-          ) : (
-            <p className="fashion-brand-message">Đang tải sản phẩm...</p>
-          )}
+          <button
+            type="button"
+            className="fashion-primary-button"
+            onClick={() => setRoute(ROUTES.PRODUCTS)}
+          >
+            Khám phá toàn bộ sản phẩm <span>→</span>
+          </button>
         </div>
       </section>
 

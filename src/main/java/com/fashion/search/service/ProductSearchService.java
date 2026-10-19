@@ -55,17 +55,65 @@ public class ProductSearchService {
         Pageable pageable = PageRequest.of(page, size);
         Page<Product> products = productRepository.searchActiveProducts(
                 pattern(request.getKeyword()),
-                lower(request.getCategory()),
-                pattern(request.getCategory()),
+                normalizeCategorySlug(request.getCategory()),
+                lower(request.getCategoryName()),
+                request.getCategoryId(),
                 pattern(request.getStyle()),
                 lower(request.getSize()),
                 lower(request.getColor()),
                 request.getMinPrice(),
                 request.getMaxPrice(),
                 pageable);
-        Map<Long, ProductDocument> documents = convertToDocuments(products.getContent()).stream()
-                .collect(Collectors.toMap(ProductDocument::getId, document -> document));
-        return products.map(product -> convertToResponse(documents.get(product.getId())));
+        List<Product> content = products.getContent();
+        List<Long> ids = content.stream().map(Product::getId).toList();
+        Map<Long, String> primaryImages = loadPrimaryImageUrls(ids);
+        Map<Long, List<ProductVariant>> variants = new HashMap<>();
+        if (!content.isEmpty()) {
+            productVariantRepository.findByProductIn(content).stream()
+                    .filter(variant -> Boolean.TRUE.equals(variant.getIsActive()))
+                    .forEach(variant -> variants.computeIfAbsent(variant.getProduct().getId(), ignored -> new ArrayList<>()).add(variant));
+        }
+        Map<Long, ReviewRepository.ProductRatingSummary> ratings = new HashMap<>();
+        if (!ids.isEmpty()) {
+            reviewRepository.summarizeProducts(ids).forEach(rating -> ratings.put(rating.getProductId(), rating));
+        }
+        return products.map(product -> convertToResponse(
+                product,
+                primaryImages.get(product.getId()),
+                variants.getOrDefault(product.getId(), List.of()),
+                ratings.get(product.getId())));
+    }
+
+    private ProductSearchResponse convertToResponse(
+            Product product,
+            String primaryImageUrl,
+            List<ProductVariant> variants,
+            ReviewRepository.ProductRatingSummary rating) {
+        List<String> colors = variants.stream().map(ProductVariant::getColor).filter(java.util.Objects::nonNull).distinct().toList();
+        List<String> sizes = variants.stream().map(ProductVariant::getSize).filter(java.util.Objects::nonNull).distinct().toList();
+        int stock = variants.stream().map(ProductVariant::getStockQty).filter(java.util.Objects::nonNull).mapToInt(Integer::intValue).sum();
+        return ProductSearchResponse.builder()
+                .id(product.getId())
+                .name(product.getName())
+                .description(product.getDescription())
+                .slug(product.getSlug())
+                .basePrice(product.getBasePrice())
+                .salePrice(product.getSalePrice() == null ? product.getBasePrice() : product.getSalePrice())
+                .material(product.getMaterial())
+                .fit(product.getFit())
+                .gender(product.getGender())
+                .status(product.getStatus())
+                .brandName(product.getBrandName())
+                .categoryName(product.getCategory() == null ? "" : product.getCategory().getName())
+                .primaryImageUrl(primaryImageUrl)
+                .colors(colors)
+                .sizes(sizes)
+                .totalStock(stock)
+                .averageRating(rating == null ? 0.0 : rating.getAverageRating())
+                .totalReviews(rating == null ? 0 : rating.getTotalReviews().intValue())
+                .isFeatured(product.getIsFeatured())
+                .isNew(product.getIsNew())
+                .build();
     }
 
     @Transactional(readOnly = true)
@@ -195,8 +243,16 @@ public class ProductSearchService {
         Map<Long, String> imageUrls = new HashMap<>();
         for (int start = 0; start < productIds.size(); start += 500) {
             List<Long> batch = productIds.subList(start, Math.min(start + 500, productIds.size()));
-            productImageRepository.findSummariesByProductIdIn(batch).forEach(image ->
-                    imageUrls.putIfAbsent(image.getProductId(), image.getImageUrl()));
+            productImageRepository.findSummariesByProductIdIn(batch).forEach(image -> {
+                if (image.getImageUrl() == null || image.getImageUrl().isBlank()) return;
+                if (image.getVariantId() == null && Boolean.TRUE.equals(image.getIsPrimary())) {
+                    imageUrls.put(image.getProductId(), image.getImageUrl());
+                } else if (!imageUrls.containsKey(image.getProductId()) && image.getVariantId() == null) {
+                    imageUrls.put(image.getProductId(), image.getImageUrl());
+                } else if (!imageUrls.containsKey(image.getProductId())) {
+                    imageUrls.put(image.getProductId(), image.getImageUrl());
+                }
+            });
         }
         return imageUrls;
     }
@@ -368,6 +424,18 @@ public class ProductSearchService {
             return null;
         }
         return value.trim();
+    }
+
+    private String normalizeCategorySlug(String value) {
+        String normalized = normalize(value);
+        if (normalized == null) return null;
+        return java.text.Normalizer.normalize(normalized, java.text.Normalizer.Form.NFD)
+                .replaceAll("\\p{M}+", "")
+                .replace('đ', 'd')
+                .replace('Đ', 'D')
+                .toLowerCase(java.util.Locale.ROOT)
+                .replaceAll("[^a-z0-9]+", "-")
+                .replaceAll("^-|-$", "");
     }
 
     private String lower(String value) {

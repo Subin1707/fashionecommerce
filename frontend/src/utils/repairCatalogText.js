@@ -55,6 +55,7 @@ export function repairCategory(category) {
   return {
     ...category,
     name: repairCatalogText(category.name),
+    slug: repairCatalogText(category.slug),
     description: repairCatalogText(category.description),
     parent: category.parent ? repairCategory(category.parent) : category.parent,
   }

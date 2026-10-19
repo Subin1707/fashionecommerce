@@ -3,6 +3,7 @@ import { useCart } from '../../hooks/useCart'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { ROUTES } from '../../utils/constants'
 import * as productService from '../../services/productService'
+import * as voucherService from '../../services/voucherService'
 import { SafeImage } from '../../components/common/SafeImage'
 import './CartPage.css'
 
@@ -38,6 +39,7 @@ export function CartPage({ setNotice, setRoute }) {
 
   const discountAmount = useMemo(() => {
     if (!appliedVoucher) return 0
+    if (Number.isFinite(Number(appliedVoucher.discountAmount))) return Number(appliedVoucher.discountAmount)
     if (appliedVoucher.type === 'PERCENT') {
       return Math.round((total * appliedVoucher.value) / 100)
     }
@@ -55,6 +57,30 @@ export function CartPage({ setNotice, setRoute }) {
   useEffect(() => {
     loadCart().catch(console.error)
   }, [loadCart])
+
+  useEffect(() => {
+    if (!appliedVoucher || total <= 0) return
+    let cancelled = false
+    voucherService.validateVoucher(appliedVoucher.code, total)
+      .then((result) => {
+        if (cancelled) return
+        if (!result.valid) {
+          setAppliedVoucher(null)
+          setVoucherError(result.message || 'Voucher không còn áp dụng được.')
+          return
+        }
+        setAppliedVoucher((current) => current?.code === result.code
+          ? { ...current, discountAmount: Number(result.discountAmount || 0), label: `Giảm ${formatCurrency(Number(result.discountAmount || 0))}` }
+          : current)
+      })
+      .catch((error) => {
+        if (!cancelled) {
+          setAppliedVoucher(null)
+          setVoucherError(error.message || 'Không thể xác minh voucher.')
+        }
+      })
+    return () => { cancelled = true }
+  }, [total, appliedVoucher?.code])
 
   // ===============================
   // LOAD THÔNG TIN SẢN PHẨM (ẢNH, THƯƠNG HIỆU,...)
@@ -161,7 +187,7 @@ export function CartPage({ setNotice, setRoute }) {
   // ===============================
   // ÁP DỤNG VOUCHER
   // ===============================
-  function handleApplyVoucher(codeToApply) {
+  async function handleApplyVoucher(codeToApply) {
     const code = (codeToApply || voucherInput).trim().toUpperCase()
     setVoucherError('')
 
@@ -170,20 +196,25 @@ export function CartPage({ setNotice, setRoute }) {
       return
     }
 
-    if (code === 'FREESHIP') {
-      setAppliedVoucher({ code: 'FREESHIP', type: 'FREESHIP', label: 'Miễn phí vận chuyển' })
-      setNotice?.('Đã áp dụng mã miễn phí vận chuyển!')
-      setVoucherInput('')
-    } else if (code === 'FASHION10') {
-      setAppliedVoucher({ code: 'FASHION10', type: 'PERCENT', value: 10, label: 'Giảm 10% đơn hàng' })
-      setNotice?.('Đã áp dụng mã giảm giá 10%!')
-      setVoucherInput('')
-    } else if (code === 'VIP50K') {
-      setAppliedVoucher({ code: 'VIP50K', type: 'FIXED', value: 50000, label: 'Giảm 50.000₫' })
-      setNotice?.('Đã áp dụng giảm trực tiếp 50.000₫!')
-      setVoucherInput('')
-    } else {
-      setVoucherError('Mã ưu đãi không hợp lệ hoặc đã hết hạn.')
+    try {
+      const result = await voucherService.validateVoucher(code, total)
+      if (!result.valid) {
+        setAppliedVoucher(null)
+        setVoucherError(result.message || 'Voucher không hợp lệ hoặc đã hết hạn.')
+        return
+      }
+      setAppliedVoucher({
+        code: result.code || code,
+        type: 'VALIDATED',
+        discountAmount: Number(result.discountAmount || 0),
+        label: `Giảm ${formatCurrency(Number(result.discountAmount || 0))}`,
+      })
+      setVoucherInput(result.code || code)
+      setVoucherError('')
+      setNotice?.('Đã áp dụng voucher!')
+    } catch (error) {
+      setAppliedVoucher(null)
+      setVoucherError(error.message || 'Không thể kiểm tra voucher.')
     }
   }
 
@@ -198,6 +229,11 @@ export function CartPage({ setNotice, setRoute }) {
   // ===============================
   function goCheckout() {
     if (!items.length) return
+    if (appliedVoucher) {
+      sessionStorage.setItem('fashion:checkoutVoucher', JSON.stringify({ code: appliedVoucher.code, discountAmount }))
+    } else {
+      sessionStorage.removeItem('fashion:checkoutVoucher')
+    }
     setRoute?.(ROUTES.CHECKOUT)
   }
 

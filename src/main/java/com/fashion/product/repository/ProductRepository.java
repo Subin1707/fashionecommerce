@@ -1,6 +1,7 @@
 package com.fashion.product.repository;
 
 import com.fashion.admin.dto.InventoryProductDto;
+import com.fashion.category.entity.Category;
 import com.fashion.product.entity.Product;
 import java.math.BigDecimal;
 import java.util.List;
@@ -64,6 +65,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     @EntityGraph(attributePaths = {"brand", "category", "variants"})
     List<Product> findByCategory_Id(Long categoryId);
 
+
     @EntityGraph(attributePaths = {"brand", "category", "variants"})
     Optional<Product> findBySlug(String slug);
 
@@ -84,9 +86,18 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                            or lower(p.material) like :keyword
                            or lower(b.name) like :keyword
                            or lower(c.name) like :keyword)
-                      and (:category is null
+                      and ((:categoryId is null and :category is null)
                            or lower(c.slug) = :category
-                           or lower(c.name) like :categoryPattern)
+                           or lower(c.name) = lower(:categoryName)
+                           or c.id = :categoryId
+                           or exists (
+                               select 1
+                               from Category childCategory
+                               where childCategory.parent = c
+                                 and (childCategory.id = :categoryId
+                                      or lower(childCategory.slug) = :category
+                                      or lower(childCategory.name) = lower(:categoryName))
+                           ))
                       and (:style is null
                            or lower(p.name) like :style
                            or lower(p.description) like :style
@@ -126,9 +137,18 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                            or lower(p.material) like :keyword
                            or lower(b.name) like :keyword
                            or lower(c.name) like :keyword)
-                      and (:category is null
+                      and ((:categoryId is null and :category is null)
                            or lower(c.slug) = :category
-                           or lower(c.name) like :categoryPattern)
+                           or lower(c.name) = lower(:categoryName)
+                           or c.id = :categoryId
+                           or exists (
+                               select 1
+                               from Category childCategory
+                               where childCategory.parent = c
+                                 and (childCategory.id = :categoryId
+                                      or lower(childCategory.slug) = :category
+                                      or lower(childCategory.name) = lower(:categoryName))
+                           ))
                       and (:style is null
                            or lower(p.name) like :style
                            or lower(p.description) like :style
@@ -159,7 +179,8 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     Page<Product> searchActiveProducts(
             @Param("keyword") String keyword,
             @Param("category") String category,
-            @Param("categoryPattern") String categoryPattern,
+            @Param("categoryName") String categoryName,
+            @Param("categoryId") Long categoryId,
             @Param("style") String style,
             @Param("size") String size,
             @Param("color") String color,

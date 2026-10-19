@@ -1988,6 +1988,104 @@ dd {
   color: #554c43;
 }
 
+.stylist-chat {
+  position: fixed;
+  z-index: 1200;
+  right: 24px;
+  bottom: 24px;
+  display: grid;
+  justify-items: end;
+  gap: 12px;
+}
+
+.stylist-chat-launcher {
+  min-height: 48px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 999px;
+  background: #211f1c;
+  color: #fffdf9;
+  box-shadow: 0 10px 28px rgba(31, 29, 26, 0.22);
+}
+
+.stylist-chat-window {
+  display: grid;
+  grid-template-rows: auto minmax(220px, 1fr) auto;
+  width: min(390px, calc(100vw - 32px));
+  height: min(560px, calc(100dvh - 110px));
+  overflow: hidden;
+  border: 1px solid #dfd4c7;
+  border-radius: 16px;
+  background: #fffdf9;
+  box-shadow: 0 18px 55px rgba(31, 29, 26, 0.2);
+}
+
+.stylist-chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 18px;
+  background: #211f1c;
+  color: #fffdf9;
+}
+
+.stylist-chat-header div { display: grid; gap: 3px; }
+.stylist-chat-header small { color: #d9d1c7; }
+.stylist-chat-header button { padding: 2px 8px; border: 0; background: transparent; color: inherit; font-size: 26px; }
+
+.stylist-chat-messages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.stylist-chat-welcome,
+.stylist-chat-message span {
+  max-width: 88%;
+  margin: 0;
+  padding: 11px 13px;
+  border-radius: 14px;
+  background: #f3eee7;
+  color: #39342e;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.stylist-chat-message { display: flex; }
+.stylist-chat-message.user { justify-content: flex-end; }
+.stylist-chat-message.user span { background: #e8d3ab; }
+
+.stylist-chat-products { display: grid; gap: 8px; }
+.stylist-chat-product { display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; align-items: center; gap: 9px; padding: 8px; border: 1px solid #eee7de; border-radius: 10px; background: #fff; }
+.stylist-chat-product img { width: 48px; height: 54px; object-fit: cover; border-radius: 7px; }
+.stylist-chat-product div { display: grid; gap: 3px; min-width: 0; }
+.stylist-chat-product strong { overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.stylist-chat-product small { color: #756c62; font-size: 11px; }
+.stylist-chat-product button { min-height: 32px; padding: 0 10px; }
+
+.stylist-chat-prompts { display: flex; gap: 6px; overflow-x: auto; padding: 0 12px 10px; }
+.stylist-chat-prompts button { flex: 0 0 auto; min-height: 30px; padding: 0 9px; border: 1px solid #dfd4c7; background: #fff; color: #51483f; font-size: 11px; }
+
+.stylist-chat-compose {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  align-items: end;
+  padding: 12px;
+  border-top: 1px solid #eee7de;
+}
+
+.stylist-chat-compose textarea { min-height: 44px; max-height: 110px; resize: vertical; }
+.stylist-chat-compose button { min-height: 44px; }
+
+@media (max-width: 600px) {
+  .stylist-chat { right: 12px; bottom: 12px; }
+  .stylist-chat-window { width: calc(100vw - 24px); height: min(560px, calc(100dvh - 86px)); }
+}
+
 .style-empty-state {
   padding: 16px;
   border-radius: 8px;
@@ -9208,6 +9306,14 @@ pre,
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+.safe-image-unavailable > .safe-image-placeholder-art {
+  flex: 0 1 68%;
+  width: min(100%, 360px);
+  height: 68%;
+  min-height: 0;
+  object-fit: contain;
 }
 
 .safe-image-unavailable > strong {

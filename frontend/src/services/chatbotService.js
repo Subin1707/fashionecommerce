@@ -1,9 +1,16 @@
 import { apiRequest } from './api'
 
-export function askChatbot(message) {
+export function askChatbot(message, history = [], productId = null) {
   return apiRequest('/api/chatbot', {
     method: 'POST',
-    body: JSON.stringify({ message }),
+    body: JSON.stringify({ message, history, productId }),
+  })
+}
+
+export function searchChatbotProducts(message, productId = null) {
+  return apiRequest('/api/chatbot/products', {
+    method: 'POST',
+    body: JSON.stringify({ message, productId }),
   })
 }
 

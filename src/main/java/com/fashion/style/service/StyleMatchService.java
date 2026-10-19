@@ -5,6 +5,7 @@ import com.fashion.product.dto.ProductResponse;
 import com.fashion.product.entity.ProductImage;
 import com.fashion.product.repository.ProductImageRepository;
 import com.fashion.product.repository.ProductRepository;
+import com.fashion.product.repository.ProductVariantRepository;
 import com.fashion.style.dto.StyleMatchRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ public class StyleMatchService {
 
     private final ProductRepository productRepository;
     private final ProductImageRepository productImageRepository;
+    private final ProductVariantRepository productVariantRepository;
 
     @Transactional(readOnly = true)
     public List<ProductResponse> recommendProducts(StyleMatchRequest request) {
@@ -23,15 +25,26 @@ public class StyleMatchService {
             throw new IllegalArgumentException("Yêu cầu phân tích style không hợp lệ");
         }
 
-        String color = request.getColor() == null ? "" : request.getColor().toLowerCase();
-        String style = request.getStyle() == null ? "" : request.getStyle().toLowerCase();
-        String category = request.getCategory() == null ? "" : request.getCategory().toLowerCase();
-        String pattern = request.getPattern() == null ? "" : request.getPattern().toLowerCase();
-        String fashionType = request.getFashionType() == null ? "" : request.getFashionType().toLowerCase();
+        String color = normalize(request.getColor());
+        String style = normalize(request.getStyle());
+        String category = normalize(request.getCategory());
+        String pattern = normalize(request.getPattern());
+        String fashionType = normalize(request.getFashionType());
 
-        return productRepository.findAll().stream()
+        List<Product> activeProducts = productRepository.findAll().stream()
                 .filter(product -> product.getStatus() != null && "ACTIVE".equalsIgnoreCase(product.getStatus()))
+                .toList();
+        List<Product> ranked = activeProducts.stream()
+                .sorted((left, right) -> Integer.compare(
+                        matchScore(right, color, style, category, pattern, fashionType),
+                        matchScore(left, color, style, category, pattern, fashionType)))
+                .toList();
+        List<Product> matches = ranked.stream()
                 .filter(product -> matchScore(product, color, style, category, pattern, fashionType) > 0)
+                .toList();
+        // Catalog attributes are often incomplete. Still return real active products
+        // so the budget and disliked-color filters on the client can make useful picks.
+        return (matches.isEmpty() ? ranked : matches).stream()
                 .map(this::toResponse)
                 .limit(10)
                 .toList();
@@ -56,10 +69,14 @@ public class StyleMatchService {
         String brandName = product.getBrand() == null ? null : product.getBrand().getName();
         String categoryName = product.getCategory() == null ? null : product.getCategory().getName();
 
-        if (!color.isBlank() && (matches(name, color) || matches(description, color) || matches(brandName, color))) {
+        boolean variantColorMatches = !color.isBlank() && productVariantRepository.findByProductId(product.getId()).stream()
+                .filter(variant -> Boolean.TRUE.equals(variant.getIsActive()) && variant.getStockQty() != null && variant.getStockQty() > 0)
+                .anyMatch(variant -> matchesColor(variant.getColor(), color));
+        if (!color.isBlank() && (variantColorMatches || matchesColor(name, color) || matchesColor(description, color))) {
             score++;
         }
-        if (!style.isBlank() && (matches(name, style) || matches(description, style) || matches(product.getFit(), style))) {
+        if (!style.isBlank() && (matches(name, style) || matches(description, style) || matches(product.getFit(), style)
+                || matchesStyle(name, style) || matchesStyle(description, style) || matchesStyle(product.getFit(), style))) {
             score++;
         }
         if (!category.isBlank() && (matches(name, category) || matches(categoryName, category))) {
@@ -68,22 +85,58 @@ public class StyleMatchService {
         if (!pattern.isBlank() && matches(description, pattern)) {
             score++;
         }
-        if (!fashionType.isBlank() && (matches(product.getGender(), fashionType) || matches(description, fashionType))) {
+        if (!fashionType.isBlank() && !"unisex".equals(fashionType)
+                && (matches(product.getGender(), fashionType) || matches(description, fashionType))) {
             score++;
         }
         return score;
+    }
+
+    private boolean matchesColor(String value, String desired) {
+        String text = normalize(value);
+        if (matches(text, desired)) return true;
+        if (desired.contains("trang") || desired.contains("be")) return text.contains("white") || text.contains("cream") || text.contains("beige") || text.contains("ivory");
+        if (desired.contains("den")) return text.contains("black");
+        if (desired.contains("xanh")) return text.contains("blue") || text.contains("green") || text.contains("navy");
+        if (desired.contains("pastel")) return text.contains("pastel") || text.contains("pink") || text.contains("lavender");
+        if (desired.contains("noi")) return text.contains("red") || text.contains("orange") || text.contains("yellow");
+        return false;
+    }
+
+    private boolean matchesStyle(String value, String style) {
+        String text = normalize(value);
+        return switch (style) {
+            case "minimal", "basic" -> text.contains("basic") || text.contains("minimal") || text.contains("toi gian") || text.contains("tron");
+            case "streetwear" -> text.contains("street") || text.contains("hoodie") || text.contains("oversize") || text.contains("casual");
+            case "vintage" -> text.contains("vintage") || text.contains("retro") || text.contains("classic");
+            case "elegant" -> text.contains("elegant") || text.contains("formal") || text.contains("thanh lich") || text.contains("cong so");
+            case "sporty" -> text.contains("sport") || text.contains("the thao") || text.contains("active");
+            case "y2k" -> text.contains("y2k") || text.contains("crop") || text.contains("baggy");
+            default -> false;
+        };
     }
 
     private boolean matches(String productValue, String desiredValue) {
         if (productValue == null) {
             return false;
         }
-        String normalizedProduct = productValue.toLowerCase();
-        return normalizedProduct.contains(desiredValue) || desiredValue.contains(normalizedProduct);
+        String normalizedProduct = normalize(productValue);
+        String normalizedDesired = normalize(desiredValue);
+        return normalizedProduct.contains(normalizedDesired) || normalizedDesired.contains(normalizedProduct);
     }
 
-    public StyleMatchService(final ProductRepository productRepository, final ProductImageRepository productImageRepository) {
+    private String normalize(String value) {
+        if (value == null) return "";
+        String normalized = java.text.Normalizer.normalize(value, java.text.Normalizer.Form.NFD)
+                .replaceAll("\\p{M}", "")
+                .replace('đ', 'd').replace('Đ', 'd')
+                .toLowerCase();
+        return normalized;
+    }
+
+    public StyleMatchService(final ProductRepository productRepository, final ProductImageRepository productImageRepository, final ProductVariantRepository productVariantRepository) {
         this.productRepository = productRepository;
         this.productImageRepository = productImageRepository;
+        this.productVariantRepository = productVariantRepository;
     }
 }

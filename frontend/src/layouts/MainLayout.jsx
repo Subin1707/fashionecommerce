@@ -2,6 +2,7 @@ import { ADMIN_NAV, CUSTOMER_NAV, ROUTES } from '../utils/constants'
 import { useAuth } from '../hooks/useAuth'
 import { useCart } from '../hooks/useCart'
 import { FashionMark } from '../components/common/FashionMark'
+import { StyleChatWidget } from '../components/common/StyleChatWidget'
 
 export function MainLayout({ route, setRoute, notice, children }) {
   const { auth, isAdmin, logout } = useAuth()
@@ -252,6 +253,7 @@ export function MainLayout({ route, setRoute, notice, children }) {
 
         {children}
       </section>
+      {!isAdmin && auth.role === 'CUSTOMER' && <StyleChatWidget setRoute={setRoute} route={route} />}
     </main>
   )
 }

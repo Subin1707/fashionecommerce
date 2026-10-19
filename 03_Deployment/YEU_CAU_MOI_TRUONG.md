@@ -31,6 +31,8 @@ Truoc khi chay, can dam bao cac cong tren chua bi ung dung khac chiem dung.
 - `FASHION_ADMIN_PASSWORD`
 - `FASHION_CUSTOMER_PASSWORD`
 - `FASHION_JWT_SECRET`
+- `GROQ_API_KEY` (optional; enables Groq-powered stylist chat)
+- `GROQ_MODEL` (optional; defaults to `llama-3.3-70b-versatile`)
 - `VNPAY_TMN_CODE`
 - `VNPAY_HASH_SECRET`
 - `VNPAY_RETURN_URL`

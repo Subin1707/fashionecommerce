@@ -24,7 +24,7 @@ export function pageContent(payload) {
 export async function apiRequest(path, options = {}) {
   const auth = getStoredAuth()
   const controller = new AbortController()
-  const timeoutId = setTimeout(() => controller.abort(), options.timeoutMs || 10000)
+  const timeoutId = setTimeout(() => controller.abort(), options.timeoutMs || 15000)
   let response
 
   try {
@@ -40,6 +40,7 @@ export async function apiRequest(path, options = {}) {
     })
   } catch (error) {
     if (error.name === 'AbortError') {
+      if (options.signal?.aborted) throw error
       throw new Error('API phan hoi qua lau, vui long kiem tra backend hoac thu tai lai.')
     }
     throw error

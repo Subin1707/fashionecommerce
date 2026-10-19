@@ -4,24 +4,24 @@ export function ProductFilters({
   categories = [],
   sort,
   onQueryChange,
-  onFiltersChange,
   onFilterFieldChange,
   onSortChange,
   onReset,
   onSubmit,
 }) {
-  const childParentIds = new Set(categories.map((cat) => cat.parent?.id).filter(Boolean))
-  const categoryOptions = categories.length > 0
-    ? categories.filter((cat) => cat.isActive !== false && (cat.parent?.id || !childParentIds.has(cat.id)))
-    : [
-        { name: 'Áo' },
-        { name: 'Quần' },
-        { name: 'Đầm' },
-        { name: 'Phụ kiện' },
-      ]
+  const categoryOptions = (categories.length ? categories : [
+    { slug: 'ao-thun', name: 'Áo thun' },
+    { slug: 'quan', name: 'Quần' },
+    { slug: 'ao-khoac', name: 'Áo khoác' },
+    { slug: 'dam', name: 'Đầm' },
+    { slug: 'phu-kien', name: 'Phụ kiện' },
+  ]).filter((category) => category.isActive !== false)
 
   return (
-    <form className="product-toolbar" onSubmit={onSubmit}>
+    <form className="product-toolbar" onSubmit={(event) => {
+      event.preventDefault()
+      onSubmit(event, { ...filters }, query)
+    }}>
       <div className="search-field">
         <input
           placeholder="Tên, chất liệu, phong cách..."
@@ -30,40 +30,56 @@ export function ProductFilters({
         />
       </div>
 
-      <select value={filters.category} onChange={(event) => onFiltersChange({ ...filters, category: event.target.value })}>
+      <select
+        aria-label="Danh mục sản phẩm"
+        value={filters.categoryId || (filters.category ? `slug:${filters.category}` : '')}
+        onChange={(event) => {
+          const selectedValue = event.target.value
+          const selected = categoryOptions.find((category) => String(category.id || `slug:${category.slug}`) === selectedValue)
+          onFilterFieldChange({
+            ...filters,
+            categoryId: selected?.id ? String(selected.id) : '',
+            category: selected?.slug || '',
+            categoryName: selected?.name || '',
+          })
+        }}
+      >
         <option value="">Tất cả danh mục</option>
-        {categoryOptions.map((cat) => (
-          <option key={cat.id || cat.name} value={cat.name}>
-            {cat.parent?.name ? `${cat.parent.name} · ${cat.name}` : cat.name}
+        {categoryOptions.map((category) => (
+          <option key={category.id || category.slug} value={String(category.id || `slug:${category.slug}`)}>
+            {category.parent?.name ? `${category.parent.name} · ${category.name}` : category.name}
           </option>
         ))}
       </select>
 
       <input
+        aria-label="Size"
         placeholder="Size"
         value={filters.size}
         onChange={(event) => onFilterFieldChange({ ...filters, size: event.target.value })}
       />
       <input
+        aria-label="Màu sắc"
         placeholder="Màu sắc"
         value={filters.color}
         onChange={(event) => onFilterFieldChange({ ...filters, color: event.target.value })}
       />
       <input
+        aria-label="Giá từ"
         inputMode="numeric"
         placeholder="Giá từ"
         value={filters.minPrice}
         onChange={(event) => onFilterFieldChange({ ...filters, minPrice: event.target.value })}
       />
-
       <input
+        aria-label="Giá đến"
         inputMode="numeric"
         placeholder="Giá đến"
         value={filters.maxPrice}
         onChange={(event) => onFilterFieldChange({ ...filters, maxPrice: event.target.value })}
       />
 
-      <select value={sort} onChange={(event) => onSortChange(event.target.value)}>
+      <select aria-label="Sắp xếp sản phẩm" value={sort} onChange={(event) => onSortChange(event.target.value)}>
         <option value="featured">Nổi bật</option>
         <option value="newest">Mới nhất</option>
         <option value="price-asc">Giá tăng</option>

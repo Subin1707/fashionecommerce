@@ -79,12 +79,23 @@ export function ShipmentPanel({ order, admin = false, onUpdated }) {
 
   useEffect(() => {
     if (['CANCELLED', 'COMPLETED', 'RETURNED'].includes(order.orderStatus)) return undefined
-    const timer = setInterval(() => {
-      if (document.hidden) return
-      setReload((value) => value + 1)
-      updateRef.current?.()
-    }, activeStatuses.includes(data?.shipment?.status) ? 5000 : 15000)
-    return () => clearInterval(timer)
+    const interval = activeStatuses.includes(data?.shipment?.status) ? 30000 : 60000
+    let timer
+    const refreshWhenVisible = () => {
+      clearInterval(timer)
+      if (!document.hidden) {
+        timer = setInterval(() => {
+          setReload((value) => value + 1)
+          updateRef.current?.()
+        }, interval)
+      }
+    }
+    document.addEventListener('visibilitychange', refreshWhenVisible)
+    refreshWhenVisible()
+    return () => {
+      clearInterval(timer)
+      document.removeEventListener('visibilitychange', refreshWhenVisible)
+    }
   }, [data?.shipment?.status, order.orderStatus])
 
   async function submit(event, create) {

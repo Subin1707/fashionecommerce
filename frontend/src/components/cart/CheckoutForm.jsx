@@ -15,9 +15,9 @@ const paymentLabels = {
 }
 
 const paymentNotes = {
-  COD: 'Ki?m tra h?ng tr??c khi thanh to?n.',
-  BANK_TRANSFER: 'QR v? th?ng tin chuy?n kho?n s? hi?n sau khi t?o ??n h?ng.',
-  VNPAY: 'Thanh to?n qua c?ng VNPay Sandbox.',
+  COD: 'Kiểm tra hàng trước khi thanh toán.',
+  BANK_TRANSFER: 'QR và thông tin chuyển khoản sẽ hiển thị sau khi tạo đơn hàng.',
+  VNPAY: 'Thanh toán qua cổng VNPay Sandbox.',
 }
 
 export function CheckoutForm({

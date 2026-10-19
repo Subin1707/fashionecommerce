@@ -1,10 +1,12 @@
 import { apiRequest, pageContent } from './api'
 import { repairProduct } from '../utils/repairCatalogText'
 
-export async function searchProducts(filters = {}, { page = 0, size = 16 } = {}) {
+export async function searchProducts(filters = {}, { page = 0, size = 16, signal } = {}) {
   const params = new URLSearchParams({ page: String(page), size_param: String(size) })
   if (filters.keyword) params.set('keyword', filters.keyword)
+  if (filters.categoryId) params.set('categoryId', String(filters.categoryId))
   if (filters.category) params.set('category', filters.category)
+  if (filters.categoryName) params.set('categoryName', filters.categoryName)
   if (filters.size) params.set('size', filters.size)
   if (filters.color) params.set('color', filters.color)
   const minPrice = parsePrice(filters.minPrice)
@@ -12,7 +14,7 @@ export async function searchProducts(filters = {}, { page = 0, size = 16 } = {})
   if (minPrice != null) params.set('minPrice', String(minPrice))
   if (maxPrice != null) params.set('maxPrice', String(maxPrice))
 
-  const data = await apiRequest(`/api/search?${params}`)
+  const data = await apiRequest(`/api/search?${params}`, { signal })
   const products = pageContent(data).map(repairProduct)
   return {
     products,
@@ -29,6 +31,11 @@ function parsePrice(value) {
 
 export async function getProduct(id) {
   return repairProduct(await apiRequest(`/api/products/${id}`))
+}
+
+export async function getProducts() {
+  const data = await apiRequest('/api/products')
+  return Array.isArray(data) ? data.map(repairProduct) : []
 }
 
 export function getProductVariants(productId) {

@@ -178,4 +178,5 @@ public class VoucherService {
     public VoucherService(final VoucherRepository voucherRepository) {
         this.voucherRepository = voucherRepository;
     }
+
 }

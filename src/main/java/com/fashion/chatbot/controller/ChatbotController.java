@@ -17,14 +17,14 @@ public class ChatbotController {
 
     @PostMapping
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
-    public ResponseEntity<String> chat(@RequestBody ChatbotMessage message, Authentication authentication) {
-        return ResponseEntity.ok(fashionChatbotService.chat(userId(authentication), message.getMessage()));
+    public ResponseEntity<ChatbotResponse> chat(@RequestBody ChatbotMessage message, Authentication authentication) {
+        return ResponseEntity.ok(fashionChatbotService.chat(userId(authentication), message));
     }
 
     @PostMapping("/products")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER')")
     public ResponseEntity<ChatbotResponse> searchProducts(@RequestBody ChatbotMessage message) {
-        return ResponseEntity.ok(fashionChatbotService.searchProducts(message.getMessage()));
+        return ResponseEntity.ok(fashionChatbotService.searchProducts(message.getMessage(), message.getProductId()));
     }
 
     private Long userId(Authentication authentication) {

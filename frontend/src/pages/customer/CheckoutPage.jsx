@@ -14,7 +14,14 @@ export function CheckoutPage({ setNotice, setRoute }) {
     ? Number(buyNowItem.price || 0) * Number(buyNowItem.quantity || 1)
     : total
   const checkoutItemCount = buyNowItem ? Number(buyNowItem.quantity || 1) : itemCount
-  const [checkout, setCheckout] = useState({
+  const [checkout, setCheckout] = useState(() => {
+    let voucher = null
+    try {
+      voucher = JSON.parse(sessionStorage.getItem('fashion:checkoutVoucher') || 'null')
+    } catch {
+      voucher = null
+    }
+    return {
     contactName: '',
     contactPhone: '',
     shippingAddress: '',
@@ -23,8 +30,9 @@ export function CheckoutPage({ setNotice, setRoute }) {
     shippingLng: null,
     paymentMethod: 'COD',
     shippingFee: 30000,
-    discountAmount: 0,
-    voucherCode: '',
+    discountAmount: Number(voucher?.discountAmount || 0),
+    voucherCode: voucher?.code || '',
+    }
   })
   const [profileLoading, setProfileLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
@@ -32,6 +40,32 @@ export function CheckoutPage({ setNotice, setRoute }) {
   const [voucherMessage, setVoucherMessage] = useState('')
   const [voucherLoading, setVoucherLoading] = useState(false)
   const [createdOrder, setCreatedOrder] = useState(null)
+
+  useEffect(() => {
+    if (!checkout.voucherCode || checkoutTotal <= 0) return
+    let cancelled = false
+    voucherService.validateVoucher(checkout.voucherCode, checkoutTotal)
+      .then((result) => {
+        if (cancelled) return
+        if (!result.valid) {
+          setCheckout((current) => ({ ...current, voucherCode: '', discountAmount: 0 }))
+          setVoucherMessage(result.message || 'Voucher không còn áp dụng được.')
+          sessionStorage.removeItem('fashion:checkoutVoucher')
+          return
+        }
+        const discountAmount = Number(result.discountAmount || 0)
+        setCheckout((current) => ({ ...current, voucherCode: result.code || current.voucherCode, discountAmount }))
+        setVoucherMessage(result.message || 'Đã áp dụng voucher.')
+        sessionStorage.setItem('fashion:checkoutVoucher', JSON.stringify({ code: result.code || checkout.voucherCode, discountAmount }))
+      })
+      .catch((error) => {
+        if (cancelled) return
+        setCheckout((current) => ({ ...current, voucherCode: '', discountAmount: 0 }))
+        setVoucherMessage(error.message || 'Không thể xác minh voucher.')
+        sessionStorage.removeItem('fashion:checkoutVoucher')
+      })
+    return () => { cancelled = true }
+  }, [checkoutTotal, checkout.voucherCode])
 
   function showValidationError(message) {
     setValidationError(message)
@@ -96,6 +130,15 @@ export function CheckoutPage({ setNotice, setRoute }) {
       setValidationError('')
       setSubmitting(true)
 
+      if (checkout.voucherCode) {
+        const voucher = await voucherService.validateVoucher(checkout.voucherCode, checkoutTotal)
+        if (!voucher.valid) {
+          setCheckout((current) => ({ ...current, voucherCode: '', discountAmount: 0 }))
+          sessionStorage.removeItem('fashion:checkoutVoucher')
+          throw new Error(voucher.message || 'Voucher không còn áp dụng được.')
+        }
+      }
+
       const order = await orderService.checkout({
         paymentMethod: checkout.paymentMethod,
         shippingFee: checkout.shippingFee,
@@ -138,7 +181,7 @@ export function CheckoutPage({ setNotice, setRoute }) {
   }
 
   async function applyVoucher() {
-    const code = checkout.voucherCode.trim()
+    const code = checkout.voucherCode.trim().toUpperCase()
     if (!code) {
       setVoucherMessage('Vui lòng nhập mã giảm giá.')
       return
@@ -157,9 +200,14 @@ export function CheckoutPage({ setNotice, setRoute }) {
         voucherCode: result.code || code.toUpperCase(),
         discountAmount: Number(result.discountAmount || 0),
       }))
+      sessionStorage.setItem('fashion:checkoutVoucher', JSON.stringify({
+        code: result.code || code,
+        discountAmount: Number(result.discountAmount || 0),
+      }))
       setVoucherMessage(result.message || 'Áp dụng mã giảm giá thành công.')
     } catch (error) {
       setCheckout((current) => ({ ...current, discountAmount: 0 }))
+      sessionStorage.removeItem('fashion:checkoutVoucher')
       setVoucherMessage(error.message || 'Không thể kiểm tra mã giảm giá.')
     } finally {
       setVoucherLoading(false)
@@ -203,7 +251,7 @@ function PaymentInstructions({ order, paymentMethod }) {
       <strong className="payment-instructions-total">Tổng thanh toán: {new Intl.NumberFormat('vi-VN').format(Number(order.finalAmount || 0))} ₫</strong>
       {isBankTransfer ? (
         <>
-          {qrUrl && <img className="payment-qr-image" src={qrUrl} alt="Mã QR chuyển khoản" />}
+          {qrUrl && <img className="payment-qr-image" src={qrUrl} alt="Mã QR chuyển khoản" onError={(event) => { event.currentTarget.hidden = true }} />}
           {bankCode && accountNumber ? (
             <dl className="payment-account-details">
               <div><dt>Ngân hàng</dt><dd>{bankCode}</dd></div>

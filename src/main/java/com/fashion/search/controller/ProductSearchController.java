@@ -30,6 +30,8 @@ public class ProductSearchController {
     public ResponseEntity<Page<ProductSearchResponse>> searchProducts(
             @RequestParam(required = false) String keyword,
             @RequestParam(required = false) String category,
+            @RequestParam(required = false) String categoryName,
+            @RequestParam(required = false) Long categoryId,
             @RequestParam(required = false) String style,
             @RequestParam(required = false) String size,
             @RequestParam(required = false) String color,
@@ -42,6 +44,8 @@ public class ProductSearchController {
         ProductSearchRequest request = ProductSearchRequest.builder()
                 .keyword(keyword)
                 .category(category)
+                .categoryName(categoryName)
+                .categoryId(categoryId)
                 .style(style)
                 .size(size)
                 .color(color)
@@ -50,7 +54,9 @@ public class ProductSearchController {
                 .minRating(minRating)
                 .build();
         
-        Page<ProductSearchResponse> results = productSearchService.searchProducts(request, page, size_param);
+        int safePage = Math.max(0, page);
+        int safeSize = Math.max(1, Math.min(size_param, 50));
+        Page<ProductSearchResponse> results = productSearchService.searchProducts(request, safePage, safeSize);
         return ResponseEntity.ok(results);
     }
 
