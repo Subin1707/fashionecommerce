@@ -19,7 +19,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<Map<String, String>> handleNotFound(NoResourceFoundException exception) {
-        return response(HttpStatus.NOT_FOUND, "Resource not found");
+        return response(HttpStatus.NOT_FOUND, "Resource not found: " + exception.getResourcePath());
     }
 
     @ExceptionHandler(DataIntegrityViolationException.class)

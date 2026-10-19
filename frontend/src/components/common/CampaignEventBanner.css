@@ -1,0 +1,275 @@
+.campaign-banner {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 800 / 333;
+  min-height: 270px;
+  max-height: 560px;
+  overflow: hidden;
+  border-radius: 24px;
+  isolation: isolate;
+  background: linear-gradient(115deg, #6e394a, #bd8f7b 54%, #e8d5bd);
+  box-shadow: 0 24px 54px rgba(93, 54, 65, 0.16);
+}
+
+.campaign-banner-slide {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #fffaf4;
+  text-align: left;
+  z-index: 0;
+}
+
+.campaign-banner-slide:hover {
+  background: transparent;
+}
+
+.campaign-banner-picture,
+.campaign-banner-picture img,
+.campaign-banner-shade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.campaign-banner-picture { z-index: -2; }
+
+.campaign-banner-picture img {
+  object-fit: cover;
+  object-position: center;
+  transition: transform 700ms ease;
+}
+
+.campaign-banner-slide:hover .campaign-banner-picture img {
+  transform: scale(1.025);
+}
+
+.campaign-banner-shade {
+  z-index: -1;
+  background: linear-gradient(90deg, rgba(25, 19, 22, 0.78) 0%, rgba(38, 26, 30, 0.58) 36%, rgba(45, 30, 32, 0.08) 76%), linear-gradient(0deg, rgba(32, 22, 25, 0.34), transparent 32%);
+}
+
+.campaign-banner-shade.image-failed {
+  background:
+    radial-gradient(ellipse at 84% 18%, rgba(238, 190, 161, .78), transparent 34%),
+    linear-gradient(118deg, #46313b, #926879 58%, #c59983);
+}
+
+.campaign-banner-copy {
+  position: absolute;
+  top: 50%;
+  left: clamp(24px, 7.2%, 88px);
+  display: flex;
+  max-width: min(53%, 560px);
+  flex-direction: column;
+  align-items: flex-start;
+  transform: translateY(-50%);
+}
+
+.campaign-banner-kicker {
+  margin-bottom: 12px;
+  color: #f5d7b0;
+  font-size: clamp(10px, 1.05vw, 14px);
+  font-weight: 800;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.campaign-banner-title {
+  max-width: 100%;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(34px, 5.4vw, 76px);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 0.98;
+  text-wrap: balance;
+  text-shadow: 0 3px 22px rgba(0, 0, 0, 0.16);
+}
+
+.campaign-banner-message {
+  max-width: 38ch;
+  margin-top: 14px;
+  color: rgba(255, 250, 244, 0.9);
+  font-size: clamp(12px, 1.25vw, 17px);
+  line-height: 1.45;
+}
+
+.campaign-banner-offer {
+  margin-top: 14px;
+  color: #ffe2ae;
+  font-size: clamp(16px, 2.2vw, 29px);
+  font-weight: 900;
+  letter-spacing: 0.02em;
+}
+
+.campaign-banner-code {
+  margin-top: 5px;
+  color: rgba(255, 250, 244, 0.88);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+}
+
+.campaign-banner-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  margin-top: 22px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid rgba(255, 250, 244, 0.75);
+  color: #fffaf4;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.campaign-banner-cta span {
+  font-size: 17px;
+  line-height: 0.8;
+}
+
+.campaign-banner-date {
+  position: absolute;
+  right: 28px;
+  bottom: 24px;
+  color: rgba(255, 250, 244, 0.88);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.36);
+}
+
+.campaign-banner-arrow {
+  position: absolute;
+  z-index: 5;
+  top: 50%;
+  width: 42px;
+  min-width: 42px;
+  height: 42px;
+  min-height: 42px;
+  display: grid;
+  place-items: center;
+  padding: 0 0 3px;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  background: rgba(32, 24, 27, 0.28);
+  color: #fff;
+  font-family: Georgia, serif;
+  font-size: 34px;
+  line-height: 1;
+  transform: translateY(-50%);
+  backdrop-filter: blur(8px);
+}
+
+.campaign-banner-arrow:hover {
+  background: rgba(32, 24, 27, 0.65);
+}
+
+.campaign-banner-arrow.previous { left: 18px; }
+.campaign-banner-arrow.next { right: 18px; }
+
+.campaign-banner-arrow {
+  position: absolute !important;
+  z-index: 10 !important;
+}
+
+.campaign-banner-arrow.previous { left: 18px !important; }
+.campaign-banner-arrow.next { right: 18px !important; }
+
+.campaign-banner-dots {
+  position: absolute;
+  z-index: 5;
+  right: 50%;
+  bottom: 19px;
+  display: flex;
+  gap: 7px;
+  transform: translateX(50%);
+}
+
+.campaign-banner-dots button {
+  width: 8px;
+  min-width: 8px;
+  height: 8px;
+  min-height: 8px;
+  padding: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.6);
+  transition: width 160ms ease, background 160ms ease;
+}
+
+.campaign-banner-dots button.active {
+  width: 24px;
+  background: #fff;
+}
+
+@media (max-width: 760px) {
+  .campaign-banner {
+    min-height: 240px;
+    border-radius: 19px;
+  }
+
+  .campaign-banner-copy {
+    left: 7%;
+    max-width: 68%;
+  }
+
+  .campaign-banner-arrow {
+    width: 36px;
+    min-width: 36px;
+    height: 36px;
+    min-height: 36px;
+    font-size: 29px;
+  }
+
+  .campaign-banner-arrow.previous { left: 10px; }
+  .campaign-banner-arrow.next { right: 10px; }
+}
+
+@media (max-width: 640px) {
+  .campaign-banner {
+    aspect-ratio: 4 / 4.3;
+    min-height: 390px;
+    max-height: 560px;
+    border-radius: 17px;
+  }
+
+  .campaign-banner-picture img {
+    object-position: center;
+  }
+
+  .campaign-banner-shade {
+    background: linear-gradient(0deg, rgba(25, 19, 22, 0.78) 0%, rgba(38, 26, 30, 0.48) 54%, rgba(45, 30, 32, 0.02) 100%);
+  }
+
+  .campaign-banner-copy {
+    top: auto;
+    right: 22px;
+    bottom: 54px;
+    left: 22px;
+    max-width: none;
+    transform: none;
+  }
+
+  .campaign-banner-kicker { margin-bottom: 9px; font-size: 10px; }
+  .campaign-banner-title { max-width: 12ch; font-size: clamp(38px, 12vw, 58px); }
+  .campaign-banner-message { max-width: 32ch; margin-top: 10px; font-size: 13px; }
+  .campaign-banner-offer { margin-top: 9px; font-size: 20px; }
+  .campaign-banner-code { font-size: 10px; }
+  .campaign-banner-cta { margin-top: 13px; font-size: 10px; }
+  .campaign-banner-date { right: 16px; bottom: 14px; font-size: 9px; }
+  .campaign-banner-dots { bottom: 14px; right: auto; left: 16px; transform: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .campaign-banner-picture img,
+  .campaign-banner-dots button { transition: none; }
+}

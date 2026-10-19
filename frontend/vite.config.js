@@ -10,6 +10,10 @@ export default defineConfig({
     strictPort: true,
     allowedHosts: ['.trycloudflare.com'],
     proxy: {
+      '/uploads': {
+        target: 'http://localhost:8081',
+        changeOrigin: true,
+      },
       '/api': {
         target: 'http://localhost:8081',
         changeOrigin: true,
@@ -33,6 +37,10 @@ export default defineConfig({
     strictPort: true,
     allowedHosts: ['.trycloudflare.com'],
     proxy: {
+      '/uploads': {
+        target: 'http://localhost:8081',
+        changeOrigin: true,
+      },
       '/api': {
         target: 'http://localhost:8081',
         changeOrigin: true,

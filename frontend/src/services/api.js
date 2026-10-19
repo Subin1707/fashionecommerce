@@ -62,7 +62,13 @@ export async function apiRequest(path, options = {}) {
       throwForbiddenError(path)
     }
 
-    throw new Error(data?.message || data?.error || text || `Loi may chu (HTTP ${response.status})`)
+    const serverMessage = data?.message || data?.error || text
+    if (response.status === 404 && String(serverMessage).startsWith('Resource not found')) {
+      const resourcePath = String(serverMessage).match(/Resource not found:\s*(.+)$/)?.[1]
+      const wrongResource = resourcePath ? `Backend báo không có tài nguyên ${resourcePath}.` : ''
+      throw new Error(`API không tìm thấy ${options.method || 'GET'} ${path} (HTTP 404). ${wrongResource} Hãy dừng backend cũ và chạy .\\scripts\\run-backend-current.ps1 từ thư mục E:\\fashionecommerce.`)
+    }
+    throw new Error(serverMessage || `Loi may chu (HTTP ${response.status})`)
   }
 
   return data

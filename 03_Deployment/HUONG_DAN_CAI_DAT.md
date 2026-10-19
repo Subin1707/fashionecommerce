@@ -52,16 +52,17 @@ He thong Docker khoi dong cac dich vu phu tro:
 
 ## 5. Chay Backend
 
-Tai thu muc goc du an:
+Tai checkout hien tai `E:\fashionecommerce` de backend nap dung Event API va migration moi nhat:
 
 ```powershell
-.\mvnw.cmd spring-boot:run
+.\scripts\run-backend-current.ps1
 ```
 
 Neu dung Maven cai san:
 
 ```powershell
-mvn spring-boot:run
+Set-Location E:\fashionecommerce
+mvn.cmd spring-boot:run
 ```
 
 Backend mac dinh chay tai:

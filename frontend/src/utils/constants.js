@@ -25,6 +25,7 @@ export const ROUTES = {
   ADMIN_CATEGORIES: 'admin-categories',
   ADMIN_BRANDS: 'admin-brands',
   ADMIN_DISCOUNTS: 'admin-discounts',
+  ADMIN_EVENTS: 'admin-events',
   ADMIN_REVIEWS: 'admin-reviews',
   ADMIN_REPORTS: 'admin-reports',
 }
@@ -56,6 +57,7 @@ export const ADMIN_NAV = [
   ['Danh mục', ROUTES.ADMIN_CATEGORIES],
   ['Thương hiệu', ROUTES.ADMIN_BRANDS],
   ['Mã giảm giá', ROUTES.ADMIN_DISCOUNTS],
+  ['Sự kiện', ROUTES.ADMIN_EVENTS],
   ['Đánh giá', ROUTES.ADMIN_REVIEWS],
   ['Báo cáo', ROUTES.ADMIN_REPORTS],
 ]

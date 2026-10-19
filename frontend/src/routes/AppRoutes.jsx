@@ -31,6 +31,7 @@ const UserManagementPage = lazyPage(() => import('../pages/admin/UserManagementP
 const CategoryManagementPage = lazyPage(() => import('../pages/admin/CategoryManagementPage'), 'CategoryManagementPage')
 const BrandManagementPage = lazyPage(() => import('../pages/admin/BrandManagementPage'), 'BrandManagementPage')
 const DiscountManagementPage = lazyPage(() => import('../pages/admin/DiscountManagementPage'), 'DiscountManagementPage')
+const CampaignEventManagementPage = lazyPage(() => import('../pages/admin/CampaignEventManagementPage'), 'CampaignEventManagementPage')
 const ReviewManagementPage = lazyPage(() => import('../pages/admin/ReviewManagementPage'), 'ReviewManagementPage')
 const ReportPage = lazyPage(() => import('../pages/admin/ReportPage'), 'ReportPage')
 
@@ -334,6 +335,14 @@ function AdminRoutes({
   if (route === ROUTES.ADMIN_DISCOUNTS) {
     page = (
       <DiscountManagementPage
+        setNotice={setNotice}
+      />
+    )
+  }
+
+  if (route === ROUTES.ADMIN_EVENTS) {
+    page = (
+      <CampaignEventManagementPage
         setNotice={setNotice}
       />
     )

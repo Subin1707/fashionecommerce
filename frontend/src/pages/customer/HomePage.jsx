@@ -1,6 +1,7 @@
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { FashionMark } from '../../components/common/FashionMark'
 import { SafeImage } from '../../components/common/SafeImage'
+import { CampaignEventBanner } from '../../components/common/CampaignEventBanner'
 import * as brandService from '../../services/brandService'
 import { ROUTES } from '../../utils/constants'
 
@@ -72,6 +73,7 @@ export function HomePage({ route, setNotice, setRoute }) {
 
   return (
     <div className="fashion-home">
+      <CampaignEventBanner setRoute={setRoute} />
       {/* HERO */}
       <section className="fashion-hero">
         <div className="fashion-hero-content">

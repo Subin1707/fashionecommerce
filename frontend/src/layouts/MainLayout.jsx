@@ -223,6 +223,10 @@ export function MainLayout({ route, setRoute, notice, children }) {
         <SessionPanel
           auth={auth}
           onLogout={logout}
+          itemCount={itemCount}
+          onOpenCart={() => setRoute(ROUTES.CART)}
+          showCart={!isAdmin && auth.role === 'CUSTOMER'}
+          currentRoute={route}
         />
       </aside>
 
@@ -258,13 +262,30 @@ export function MainLayout({ route, setRoute, notice, children }) {
   )
 }
 
-function SessionPanel({ auth, onLogout }) {
+function SessionPanel({ auth, onLogout, itemCount, onOpenCart, showCart, currentRoute }) {
   return (
     <div className="login-panel">
       <div>
         <strong>{auth.email}</strong>
         <small>{auth.role}</small>
       </div>
+
+      {showCart && (
+        <button
+          type="button"
+          className={`header-cart-button ${currentRoute === ROUTES.CART ? 'active' : ''}`}
+          aria-label={`Giỏ hàng, ${itemCount} sản phẩm`}
+          title="Giỏ hàng"
+          onClick={onOpenCart}
+        >
+          <svg viewBox="0 0 24 24" aria-hidden="true" fill="none">
+            <path d="M3 4h2l2.1 10.1a2 2 0 0 0 2 1.6h8.8a2 2 0 0 0 1.9-1.4L22 8H6" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" />
+            <circle cx="10" cy="20" r="1.3" fill="currentColor" />
+            <circle cx="18" cy="20" r="1.3" fill="currentColor" />
+          </svg>
+          {itemCount > 0 && <span className="header-cart-count">{itemCount > 99 ? '99+' : itemCount}</span>}
+        </button>
+      )}
 
       <button
         type="button"
