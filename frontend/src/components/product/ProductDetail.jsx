@@ -143,7 +143,7 @@ export function ProductDetail({ product, onAdd, onBuyNow, isAdding = false, isBu
         <div className="detail-price-row">
           <strong>{formatCurrency(variantPrice)}</strong>
           {hasSale && <del>{formatCurrency(product.basePrice)}</del>}
-          {hasSale && <mark>Sale</mark>}
+          {hasSale && <mark>Đang giảm giá</mark>}
         </div>
 
         <div className="detail-rating-row">
@@ -223,7 +223,7 @@ export function ProductDetail({ product, onAdd, onBuyNow, isAdding = false, isBu
         {variants.length > 0 && (
           <div className="detail-selection-note">
             <span>Đang chọn</span>
-            <strong>{selectedColor || 'Màu mặc định'} / {selectedSize || 'Size chuẩn'}</strong>
+            <strong>{selectedColor || 'Màu mặc định'} / {selectedSize || 'Kích cỡ tiêu chuẩn'}</strong>
           </div>
         )}
 
@@ -231,7 +231,7 @@ export function ProductDetail({ product, onAdd, onBuyNow, isAdding = false, isBu
           <div><dt>Chất liệu</dt><dd>{product.material || 'Đẳng cấp premium'}</dd></div>
           <div><dt>Form</dt><dd>{product.fit || 'Regular'}</dd></div>
           <div><dt>Phong cách</dt><dd>{product.gender || 'UNISEX'}</dd></div>
-          <div><dt>SKU</dt><dd>{selectedVariant?.sku || 'Không có'}</dd></div>
+          <div><dt>Mã SKU</dt><dd>{selectedVariant?.sku || 'Không có'}</dd></div>
         </dl>
 
         <div className="detail-service-list">

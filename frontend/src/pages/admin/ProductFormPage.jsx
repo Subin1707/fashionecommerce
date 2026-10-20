@@ -180,6 +180,9 @@ function validateProductPayload(product) {
   ) {
     return 'Giá khuyến mãi không hợp lệ.'
   }
+  if (product.salePrice != null && product.salePrice > product.basePrice) {
+    return 'Giá khuyến mãi không được lớn hơn giá niêm yết.'
+  }
 
   /*
    * Sản phẩm không biến thể

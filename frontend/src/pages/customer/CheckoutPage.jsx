@@ -6,6 +6,10 @@ import * as paymentService from '../../services/paymentService'
 import * as userService from '../../services/userService'
 import * as voucherService from '../../services/voucherService'
 import { ROUTES } from '../../utils/constants'
+import { validatePhone } from '../../utils/validators'
+
+const FREE_SHIPPING_THRESHOLD = 500000
+const STANDARD_SHIPPING_FEE = 30000
 
 export function CheckoutPage({ setNotice, setRoute }) {
   const { items, total, itemCount, loadCart } = useCart()
@@ -29,11 +33,14 @@ export function CheckoutPage({ setNotice, setRoute }) {
     shippingLat: null,
     shippingLng: null,
     paymentMethod: 'COD',
-    shippingFee: 30000,
+    shippingFee: STANDARD_SHIPPING_FEE,
     discountAmount: Number(voucher?.discountAmount || 0),
     voucherCode: voucher?.code || '',
     }
   })
+  const shippingFee = checkoutTotal >= FREE_SHIPPING_THRESHOLD || checkout.voucherCode?.trim().toUpperCase() === 'FREESHIP'
+    ? 0
+    : checkoutTotal > 0 ? STANDARD_SHIPPING_FEE : 0
   const [profileLoading, setProfileLoading] = useState(true)
   const [submitting, setSubmitting] = useState(false)
   const [validationError, setValidationError] = useState('')
@@ -66,6 +73,10 @@ export function CheckoutPage({ setNotice, setRoute }) {
       })
     return () => { cancelled = true }
   }, [checkoutTotal, checkout.voucherCode])
+
+  useEffect(() => {
+    setCheckout((current) => current.shippingFee === shippingFee ? current : { ...current, shippingFee })
+  }, [shippingFee])
 
   function showValidationError(message) {
     setValidationError(message)
@@ -104,16 +115,13 @@ export function CheckoutPage({ setNotice, setRoute }) {
       showValidationError('Vui lòng nhập họ tên người nhận.')
       return
     }
-    if (!checkout.contactPhone.trim()) {
-      showValidationError('Vui lòng nhập số điện thoại người nhận.')
+    const phoneError = validatePhone(checkout.contactPhone, { required: true })
+    if (phoneError) {
+      showValidationError(phoneError)
       return
     }
     if (!checkout.shippingAddress.trim()) {
       showValidationError('Vui lòng nhập địa chỉ giao hàng.')
-      return
-    }
-    if (checkout.shippingLat == null || checkout.shippingLng == null) {
-      showValidationError('Vui lòng chọn chính xác vị trí giao hàng trên bản đồ.')
       return
     }
     const shippingAddress = [
@@ -203,6 +211,7 @@ export function CheckoutPage({ setNotice, setRoute }) {
       sessionStorage.setItem('fashion:checkoutVoucher', JSON.stringify({
         code: result.code || code,
         discountAmount: Number(result.discountAmount || 0),
+        type: (result.code || code).toUpperCase() === 'FREESHIP' ? 'FREESHIP' : '',
       }))
       setVoucherMessage(result.message || 'Áp dụng mã giảm giá thành công.')
     } catch (error) {
@@ -215,7 +224,15 @@ export function CheckoutPage({ setNotice, setRoute }) {
   }
 
   return createdOrder ? (
-      <PaymentInstructions order={createdOrder} paymentMethod={checkout.paymentMethod} />
+      <PaymentInstructions
+        order={createdOrder}
+        paymentMethod={checkout.paymentMethod}
+        customer={{
+          name: checkout.contactName,
+          phone: checkout.contactPhone,
+          address: [checkout.shippingAddressDetail, checkout.shippingAddress].filter(Boolean).join(', '),
+        }}
+      />
     ) : <CheckoutForm
       checkout={checkout}
       total={checkoutTotal}
@@ -233,7 +250,7 @@ export function CheckoutPage({ setNotice, setRoute }) {
     />
 }
 
-function PaymentInstructions({ order, paymentMethod }) {
+function PaymentInstructions({ order, paymentMethod, customer }) {
   const isBankTransfer = paymentMethod === 'BANK_TRANSFER'
   const bankCode = import.meta.env.VITE_PAYMENT_BANK_CODE
   const accountNumber = import.meta.env.VITE_PAYMENT_ACCOUNT_NUMBER
@@ -245,10 +262,19 @@ function PaymentInstructions({ order, paymentMethod }) {
 
   return (
     <section className="payment-instructions">
-      <p className="eyebrow">Đơn hàng #{order.id}</p>
-      <h1>{isBankTransfer ? 'Thông tin chuyển khoản' : 'Hướng dẫn thanh toán ví điện tử'}</h1>
-      <p>Đơn hàng đã được tạo và đang chờ xác nhận thanh toán. Trạng thái sẽ cập nhật sau khi cửa hàng đối soát.</p>
-      <strong className="payment-instructions-total">Tổng thanh toán: {new Intl.NumberFormat('vi-VN').format(Number(order.finalAmount || 0))} ₫</strong>
+      <div className="payment-instructions-heading">
+        <span className="payment-success-mark" aria-hidden="true">✓</span>
+        <div>
+          <p className="eyebrow">ĐẶT HÀNG THÀNH CÔNG · #{order.id}</p>
+          <h1>{isBankTransfer ? 'Hoàn tất chuyển khoản' : 'Hướng dẫn thanh toán'}</h1>
+          <p>Đơn hàng đã được tạo và đang chờ cửa hàng xác nhận thanh toán.</p>
+        </div>
+      </div>
+
+      <div className="payment-instructions-content">
+        <div className="payment-transfer-panel">
+          <h2>{isBankTransfer ? 'Thông tin chuyển khoản' : 'Thông tin đơn hàng'}</h2>
+          <strong className="payment-instructions-total">{new Intl.NumberFormat('vi-VN').format(Number(order.finalAmount || 0))} ₫</strong>
       {isBankTransfer ? (
         <>
           {qrUrl && <img className="payment-qr-image" src={qrUrl} alt="Mã QR chuyển khoản" onError={(event) => { event.currentTarget.hidden = true }} />}
@@ -260,13 +286,25 @@ function PaymentInstructions({ order, paymentMethod }) {
               <div><dt>Nội dung chuyển khoản</dt><dd>{transferContent}</dd></div>
             </dl>
           ) : (
-            <p role="status">Cửa hàng chưa cấu hình tài khoản nhận tiền. Vui lòng liên hệ cửa hàng để lấy thông tin chuyển khoản; không chuyển tiền vào tài khoản chưa được xác nhận.</p>
+            <p className="payment-config-warning" role="status"><strong>Chưa có thông tin tài khoản nhận tiền.</strong> Vui lòng liên hệ cửa hàng để xác nhận tài khoản trước khi chuyển khoản.</p>
           )}
         </>
       ) : (
         <p>Vui lòng mở ứng dụng ví điện tử và liên hệ cửa hàng để nhận thông tin thanh toán. Đơn hàng chưa được đánh dấu đã thanh toán.</p>
       )}
-      <p>Sau khi chuyển khoản, cửa hàng sẽ xác nhận đơn hàng. Nội dung chuyển khoản giúp đối chiếu đơn chính xác.</p>
+          <p className="payment-transfer-note">Nội dung chuyển khoản: <strong>{transferContent}</strong>. Cửa hàng sẽ xác nhận đơn sau khi đối soát.</p>
+        </div>
+
+        <div className="payment-customer-panel">
+          <h2>Thông tin người nhận hàng</h2>
+          <dl className="payment-customer-details">
+            <div><dt>Họ và tên</dt><dd>{customer.name || '—'}</dd></div>
+            <div><dt>Số điện thoại</dt><dd>{customer.phone || '—'}</dd></div>
+            <div><dt>Địa chỉ giao hàng</dt><dd>{customer.address || order.shippingAddress || '—'}</dd></div>
+          </dl>
+          <p>Vui lòng kiểm tra thông tin nhận hàng. Nếu cần điều chỉnh, hãy liên hệ cửa hàng và cung cấp mã đơn #{order.id}.</p>
+        </div>
+      </div>
     </section>
   )
 }

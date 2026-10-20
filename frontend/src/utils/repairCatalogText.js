@@ -32,13 +32,20 @@ function decodeMojibakePass(value) {
 export function repairCatalogText(value) {
   if (typeof value !== 'string' || !value) return value
 
+  // Repair common partial mojibake that cannot be decoded as a complete UTF-8 byte sequence.
   let repaired = value
+    .replace(/ÁÂ[\u0080-\u009f]?(?=[a-zà-ỹ])/giu, 'Á')
+    .replace(/ÁÂ(?=[a-zà-ỹ])/giu, 'Á')
+    .replace(/Ã\s+(?=[a-zà-ỹ])/giu, 'à')
+    .replace(/Ä‚(?=[oO])/gu, 'Á')
   for (let pass = 0; pass < 3; pass += 1) {
     const next = decodeMojibakePass(repaired)
     if (next === repaired) break
     repaired = next
   }
-  return repaired
+  return repaired.replace(/ÁÂ[\u0080-\u009f]?(?=[a-zà-ỹ])/giu, 'Á')
+    .replace(/ÁÂ(?=[a-zà-ỹ])/giu, 'Á')
+    .replace(/Ã\s+(?=[a-zà-ỹ])/giu, 'à')
 }
 
 export function repairBrand(brand) {

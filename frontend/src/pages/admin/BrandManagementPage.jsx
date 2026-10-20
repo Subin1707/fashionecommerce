@@ -103,6 +103,15 @@ export function BrandManagementPage({ setNotice }) {
     event.preventDefault()
     if (!editingBrand) return
 
+    if (!editingBrand.name.trim()) {
+      setNotice?.('Vui lòng nhập tên thương hiệu.')
+      return
+    }
+    if (!slugify(editingBrand.slug || editingBrand.name)) {
+      setNotice?.('Tên thương hiệu cần có ít nhất một chữ cái hoặc chữ số để tạo slug.')
+      return
+    }
+
     setSaving(true)
     const payload = toBrandPayload(editingBrand)
 

@@ -2,6 +2,7 @@ import { lazy, Suspense, useState } from 'react'
 import { paymentMethods } from '../../services/paymentService'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { SafeImage } from '../common/SafeImage'
+import { validatePhone } from '../../utils/validators'
 
 const DeliveryLocationPicker = lazy(() => import('./DeliveryLocationPicker').then((module) => ({
   default: module.DeliveryLocationPicker,
@@ -76,16 +77,20 @@ export function CheckoutForm({
 
             <label>Số điện thoại
               <input
+                type="tel"
+                inputMode="numeric"
+                maxLength={11}
                 value={checkout.contactPhone}
                 onChange={(event) => updateField('contactPhone', event.target.value)}
                 placeholder="09xxxxxxxx"
               />
+              {validatePhone(checkout.contactPhone) && <small className="field-error" role="alert">{validatePhone(checkout.contactPhone)}</small>}
             </label>
 
             <label className="checkout-wide-field">Địa chỉ giao hàng
               <textarea
                 value={checkout.shippingAddress}
-                onChange={(event) => onChange({ ...checkout, shippingAddress: event.target.value, shippingLat: null, shippingLng: null })}
+                onChange={(event) => onChange({ ...checkout, shippingAddress: event.target.value })}
                 placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"
               />
             </label>
@@ -99,7 +104,7 @@ export function CheckoutForm({
                 maxLength={300}
                 aria-describedby="shipping-address-detail-help"
               />
-              <small id="shipping-address-detail-help">Bổ sung số nhà, căn hộ, tầng hoặc hướng dẫn tìm nhà. Thông tin này được lưu cùng địa chỉ trong đơn hàng.</small>
+              <small id="shipping-address-detail-help">Nhập số nhà, căn hộ, tầng hoặc hướng dẫn tìm nhà. Địa chỉ nhập tay được lưu nguyên văn; bản đồ bên dưới chỉ bổ sung vị trí ghim.</small>
             </label>
             <div className="checkout-wide-field">
               {showLocationPicker ? (
@@ -108,7 +113,7 @@ export function CheckoutForm({
                     latitude={checkout.shippingLat}
                     longitude={checkout.shippingLng}
                     address={checkout.shippingAddress}
-                    onChange={(shippingLat, shippingLng, shippingAddress) => onChange({ ...checkout, shippingLat, shippingLng, shippingAddress })}
+                    onChange={(shippingLat, shippingLng) => onChange({ ...checkout, shippingLat, shippingLng })}
                   />
                 </Suspense>
               ) : (
@@ -183,7 +188,7 @@ export function CheckoutForm({
           <OrderItem
             imageUrl={buyNowItem.imageUrl}
             name={buyNowItem.productName}
-            meta={`${buyNowItem.color || 'Màu mặc định'} / ${buyNowItem.size || 'Size chuẩn'}`}
+            meta={`${buyNowItem.color || 'Màu mặc định'} / ${buyNowItem.size || 'Cỡ tiêu chuẩn'}`}
             sku={buyNowItem.sku || buyNowItem.variantId}
             quantity={buyNowItem.quantity}
             price={buyNowItem.price}
@@ -195,7 +200,7 @@ export function CheckoutForm({
                 key={item.id}
                 imageUrl={item.imageUrl}
                 name={item.productName}
-                meta={item.size || 'Size chuẩn'}
+                meta={item.size || 'Cỡ tiêu chuẩn'}
                 sku={item.variantId}
                 quantity={item.quantity}
                 price={item.price}
@@ -243,12 +248,12 @@ function OrderItem({ imageUrl, name, meta, sku, quantity, price }) {
   return (
     <div className="checkout-order-item">
       <div className="checkout-order-image">
-        <SafeImage src={imageUrl} alt={name} fallbackLabel="Fashion item" />
+          <SafeImage src={imageUrl} alt={name} fallbackLabel="Sản phẩm thời trang" />
       </div>
       <div>
         <strong>{name || 'Sản phẩm'}</strong>
         <p>{meta}</p>
-        <small>SKU: {sku || '-'}</small>
+        <small>Mã SKU: {sku || '-'}</small>
       </div>
       <div className="checkout-order-price">
         <span>x{quantity || 1}</span>

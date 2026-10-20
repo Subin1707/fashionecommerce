@@ -148,7 +148,7 @@ export function CartPage({ setNotice, setRoute }) {
   // ===============================
   async function handleRemove(item) {
     const productName = productMap[item.productId]?.name || `Sản phẩm #${item.productId}`
-    const confirmed = window.confirm(`Bạn có muốn bỏ "${productName}" (Size ${item.size || '-'}) khỏi giỏ hàng?`)
+    const confirmed = window.confirm(`Bạn có muốn bỏ "${productName}" (cỡ ${item.size || '-'}) khỏi giỏ hàng?`)
     if (!confirmed) return
 
     try {
@@ -230,7 +230,7 @@ export function CartPage({ setNotice, setRoute }) {
   function goCheckout() {
     if (!items.length) return
     if (appliedVoucher) {
-      sessionStorage.setItem('fashion:checkoutVoucher', JSON.stringify({ code: appliedVoucher.code, discountAmount }))
+      sessionStorage.setItem('fashion:checkoutVoucher', JSON.stringify({ code: appliedVoucher.code, discountAmount, type: appliedVoucher.type }))
     } else {
       sessionStorage.removeItem('fashion:checkoutVoucher')
     }
@@ -407,7 +407,7 @@ export function CartPage({ setNotice, setRoute }) {
                   title="Nhấn để xem chi tiết sản phẩm"
                 >
                   {image ? (
-                    <SafeImage src={image} alt={name} fallbackLabel="Fashion item" />
+                    <SafeImage src={image} alt={name} fallbackLabel="Sản phẩm thời trang" />
                   ) : (
                     <div className="item-image-placeholder">
                       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -433,7 +433,7 @@ export function CartPage({ setNotice, setRoute }) {
 
                   <div className="item-meta-row">
                     <span className="item-variant-pill">
-                      Size: <strong>{item.size || 'Tiêu chuẩn'}</strong>
+                      Cỡ: <strong>{item.size || 'Tiêu chuẩn'}</strong>
                     </span>
                     <span className="item-stock-tag">Còn hàng</span>
                   </div>
@@ -532,7 +532,7 @@ export function CartPage({ setNotice, setRoute }) {
               )}
             </div>
 
-            {/* MÃ KHUYẾN MÃI */}
+            {/* Mã khuyến mãi */}
             <div className="summary-voucher-section">
               {appliedVoucher ? (
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: '13px' }}>

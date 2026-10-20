@@ -296,7 +296,7 @@ export function InventoryPage({ setNotice }) {
                     required
                   />
                 </label>
-                <label>Size
+                <label>Kích cỡ
                   <input
                     value={variantForm.size}
                     onChange={(event) => setVariantForm({ ...variantForm, size: event.target.value })}

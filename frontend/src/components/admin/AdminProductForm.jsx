@@ -61,7 +61,7 @@ export function AdminProductForm({
           <p className="eyebrow">Biểu mẫu sản phẩm</p>
           <h2>{title}</h2>
         </div>
-        <span>{value.status || 'ACTIVE'}</span>
+        <span>{value.status === 'INACTIVE' ? 'Đã ẩn' : 'Đang bán'}</span>
       </div>
 
       <div className="admin-product-form-grid">
@@ -170,7 +170,7 @@ export function AdminProductForm({
 
                 <input
                   type="text"
-                  placeholder="Size"
+                  placeholder="Kích cỡ"
                   value={variant.size ?? ''}
                   onChange={(event) => {
                     const next = [...(value.variants || [])]
@@ -282,8 +282,8 @@ export function AdminProductForm({
             value={value.status}
             onChange={(event) => updateField('status', event.target.value)}
           >
-            <option>ACTIVE</option>
-            <option>INACTIVE</option>
+            <option value="ACTIVE">Đang bán</option>
+            <option value="INACTIVE">Đã ẩn</option>
           </select>
         </label>
 

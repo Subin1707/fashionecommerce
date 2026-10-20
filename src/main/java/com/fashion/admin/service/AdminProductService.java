@@ -23,6 +23,7 @@ import com.fashion.product.repository.ProductSizeChartRepository;
 import com.fashion.product.repository.ProductVariantRepository;
 import com.fashion.search.service.ProductSearchService;
 import jakarta.persistence.EntityManager;
+import java.math.BigDecimal;
 import java.util.List;
 import java.text.Normalizer;
 import java.util.Map;
@@ -80,6 +81,7 @@ public class AdminProductService {
     public AdminProductDto getProductById(Long productId) {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
+
         return convertToAdminDto(product);
     }
 
@@ -122,6 +124,14 @@ public class AdminProductService {
 
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new RuntimeException("Product not found"));
+
+        BigDecimal nextBasePrice = request.getBasePrice() == null ? product.getBasePrice() : request.getBasePrice();
+        if (nextBasePrice == null || nextBasePrice.signum() <= 0) {
+            throw new IllegalArgumentException("Giá niêm yết phải lớn hơn 0");
+        }
+        if (request.getSalePrice() != null && request.getSalePrice().compareTo(nextBasePrice) > 0) {
+            throw new IllegalArgumentException("Giá khuyến mãi không được lớn hơn giá niêm yết");
+        }
 
         if (request.getBrandId() != null) {
             Brand brand = brandRepository.findById(request.getBrandId())
@@ -187,9 +197,9 @@ public class AdminProductService {
         return convertToAdminDto(updated);
     }
 
-    public void deleteProduct(Long productId) {
+    public boolean deleteProduct(Long productId) {
         Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new RuntimeException("Product not found"));
+                .orElseThrow(() -> new IllegalArgumentException("Không tìm thấy sản phẩm cần xóa."));
 
         Number orderItemCount = (Number) entityManager.createNativeQuery(
                         "select count(*) from order_items where product_id = :productId")
@@ -197,18 +207,39 @@ public class AdminProductService {
                 .getSingleResult();
 
         if (orderItemCount.longValue() > 0) {
-            throw new IllegalStateException(
-                    "Khong the xoa san pham da phat sinh don hang. Hay giu san pham de bao toan lich su don hang."
-            );
+            product.setStatus("INACTIVE");
+            productRepository.saveAndFlush(product);
+            productSearchService.syncProductsToElasticsearch();
+            return false;
         }
 
         entityManager.createNativeQuery("delete from cart_items where product_id = :productId")
                 .setParameter("productId", productId)
                 .executeUpdate();
 
+        entityManager.createNativeQuery("delete from wishlist_items where product_id = :productId")
+                .setParameter("productId", productId)
+                .executeUpdate();
+        entityManager.createNativeQuery("delete from product_size_charts where product_id = :productId")
+                .setParameter("productId", productId)
+                .executeUpdate();
+        entityManager.createNativeQuery("delete from product_images where product_id = :productId")
+                .setParameter("productId", productId)
+                .executeUpdate();
+        entityManager.createNativeQuery("delete from review_media where review_id in (select id from reviews where product_id = :productId)")
+                .setParameter("productId", productId)
+                .executeUpdate();
+        entityManager.createNativeQuery("delete from reviews where product_id = :productId")
+                .setParameter("productId", productId)
+                .executeUpdate();
+        entityManager.createNativeQuery("delete from product_variants where product_id = :productId")
+                .setParameter("productId", productId)
+                .executeUpdate();
+
         productRepository.delete(product);
         productRepository.flush();
-        productSearchService.syncProductsToElasticsearch();
+        productSearchService.deleteProductFromSearchIndex(productId);
+        return true;
     }
 
     public AdminProductVariantDto createVariant(Long productId, CreateVariantRequest request) {
@@ -760,6 +791,10 @@ public class AdminProductService {
 
         if (request.getBasePrice() == null || request.getBasePrice().signum() <= 0) {
             throw new IllegalArgumentException("Base price must be greater than 0");
+        }
+
+        if (request.getSalePrice() != null && request.getSalePrice().compareTo(request.getBasePrice()) > 0) {
+            throw new IllegalArgumentException("Giá khuyến mãi không được lớn hơn giá niêm yết");
         }
 
         if (

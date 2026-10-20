@@ -20,6 +20,8 @@ public class VoucherService {
             throw new IllegalArgumentException("Yêu cầu voucher không hợp lệ");
         }
 
+        validateDateRange(request.getStartDate(), request.getEndDate());
+
         if (request.getCode() == null || request.getCode().isBlank()) {
             throw new IllegalArgumentException("Mã voucher không hợp lệ");
         }
@@ -67,7 +69,13 @@ public class VoucherService {
 
     @Transactional
     public Voucher updateVoucher(Long id, VoucherRequest request) {
+        if (request == null) {
+            throw new IllegalArgumentException("Yêu cầu voucher không hợp lệ");
+        }
         Voucher existing = getVoucherById(id);
+        validateDateRange(
+                request.getStartDate() == null ? existing.getStartDate() : request.getStartDate(),
+                request.getEndDate() == null ? existing.getEndDate() : request.getEndDate());
 
         if (request.getCode() != null && !request.getCode().isBlank()) {
             String newCode = request.getCode().trim().toUpperCase();
@@ -109,6 +117,12 @@ public class VoucherService {
         }
 
         return voucherRepository.save(existing);
+    }
+
+    private void validateDateRange(LocalDateTime startDate, LocalDateTime endDate) {
+        if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
+            throw new IllegalArgumentException("Ngày bắt đầu không được sau ngày kết thúc");
+        }
     }
 
     @Transactional

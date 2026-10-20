@@ -41,7 +41,7 @@ export async function apiRequest(path, options = {}) {
   } catch (error) {
     if (error.name === 'AbortError') {
       if (options.signal?.aborted) throw error
-      throw new Error('API phan hoi qua lau, vui long kiem tra backend hoac thu tai lai.')
+      throw new Error('Máy chủ phản hồi quá lâu. Vui lòng kiểm tra kết nối hoặc thử tải lại trang.')
     }
     throw error
   } finally {
@@ -53,12 +53,18 @@ export async function apiRequest(path, options = {}) {
 
   if (!response.ok) {
     if (response.status === 401) {
+      if (path === '/api/auth/login') {
+        throw new Error(data?.message || 'Thông tin đăng nhập không chính xác. Vui lòng kiểm tra lại.')
+      }
       clearStoredAuth()
       window.dispatchEvent(new CustomEvent('auth:unauthorized'))
-      throw new Error('Phien dang nhap da het han. Vui long dang nhap lai.')
+      throw new Error('Phiên đăng nhập đã hết hạn. Vui lòng đăng nhập lại.')
     }
 
     if (response.status === 403) {
+      if (path === '/api/auth/login') {
+        throw new Error(data?.message || 'Yêu cầu đăng nhập bị máy chủ từ chối. Vui lòng kiểm tra email, mật khẩu và trạng thái tài khoản.')
+      }
       throwForbiddenError(path)
     }
 
@@ -68,7 +74,7 @@ export async function apiRequest(path, options = {}) {
       const wrongResource = resourcePath ? `Backend báo không có tài nguyên ${resourcePath}.` : ''
       throw new Error(`API không tìm thấy ${options.method || 'GET'} ${path} (HTTP 404). ${wrongResource} Hãy dừng backend cũ và chạy .\\scripts\\run-backend-current.ps1 từ thư mục E:\\fashionecommerce.`)
     }
-    throw new Error(serverMessage || `Loi may chu (HTTP ${response.status})`)
+    throw new Error(serverMessage || `Lỗi máy chủ (HTTP ${response.status})`)
   }
 
   return data
@@ -79,24 +85,24 @@ function throwForbiddenError(path) {
 
   if (!auth?.token) {
     window.dispatchEvent(new CustomEvent('auth:unauthorized'))
-    throw new Error('Ban chua dang nhap. Vui long dang nhap lai.')
+    throw new Error('Bạn chưa đăng nhập. Vui lòng đăng nhập lại.')
   }
 
   if (path.startsWith('/api/admin')) {
-    throw new Error('Phien Admin khong duoc backend chap nhan. Vui long dang xuat, dang nhap lai bang tai khoan Admin roi thu lai.')
+    throw new Error('Phiên quản trị không hợp lệ. Vui lòng đăng xuất và đăng nhập lại bằng tài khoản quản trị.')
   }
 
   if (path.startsWith('/api/cart') && auth.role === 'CUSTOMER') {
     clearStoredAuth()
     window.dispatchEvent(new CustomEvent('auth:unauthorized'))
-    throw new Error('Phien Customer khong duoc backend chap nhan. Vui long dang nhap lai bang tai khoan Customer.')
+    throw new Error('Phiên khách hàng không hợp lệ. Vui lòng đăng nhập lại bằng tài khoản khách hàng.')
   }
 
   if (auth.role === 'ADMIN') {
-    throw new Error('Tai khoan Admin khong co quyen thuc hien thao tac danh cho Khach hang. Vui long dung tai khoan Customer.')
+    throw new Error('Tài khoản quản trị không có quyền thực hiện thao tác dành cho khách hàng. Vui lòng dùng tài khoản khách hàng.')
   }
 
-  throw new Error('Khong co quyen truy cap. Vui long kiem tra tai khoan dang nhap.')
+  throw new Error('Bạn không có quyền truy cập. Vui lòng kiểm tra tài khoản đang đăng nhập.')
 }
 
 function parseResponseBody(text) {

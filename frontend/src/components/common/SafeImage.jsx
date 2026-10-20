@@ -47,7 +47,6 @@ export function SafeImage({ src, alt = '', fallbackLabel = 'Fashion', className 
         role="img"
         aria-label={`${alt || fallbackLabel} — ảnh sản phẩm chưa có`}
       >
-        <img className="safe-image-placeholder-art" src="/images/catalog/product-placeholder.svg" alt="" aria-hidden="true" />
         <span>{fallbackLabel}</span>
         {alt && <strong>{alt}</strong>}
       </span>

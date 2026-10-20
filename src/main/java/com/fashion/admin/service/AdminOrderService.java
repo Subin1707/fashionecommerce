@@ -4,6 +4,11 @@ import com.fashion.admin.dto.AdminOrderDto;
 import com.fashion.admin.dto.UpdateOrderStatusRequest;
 import com.fashion.order.entity.Order;
 import com.fashion.order.repository.OrderRepository;
+import com.fashion.product.entity.ProductVariant;
+import com.fashion.product.repository.ProductVariantRepository;
+import com.fashion.messaging.EventPublisher;
+import com.fashion.messaging.event.StockUpdatedEvent;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -20,6 +25,8 @@ public class AdminOrderService {
 
     private final OrderRepository orderRepository;
     private final com.fashion.order.repository.OrderStatusHistoryRepository historyRepository;
+    private final ProductVariantRepository productVariantRepository;
+    private final EventPublisher eventPublisher;
 
     public Page<AdminOrderDto> getAllOrders(int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
@@ -38,7 +45,7 @@ public class AdminOrderService {
     }
 
     public AdminOrderDto updateOrderStatus(Long orderId, UpdateOrderStatusRequest request) {
-        Order order = orderRepository.findById(orderId)
+        Order order = orderRepository.findForUpdate(orderId)
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
         String normalizedStatus = com.fashion.order.enums.OrderStatus.fromString(request.getOrderStatus()).name();
@@ -47,6 +54,19 @@ public class AdminOrderService {
         
         if (!isValidStatusTransition(currentStatus, newStatus)) {
             throw new IllegalArgumentException("Invalid status transition from " + currentStatus + " to " + newStatus);
+        }
+
+        if ("CANCELLED".equals(newStatus)) {
+            for (var item : order.getItems()) {
+                ProductVariant variant = productVariantRepository.findByIdForUpdate(item.getVariantId())
+                        .orElseThrow(() -> new IllegalStateException("Không tìm thấy SKU để hoàn kho: " + item.getVariantId()));
+                int restoredStock = (variant.getStockQty() == null ? 0 : variant.getStockQty()) + item.getQuantity();
+                variant.setStockQty(restoredStock);
+                productVariantRepository.save(variant);
+                eventPublisher.publish("StockUpdated", new StockUpdatedEvent(
+                        variant.getProduct().getId(), variant.getId(), item.getQuantity(), restoredStock,
+                        "ORDER_CANCELLED", Instant.now()));
+            }
         }
 
         order.setOrderStatus(newStatus);
@@ -95,8 +115,11 @@ public class AdminOrderService {
         };
     }
 
-    public AdminOrderService(final OrderRepository orderRepository, final com.fashion.order.repository.OrderStatusHistoryRepository historyRepository) {
+    public AdminOrderService(final OrderRepository orderRepository, final com.fashion.order.repository.OrderStatusHistoryRepository historyRepository,
+            final ProductVariantRepository productVariantRepository, final EventPublisher eventPublisher) {
         this.orderRepository = orderRepository;
         this.historyRepository = historyRepository;
+        this.productVariantRepository = productVariantRepository;
+        this.eventPublisher = eventPublisher;
     }
 }

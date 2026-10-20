@@ -52,7 +52,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.OPTIONS, "/api/**").permitAll()
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/vnpay/return").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/events/active", "/uploads/events/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/events/active", "/uploads/events/**", "/uploads/avatars/**").permitAll()
                         .requestMatchers("/api/products", "/api/products/**").permitAll()
                         .requestMatchers("/api/search", "/api/search/**").permitAll()
                         .requestMatchers("/api/brands", "/api/brands/**").permitAll()

@@ -21,20 +21,30 @@ public class CampaignImageStorageService {
     private static final int MAX_IMAGE_EDGE = 10000;
     private static final long MAX_IMAGE_PIXELS = 25_000_000L;
     private final Path eventDirectory;
+    private final Path avatarDirectory;
 
     public CampaignImageStorageService(@Value("${fashion.upload.directory:uploads}") String uploadDirectory) {
         this.eventDirectory = Path.of(uploadDirectory).toAbsolutePath().normalize().resolve("events").normalize();
+        this.avatarDirectory = Path.of(uploadDirectory).toAbsolutePath().normalize().resolve("avatars").normalize();
     }
 
     public String store(MultipartFile file) {
-        if (file == null || file.isEmpty()) throw new IllegalArgumentException("Chọn ảnh banner trước khi tải lên.");
-        if (file.getSize() > MAX_IMAGE_BYTES) throw new IllegalArgumentException("Ảnh banner tối đa 8 MB.");
+        return store(file, eventDirectory, "events", "ảnh banner");
+    }
+
+    public String storeAvatar(MultipartFile file) {
+        return store(file, avatarDirectory, "avatars", "ảnh đại diện");
+    }
+
+    private String store(MultipartFile file, Path directory, String folder, String label) {
+        if (file == null || file.isEmpty()) throw new IllegalArgumentException("Chọn " + label + " trước khi tải lên.");
+        if (file.getSize() > MAX_IMAGE_BYTES) throw new IllegalArgumentException(label + " tối đa 8 MB.");
 
         String contentType = file.getContentType() == null ? "" : file.getContentType().toLowerCase(Locale.ROOT);
         String extension = switch (contentType) {
             case "image/jpeg" -> "jpg";
             case "image/png" -> "png";
-            default -> throw new IllegalArgumentException("Chỉ hỗ trợ ảnh JPEG hoặc PNG cho banner.");
+            default -> throw new IllegalArgumentException("Chỉ hỗ trợ ảnh JPEG hoặc PNG.");
         };
 
         try {
@@ -54,7 +64,7 @@ public class CampaignImageStorageService {
                     int height = reader.getHeight(0);
                     if (width < 2 || height < 2 || width > MAX_IMAGE_EDGE || height > MAX_IMAGE_EDGE
                             || (long) width * height > MAX_IMAGE_PIXELS) {
-                        throw new IllegalArgumentException("Kích thước ảnh banner vượt quá giới hạn cho phép.");
+                        throw new IllegalArgumentException("Kích thước " + label + " vượt quá giới hạn cho phép.");
                     }
                     BufferedImage image = reader.read(0);
                     if (image == null) throw new IllegalArgumentException("Tệp tải lên không phải ảnh hợp lệ.");
@@ -63,14 +73,14 @@ public class CampaignImageStorageService {
                 }
             }
 
-            Files.createDirectories(eventDirectory);
+            Files.createDirectories(directory);
             String filename = UUID.randomUUID() + "." + extension;
-            Path destination = eventDirectory.resolve(filename).normalize();
-            if (!destination.startsWith(eventDirectory)) throw new IllegalArgumentException("Đường dẫn ảnh không hợp lệ.");
+            Path destination = directory.resolve(filename).normalize();
+            if (!destination.startsWith(directory)) throw new IllegalArgumentException("Đường dẫn ảnh không hợp lệ.");
             Files.write(destination, bytes, java.nio.file.StandardOpenOption.CREATE_NEW);
-            return "/uploads/events/" + filename;
+            return "/uploads/" + folder + "/" + filename;
         } catch (IOException exception) {
-            throw new IllegalArgumentException("Không thể lưu ảnh banner.", exception);
+            throw new IllegalArgumentException("Không thể lưu " + label + ".", exception);
         }
     }
 
@@ -88,5 +98,9 @@ public class CampaignImageStorageService {
 
     public Path getEventDirectory() {
         return eventDirectory;
+    }
+
+    public Path getAvatarDirectory() {
+        return avatarDirectory;
     }
 }

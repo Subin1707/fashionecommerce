@@ -139,7 +139,7 @@ function WishlistCard({ item, product, removing, onRemove, onView }) {
     <article className="wishlist-card">
       <div className="wishlist-product-image">
         {product?.primaryImageUrl ? (
-          <SafeImage src={product.primaryImageUrl} alt={product.name} fallbackLabel="Fashion item" />
+          <SafeImage src={product.primaryImageUrl} alt={product.name} fallbackLabel="Sản phẩm thời trang" />
         ) : (
           <span>#{item.productId}</span>
         )}

@@ -107,6 +107,7 @@ export function ProductListPage({ setNotice, setRoute }) {
       if (requestId !== searchRequestId.current) return
       setProducts((current) => [...current, ...result.products])
       setTotalPages(result.totalPages)
+      setNotice(`${Math.min(products.length + result.products.length, result.totalElements ?? Infinity)} sản phẩm đã tải.`)
     } catch (error) {
       setNotice(`Chưa tải thêm được sản phẩm: ${error.message}`)
     } finally {
@@ -148,12 +149,12 @@ export function ProductListPage({ setNotice, setRoute }) {
 
   async function handleAdd(product, variant) {
     if (isAdmin) {
-      setNotice('Giỏ hàng chỉ dành cho tài khoản Customer. Admin vui lòng dùng trang quản trị để vận hành sản phẩm.')
+      setNotice('Giỏ hàng chỉ dành cho khách hàng. Quản trị viên vui lòng sử dụng trang quản trị để vận hành sản phẩm.')
       return
     }
 
     if (!isCustomer) {
-      setNotice('Vui lòng đăng nhập bằng tài khoản Khách hàng (ví dụ: customer1@example.com / Customer@123) để thêm sản phẩm vào giỏ hàng.')
+      setNotice('Vui lòng đăng nhập bằng tài khoản khách hàng (ví dụ: customer1@example.com) để thêm sản phẩm vào giỏ hàng.')
       setRoute?.(ROUTES.LOGIN)
       return
     }
@@ -199,7 +200,7 @@ export function ProductListPage({ setNotice, setRoute }) {
 
   async function handleBuyNow(product, variant = null, quantity = 1) {
     if (isAdmin) {
-      setNotice('Mua hàng và giỏ hàng chỉ dành cho tài khoản Customer. Admin vui lòng đăng xuất nếu muốn đặt hàng thử.')
+      setNotice('Mua hàng và giỏ hàng chỉ dành cho khách hàng. Quản trị viên vui lòng đăng xuất để thử đặt hàng.')
       return
     }
 
@@ -252,11 +253,11 @@ export function ProductListPage({ setNotice, setRoute }) {
       <div className="catalog-panel">
         <div className="catalog-summary">
           <div>
-            <p className="eyebrow">Catalog</p>
+            <p className="eyebrow">Danh mục sản phẩm</p>
             <h2>Sản phẩm đang bán</h2>
           </div>
           <div className="summary-pills">
-            <span>{sortedProducts.length} mẫu</span>
+            <span>{sortedProducts.length} sản phẩm đã tải</span>
             <span>{totalStock(sortedProducts)} tồn kho</span>
           </div>
         </div>

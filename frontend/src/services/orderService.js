@@ -1,15 +1,30 @@
 import { apiRequest } from './api'
+import { repairCatalogText } from '../utils/repairCatalogText'
+
+export function repairOrder(order) {
+  if (!order) return order
+  return {
+    ...order,
+    shippingAddress: repairCatalogText(order.shippingAddress),
+    items: order.items?.map((item) => ({
+      ...item,
+      productName: repairCatalogText(item.productName),
+      color: repairCatalogText(item.color),
+      size: repairCatalogText(item.size),
+    })),
+  }
+}
 
 export function confirmReceived(id) {
-  return apiRequest(`/api/orders/${id}/receive`, { method: 'PATCH' })
+  return apiRequest(`/api/orders/${id}/receive`, { method: 'PATCH' }).then(repairOrder)
 }
 
 export function getOrders() {
-  return apiRequest('/api/orders')
+  return apiRequest('/api/orders').then((orders) => orders.map(repairOrder))
 }
 
 export function getOrder(id) {
-  return apiRequest(`/api/orders/${id}`)
+  return apiRequest(`/api/orders/${id}`).then(repairOrder)
 }
 
 export function checkout(payload) {

@@ -9,7 +9,11 @@ import com.fashion.security.UserPrincipal;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import com.fashion.event.service.CampaignImageStorageService;
+import com.fashion.event.dto.CampaignImageResponse;
 
 import java.util.List;
 
@@ -18,6 +22,7 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final CampaignImageStorageService imageStorage;
 
     @GetMapping("/me")
     @PreAuthorize("hasAuthority('ROLE_CUSTOMER') or hasAuthority('ROLE_ADMIN')")
@@ -32,6 +37,12 @@ public class UserController {
             Authentication authentication
     ) {
         return ResponseEntity.ok(UserResponse.fromEntity(userService.updateProfile(userId(authentication), request)));
+    }
+
+    @PostMapping(value = "/me/avatar", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasAuthority('ROLE_CUSTOMER') or hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<CampaignImageResponse> uploadAvatar(@RequestPart("file") MultipartFile file) {
+        return ResponseEntity.ok(new CampaignImageResponse(imageStorage.storeAvatar(file)));
     }
 
     @GetMapping
@@ -71,7 +82,8 @@ public class UserController {
         return ((UserPrincipal) authentication.getPrincipal()).getUserId();
     }
 
-    public UserController(final UserService userService) {
+    public UserController(final UserService userService, CampaignImageStorageService imageStorage) {
         this.userService = userService;
+        this.imageStorage = imageStorage;
     }
 }

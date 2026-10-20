@@ -1,5 +1,6 @@
 import { apiRequest, pageContent } from './api'
 import { repairProduct } from '../utils/repairCatalogText'
+import { repairOrder } from './orderService'
 
 export function getDashboard() {
   return apiRequest('/api/admin/dashboard')
@@ -32,15 +33,15 @@ export function deleteAdminProduct(productId) {
 }
 
 export async function getAdminOrders({ page = 0, size = 100 } = {}) {
-  return pageContent(await apiRequest(`/api/admin/orders?page=${page}&size=${size}`))
+  return pageContent(await apiRequest(`/api/admin/orders?page=${page}&size=${size}`)).map(repairOrder)
 }
 
 export async function getAdminOrdersByStatus(status, { page = 0, size = 100 } = {}) {
-  return pageContent(await apiRequest(`/api/admin/orders/status/${status}?page=${page}&size=${size}`))
+  return pageContent(await apiRequest(`/api/admin/orders/status/${status}?page=${page}&size=${size}`)).map(repairOrder)
 }
 
 export function getAdminOrder(orderId) {
-  return apiRequest(`/api/admin/orders/${orderId}`)
+  return apiRequest(`/api/admin/orders/${orderId}`).then(repairOrder)
 }
 
 export function updateAdminOrderStatus(orderId, orderStatus) {

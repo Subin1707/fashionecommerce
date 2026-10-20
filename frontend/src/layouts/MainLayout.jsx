@@ -1,12 +1,31 @@
 import { ADMIN_NAV, CUSTOMER_NAV, ROUTES } from '../utils/constants'
 import { useAuth } from '../hooks/useAuth'
 import { useCart } from '../hooks/useCart'
+import { useEffect, useState } from 'react'
+import * as userService from '../services/userService'
 import { FashionMark } from '../components/common/FashionMark'
 import { StyleChatWidget } from '../components/common/StyleChatWidget'
 
 export function MainLayout({ route, setRoute, notice, children }) {
   const { auth, isAdmin, logout } = useAuth()
   const { itemCount } = useCart()
+  const [profileName, setProfileName] = useState('')
+
+  useEffect(() => {
+    if (!auth || auth.role !== 'CUSTOMER') {
+      setProfileName('')
+      return undefined
+    }
+    let cancelled = false
+    userService.getProfile()
+      .then((profile) => {
+        if (!cancelled) setProfileName(profile?.fullName?.trim() || '')
+      })
+      .catch(() => {
+        if (!cancelled) setProfileName('')
+      })
+    return () => { cancelled = true }
+  }, [auth?.email, auth?.role])
 
   const isAuthRoute = [
     'login',
@@ -222,6 +241,7 @@ export function MainLayout({ route, setRoute, notice, children }) {
 
         <SessionPanel
           auth={auth}
+          displayName={profileName}
           onLogout={logout}
           itemCount={itemCount}
           onOpenCart={() => setRoute(ROUTES.CART)}
@@ -262,11 +282,11 @@ export function MainLayout({ route, setRoute, notice, children }) {
   )
 }
 
-function SessionPanel({ auth, onLogout, itemCount, onOpenCart, showCart, currentRoute }) {
+function SessionPanel({ auth, displayName, onLogout, itemCount, onOpenCart, showCart, currentRoute }) {
   return (
     <div className="login-panel">
       <div>
-        <strong>{auth.email}</strong>
+        <strong>{displayName || auth.fullName || auth.email}</strong>
         <small>{auth.role}</small>
       </div>
 

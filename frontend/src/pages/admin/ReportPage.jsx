@@ -718,7 +718,7 @@ export function ReportPage({ setNotice }) {
             <div className="report-card-head">
               <div>
                 <p className="eyebrow">Top giá trị</p>
-                <h3>Top sản phẩm chủ lực trong Catalog</h3>
+                <h3>Sản phẩm chủ lực</h3>
               </div>
             </div>
 

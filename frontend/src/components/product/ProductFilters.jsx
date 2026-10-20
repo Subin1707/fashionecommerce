@@ -53,8 +53,8 @@ export function ProductFilters({
       </select>
 
       <input
-        aria-label="Size"
-        placeholder="Size"
+        aria-label="Kích cỡ"
+        placeholder="Kích cỡ"
         value={filters.size}
         onChange={(event) => onFilterFieldChange({ ...filters, size: event.target.value })}
       />

@@ -9,6 +9,7 @@ import com.fashion.admin.dto.UpdateProductRequest;
 import com.fashion.admin.dto.UpdateVariantRequest;
 import com.fashion.admin.service.AdminProductService;
 import java.util.List;
+import java.util.Map;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -65,9 +66,9 @@ public class AdminProductController {
     }
 
     @DeleteMapping("/{productId}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable Long productId) {
-        adminProductService.deleteProduct(productId);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Map<String, Boolean>> deleteProduct(@PathVariable Long productId) {
+        boolean deleted = adminProductService.deleteProduct(productId);
+        return ResponseEntity.ok(Map.of("deleted", deleted));
     }
 
     @GetMapping("/{productId}/variants")

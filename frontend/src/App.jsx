@@ -35,7 +35,9 @@ function getRouteFromHash(fallbackRoute = ROUTES.LOGIN) {
 
 function App() {
   const [route, setRouteState] = useState(() => getRouteFromHash())
-  const [notice, setNotice] = useState('Đăng nhập hoặc tạo tài khoản để bắt đầu mua sắm.')
+  const [notice, setNotice] = useState(() => (
+    getStoredAuth() ? '' : 'Đăng nhập hoặc tạo tài khoản để bắt đầu mua sắm.'
+  ))
   const authRoute = isAuthRoute(route)
 
   useEffect(() => {
@@ -58,6 +60,9 @@ function App() {
 
   function setRoute(nextRoute) {
     const nextValue = nextRoute || getRouteFromHash()
+    if ((route || '').split('?')[0] !== nextValue.split('?')[0]) {
+      setNotice('')
+    }
     window.location.hash = nextValue
     setRouteState(nextValue)
     window.scrollTo(0, 0)

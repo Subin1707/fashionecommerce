@@ -138,6 +138,11 @@ export function DiscountManagementPage({ setNotice }) {
     event.preventDefault()
     if (!editingVoucher) return
 
+    if (editingVoucher.startDate && editingVoucher.endDate && editingVoucher.startDate > editingVoucher.endDate) {
+      setNotice?.('Ngày bắt đầu không được sau ngày kết thúc.')
+      return
+    }
+
     setSaving(true)
     const payload = {
       ...editingVoucher,
@@ -260,7 +265,7 @@ export function DiscountManagementPage({ setNotice }) {
               <p className="eyebrow">Danh sách mã</p>
               <h2>{filteredVouchers.length} mã ưu đãi</h2>
             </div>
-            <span>Catalog khuyến mãi</span>
+            <span>Danh mục khuyến mãi</span>
           </div>
 
           {loading && <div className="admin-product-loading" />}
@@ -501,6 +506,7 @@ function VoucherForm({
           <input
             type="date"
             value={value.startDate}
+            max={value.endDate || undefined}
             onChange={(event) => onChange({ startDate: event.target.value })}
           />
         </label>
@@ -508,6 +514,7 @@ function VoucherForm({
           <input
             type="date"
             value={value.endDate}
+            min={value.startDate || undefined}
             onChange={(event) => onChange({ endDate: event.target.value })}
           />
         </label>

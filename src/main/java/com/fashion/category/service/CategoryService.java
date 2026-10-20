@@ -34,7 +34,8 @@ public class CategoryService {
             throw new RuntimeException("Category already exists: " + category.getName());
         }
         if (category.getParent() != null && category.getParent().getId() != null) {
-            category.setParent(categoryRepository.findById(category.getParent().getId()).orElse(null));
+            category.setParent(categoryRepository.findById(category.getParent().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Danh mục cha không tồn tại")));
         }
         if (category.getIsActive() == null) {
             category.setIsActive(true);
@@ -46,6 +47,11 @@ public class CategoryService {
     @CacheEvict(cacheNames = {"categories", "categoryList"}, allEntries = true)
     public Category updateCategory(Long id, Category category) {
         Category existing = getCategoryById(id);
+        if (category.getName() != null && !category.getName().isBlank()) {
+            categoryRepository.findByName(category.getName().trim())
+                    .filter(match -> !match.getId().equals(id))
+                    .ifPresent(match -> { throw new IllegalArgumentException("Danh mục đã tồn tại: " + category.getName()); });
+        }
         existing.setName(category.getName());
         if (category.getSlug() != null && !category.getSlug().isBlank()) {
             existing.setSlug(category.getSlug());
@@ -58,7 +64,8 @@ public class CategoryService {
             if (category.getParent().getId().equals(id)) {
                 throw new RuntimeException("A category cannot be its own parent");
             }
-            existing.setParent(categoryRepository.findById(category.getParent().getId()).orElse(null));
+            existing.setParent(categoryRepository.findById(category.getParent().getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Danh mục cha không tồn tại")));
         } else {
             existing.setParent(null);
         }

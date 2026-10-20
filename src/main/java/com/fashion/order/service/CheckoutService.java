@@ -30,6 +30,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class CheckoutService {
 
     private static final double SHIPPING_FEE = 30000.0;
+    private static final double FREE_SHIPPING_THRESHOLD = 500000.0;
 
     private final CartRepository cartRepository;
     private final ProductRepository productRepository;
@@ -51,8 +52,8 @@ public class CheckoutService {
             }
 
             double subtotal = calculateUnitPrice(product, variant) * quantity;
-            double shippingFee = SHIPPING_FEE;
             double discountAmount = request == null ? 0.0 : calculateDiscount(request.getVoucherCode(), subtotal);
+            double shippingFee = calculateShippingFee(subtotal, request == null ? null : request.getVoucherCode());
             double finalAmount = subtotal + shippingFee - discountAmount;
 
             return CheckoutSummary.builder()
@@ -76,8 +77,8 @@ public class CheckoutService {
             }
         }
 
-        double shippingFee = SHIPPING_FEE;
         double discountAmount = request == null ? 0.0 : calculateDiscount(request.getVoucherCode(), subtotal);
+        double shippingFee = calculateShippingFee(subtotal, request == null ? null : request.getVoucherCode());
         double finalAmount = subtotal + shippingFee - discountAmount;
 
         return CheckoutSummary.builder()
@@ -133,7 +134,7 @@ public class CheckoutService {
                 subtotal += calculateUnitPrice(product, variant) * cartItem.getQuantity();
         }
 
-        double shippingFee = SHIPPING_FEE;
+        double shippingFee = calculateShippingFee(subtotal, request.getVoucherCode());
         double discountAmount = calculateDiscount(request.getVoucherCode(), subtotal);
         double finalAmount = subtotal + shippingFee - discountAmount;
 
@@ -225,7 +226,7 @@ public class CheckoutService {
 
         double unitPrice = calculateUnitPrice(product, variant);
         double subtotal = unitPrice * quantity;
-        double shippingFee = SHIPPING_FEE;
+        double shippingFee = calculateShippingFee(subtotal, request.getVoucherCode());
         double discountAmount = calculateDiscount(request.getVoucherCode(), subtotal);
         double finalAmount = subtotal + shippingFee - discountAmount;
 
@@ -313,6 +314,11 @@ public class CheckoutService {
             throw new IllegalArgumentException(result.getMessage());
         }
         return Math.min(Math.max(result.getDiscountAmount(), 0.0), subtotal);
+    }
+
+    private double calculateShippingFee(double subtotal, String voucherCode) {
+        return subtotal <= 0 || subtotal >= FREE_SHIPPING_THRESHOLD || "FREESHIP".equalsIgnoreCase(voucherCode == null ? "" : voucherCode.trim())
+                ? 0.0 : SHIPPING_FEE;
     }
 
     private String normalizeCouponCode(String couponCode) {

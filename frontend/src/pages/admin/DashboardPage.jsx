@@ -71,7 +71,7 @@ export function DashboardPage({ setNotice }) {
         <DashboardKpi label="Doanh thu hôm nay" value={formatCurrency(dashboard?.revenueToday)} note={`${dashboard?.ordersToday || 0} đơn hôm nay`} tone="warm" />
         <DashboardKpi label="Đơn hàng" value={dashboard?.totalOrders || 0} note={`Giá trị TB ${formatCurrency(insights.averageOrderValue)}`} />
         <DashboardKpi label="Sản phẩm" value={dashboard?.totalProducts || 0} note={`${insights.stockPerProduct} tồn kho/sản phẩm`} />
-        <DashboardKpi label="Khách hàng" value={dashboard?.totalCustomers || 0} note="Tài khoản customer đang hoạt động" />
+        <DashboardKpi label="Khách hàng" value={dashboard?.totalCustomers || 0} note="Tài khoản khách hàng" />
         <DashboardKpi label="Tồn kho" value={dashboard?.totalStock || 0} note="Tổng số lượng SKU" tone="green" />
         <DashboardKpi label="Mật độ đơn" value={insights.orderDensity} note="Đơn hàng trên mỗi sản phẩm" />
       </div>

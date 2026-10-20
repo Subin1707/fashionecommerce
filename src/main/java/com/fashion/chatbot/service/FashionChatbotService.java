@@ -17,6 +17,10 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Duration;
+import java.nio.ByteBuffer;
+import java.nio.charset.CharacterCodingException;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -147,7 +151,9 @@ public class FashionChatbotService {
         String searchText = contextualize(message, request.getHistory());
         ChatbotResponse matches = findProducts(searchText, request.getProductId());
         String answer;
-        if (groqApiKey != null && !groqApiKey.isBlank()) {
+        if (isProductDiscovery(searchText) && matches.getProducts() != null && !matches.getProducts().isEmpty()) {
+            answer = fallbackAdvice(searchText, request.getProductId(), matches);
+        } else if (groqApiKey != null && !groqApiKey.isBlank()) {
             try {
                 answer = askGroq(request, searchText, matches.getProducts());
             } catch (Exception exception) {
@@ -175,11 +181,11 @@ public class FashionChatbotService {
     private String askGroq(ChatbotMessage request, String searchText, List<ProductSearchResponse> products) throws Exception {
         List<Map<String, String>> messages = new ArrayList<>();
         String catalog = products == null ? "" : products.stream().limit(12)
-                .map(product -> String.format("%s | %s | category %s | material %s | fit %s | price %s | colors %s | sizes %s | stock %s",
+                .map(product -> String.format("Mã %s | Tên %s | Nhóm hàng %s | Chất liệu %s | Dáng mặc %s | Giá %s | Màu sắc %s | Kích cỡ %s | Tồn kho %s",
                         product.getId(), safe(product.getName()), safe(product.getCategoryName()), safe(product.getMaterial()), safe(product.getFit()),
-                        product.getSalePrice() != null ? product.getSalePrice() : product.getBasePrice(), safe(product.getColors()), safe(product.getSizes()), safe(product.getTotalStock())))
-                .reduce((left, right) -> left + System.lineSeparator() + right).orElse("No catalog match.");
-        String prompt = "You are a Vietnamese fashion store shopping assistant. Answer the actual question in natural Vietnamese. Use this live catalog and do not invent product facts, stock, prices, or policies. Help with product search, comparison, materials, fit, size, outfits, cart, vouchers, checkout, payments and order navigation. For private order status, direct the customer to Orders. Current request: " + searchText + System.lineSeparator() + "Catalog:" + System.lineSeparator() + catalog;
+                        product.getSalePrice() != null ? product.getSalePrice() : product.getBasePrice(), localizedColors(product.getColors()), safe(product.getSizes()), safe(product.getTotalStock())))
+                .reduce((left, right) -> left + System.lineSeparator() + right).orElse("Không tìm thấy sản phẩm trong danh mục.");
+        String prompt = "Bạn là trợ lý mua sắm thời trang của cửa hàng. BẮT BUỘC trả lời hoàn toàn bằng tiếng Việt có dấu; chỉ giữ nguyên tên thương hiệu, tên sản phẩm và thuật ngữ riêng khi cần. Trả lời trực tiếp câu hỏi, ngắn gọn và tự nhiên. Chỉ dùng thông tin trong danh mục đang hoạt động bên dưới; không tự bịa tên, giá, tồn kho, chất liệu, kích cỡ hay chính sách. Bạn có thể giúp tìm và so sánh sản phẩm, tư vấn chất liệu, dáng mặc, kích cỡ, cách phối đồ, giỏ hàng, mã giảm giá, thanh toán và điều hướng đơn hàng. Với thông tin đơn hàng riêng tư, hướng khách mở mục Đơn hàng. Nếu câu hỏi hỏi về một sản phẩm, hãy dựa vào đúng dữ liệu của sản phẩm đó. Câu hỏi hiện tại: " + searchText + System.lineSeparator() + "Danh mục sản phẩm:" + System.lineSeparator() + catalog;
         messages.add(Map.of("role", "system", "content", prompt));
         if (request.getHistory() != null) {
             int start = Math.max(0, request.getHistory().size() - 12);
@@ -197,31 +203,26 @@ public class FashionChatbotService {
         if (response.statusCode() < 200 || response.statusCode() >= 300) throw new IllegalStateException("Groq request failed");
         JsonNode content = objectMapper.readTree(response.body()).path("choices").path(0).path("message").path("content");
         if (!content.isTextual() || content.asText().isBlank()) throw new IllegalStateException("Groq returned an empty answer");
-        return content.asText();
+        return repairMojibake(content.asText());
     }
 
     private String fallbackAdvice(String message, Long productId, ChatbotResponse search) {
         String normalized = normalize(message);
         List<ProductSearchResponse> products = search.getProducts() == null ? List.of() : search.getProducts();
         if (!products.isEmpty()) {
-            String intro = search.getFilters() != null && search.getFilters().getCategory() != null
-                    ? "Trong hệ thống có " + products.size() + " mẫu còn hàng thuộc nhóm bạn hỏi: "
-                    : "Mình tìm thấy các sản phẩm phù hợp: ";
-            return intro + products.stream().limit(8).map(product -> String.format("%s (%s), giá %s, chất liệu %s, màu %s, size %s",
-                    product.getName(), safe(product.getBrandName()), product.getSalePrice() != null ? product.getSalePrice() : product.getBasePrice(),
-                    safe(product.getMaterial()), safe(product.getColors()), safe(product.getSizes())))
-                    .reduce((left, right) -> left + "; " + right).orElse("") + ".";
+            int shownCount = Math.min(products.size(), 8);
+            return "Mình tìm thấy " + shownCount + " sản phẩm phù hợp. Bạn xem hình ảnh, giá, màu sắc và kích cỡ trong từng thẻ bên dưới nhé.";
         }
         if (containsAny(normalized, "outfit", "phoi do", "set do", "di lam", "cong so", "mac gi")) {
             return "Mình chưa tìm thấy sản phẩm phù hợp để ghép set đồ đi làm. Bạn thử cho biết ngân sách hoặc muốn phối áo, quần hay váy nhé.";
         }
-        if (containsAny(normalized, "chat lieu", "material", "vai gi")) return "Tell me the product name or open its details page so I can check its catalog material.";
-        if (containsAny(normalized, "voucher", "ma giam", "khuyen mai")) return "Bạn nhập mã ở giỏ hàng hoặc checkout để hệ thống kiểm tra hạn dùng và điều kiện đơn hàng.";
-        if (containsAny(normalized, "thanh toan", "chuyen khoan", "qr", "vnpay", "cod")) return "Checkout hỗ trợ COD, chuyển khoản và VNPay Sandbox. QR chuyển khoản cần cửa hàng cấu hình tài khoản nhận tiền.";
+        if (containsAny(normalized, "chat lieu", "material", "vai gi")) return "Bạn cho mình biết tên sản phẩm hoặc mở trang chi tiết sản phẩm nhé. Mình sẽ kiểm tra chất liệu trong danh mục.";
+        if (containsAny(normalized, "voucher", "ma giam", "khuyen mai")) return "Bạn nhập mã giảm giá trong giỏ hàng hoặc khi đặt hàng để kiểm tra thời hạn và điều kiện áp dụng.";
+        if (containsAny(normalized, "thanh toan", "chuyen khoan", "qr", "vnpay", "cod")) return "Khi thanh toán, bạn có thể chọn COD, chuyển khoản hoặc VNPay ở môi trường thử nghiệm. Thanh toán QR cần cửa hàng cấu hình tài khoản nhận tiền.";
         if (containsAny(normalized, "don hang", "giao hang", "van chuyen", "tracking", "theo doi")) return "Bạn mở mục Đơn hàng để xem trạng thái và vận chuyển của đơn trong tài khoản.";
-        if (containsAny(normalized, "size", "kich co", "vong nguc", "vong eo", "vong mong", "can nang", "chieu cao")) return "Bạn gửi tên mẫu cùng chiều cao, cân nặng và số đo ngực/eo/mông nếu có; mình sẽ đối chiếu với size đang có của mẫu đó.";
-        if (productId != null) return "Bạn muốn biết giá, chất liệu, màu, size hay cách phối của sản phẩm đang xem?";
-        if (containsAny(normalized, "he thong", "website", "ung dung", "ho tro duoc gi", "ban lam duoc gi", "giup duoc gi", "co the giup", "chuc nang", "tro ly")) return "Mình hỗ trợ tìm và so sánh catalog, tư vấn size/outfit, giải thích voucher và hướng dẫn thanh toán, giỏ hàng, đơn hàng. Bạn có thể hỏi như ‘các áo còn hàng’, ‘áo đen size M’ hoặc ‘set đồ đi làm dưới 1 triệu’.";
+        if (containsAny(normalized, "size", "kich co", "vong nguc", "vong eo", "vong mong", "can nang", "chieu cao")) return "Bạn gửi tên mẫu cùng chiều cao, cân nặng và số đo ngực, eo, mông nếu có; mình sẽ đối chiếu với các kích cỡ hiện có của mẫu đó.";
+        if (productId != null) return "Bạn muốn biết giá, chất liệu, màu sắc, kích cỡ hay cách phối của sản phẩm đang xem?";
+        if (containsAny(normalized, "he thong", "website", "ung dung", "ho tro duoc gi", "ban lam duoc gi", "giup duoc gi", "co the giup", "chuc nang", "tro ly")) return "Mình hỗ trợ tìm và so sánh sản phẩm, tư vấn kích cỡ và cách phối đồ, giải thích mã giảm giá, hướng dẫn thanh toán, giỏ hàng và đơn hàng. Bạn có thể hỏi như ‘các áo còn hàng’, ‘áo đen cỡ M’ hoặc ‘trang phục đi làm dưới 1 triệu’.";
         return "Mình chưa tìm thấy sản phẩm phù hợp rõ với câu hỏi này. Bạn thử nêu loại đồ, màu, size hoặc ngân sách nhé.";
     }
 
@@ -231,12 +232,81 @@ public class FashionChatbotService {
                 .replaceAll("\\p{M}", "").replace((char) 273, 'd');
     }
 
+    private boolean isProductDiscovery(String message) {
+        String normalized = normalize(message);
+        return containsAny(normalized, "goi y", "tim san pham", "tim ao", "tim quan", "cac mau", "san pham nao", "trang phuc", "con hang");
+    }
+
     private boolean containsAny(String text, String... terms) {
         for (String term : terms) if (text.contains(term)) return true;
         return false;
     }
 
     private String safe(Object value) {
-        return value == null ? "chưa cập nhật" : value.toString();
+        return value == null ? "chưa cập nhật" : repairMojibake(value.toString());
+    }
+
+    private String localizedColors(Object value) {
+        if (value == null) return "chưa cập nhật";
+        return safe(value).replaceAll("(?i)Light Blue", "Xanh nhạt")
+                .replaceAll("(?i)Black", "Đen")
+                .replaceAll("(?i)White", "Trắng")
+                .replaceAll("(?i)Blue", "Xanh dương")
+                .replaceAll("(?i)Red", "Đỏ")
+                .replaceAll("(?i)Beige", "Be")
+                .replaceAll("(?i)Ivory", "Trắng ngà")
+                .replaceAll("(?i)Olive", "Xanh ô liu");
+    }
+
+    private String repairMojibake(String value) {
+        if (value == null || !value.matches("(?s).*(?:Ã.|Ä.|Â.|Æ.|á»|Ä‘).*")) return value;
+        String repaired = value
+                .replace("ÁÂ\u0081", "Á")
+                .replace("Ä‚Â¡", "á")
+                .replace("Ä‚Â ", "à")
+                .replace("Ä‚Â ", "à")
+                .replace("Ä‚Â²", "ò")
+                .replace("Ä‚", "Á")
+                .replace("Ã ", "à")
+                .replace("Ã²", "ò");
+        if (mojibakeScore(repaired) == 0) return repaired;
+        Charset windows1252 = Charset.forName("windows-1252");
+        for (int attempt = 0; attempt < 2; attempt++) {
+            try {
+                java.io.ByteArrayOutputStream bytes = new java.io.ByteArrayOutputStream();
+                for (int i = 0; i < repaired.length(); i++) {
+                    char character = repaired.charAt(i);
+                    if (character <= 0xFF) {
+                        bytes.write(character);
+                    } else {
+                        var encoder = windows1252.newEncoder();
+                        if (!encoder.canEncode(character)) return repaired;
+                        ByteBuffer encoded = encoder.encode(java.nio.CharBuffer.wrap(new char[]{character}));
+                        while (encoded.hasRemaining()) bytes.write(encoded.get());
+                    }
+                }
+                String candidate = StandardCharsets.UTF_8.newDecoder()
+                        .onMalformedInput(java.nio.charset.CodingErrorAction.REPORT)
+                        .onUnmappableCharacter(java.nio.charset.CodingErrorAction.REPORT)
+                        .decode(ByteBuffer.wrap(bytes.toByteArray())).toString();
+                if (mojibakeScore(candidate) >= mojibakeScore(repaired)) return repaired;
+                repaired = candidate;
+            } catch (CharacterCodingException exception) {
+                return repaired;
+            }
+        }
+        return repaired;
+    }
+
+    private int mojibakeScore(String value) {
+        int score = 0;
+        for (String marker : List.of("Ã", "Ä", "Â", "Æ", "á»")) {
+            int index = 0;
+            while ((index = value.indexOf(marker, index)) >= 0) {
+                score++;
+                index += marker.length();
+            }
+        }
+        return score;
     }
 }

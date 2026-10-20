@@ -118,6 +118,7 @@ public class ProductService {
     @Transactional
     @CacheEvict(cacheNames = {"products", "productList"}, allEntries = true)
     public Product createProduct(Product product) {
+        validatePriceRange(product.getBasePrice(), product.getSalePrice());
         return productRepository.save(product);
     }
 
@@ -125,6 +126,8 @@ public class ProductService {
     @CacheEvict(cacheNames = {"products", "productList"}, allEntries = true)
     public Product updateProduct(Long id, Product product) {
         Product existing = getProductById(id);
+        BigDecimal nextBasePrice = product.getBasePrice() == null ? existing.getBasePrice() : product.getBasePrice();
+        validatePriceRange(nextBasePrice, product.getSalePrice());
         existing.setName(product.getName());
         existing.setSlug(product.getSlug());
         existing.setShortDescription(product.getShortDescription());
@@ -140,6 +143,18 @@ public class ProductService {
         existing.setIsFeatured(product.getIsFeatured());
         existing.setIsNew(product.getIsNew());
         return productRepository.save(existing);
+    }
+
+    private void validatePriceRange(BigDecimal basePrice, BigDecimal salePrice) {
+        if (basePrice == null || basePrice.signum() <= 0) {
+            throw new IllegalArgumentException("Giá niêm yết phải lớn hơn 0");
+        }
+        if (salePrice != null && salePrice.signum() < 0) {
+            throw new IllegalArgumentException("Giá khuyến mãi không được âm");
+        }
+        if (salePrice != null && salePrice.compareTo(basePrice) > 0) {
+            throw new IllegalArgumentException("Giá khuyến mãi không được lớn hơn giá niêm yết");
+        }
     }
 
     @Transactional

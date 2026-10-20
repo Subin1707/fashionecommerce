@@ -20,6 +20,7 @@ export function ProductManagementPage({ setNotice }) {
   const [query, setQuery] = useState('')
   const [statusFilter, setStatusFilter] = useState('ALL')
   const [loading, setLoading] = useState(true)
+  const [deletingProductId, setDeletingProductId] = useState(null)
 
   const loadProducts = useCallback(async function loadProducts() {
     setLoading(true)
@@ -214,13 +215,19 @@ export function ProductManagementPage({ setNotice }) {
   }
 
   async function removeProduct(product) {
-    if (!window.confirm(`Xóa vĩnh viễn sản phẩm "${product.name}"? Hành động này không thể hoàn tác.`)) return
+    if (!window.confirm(`Xóa sản phẩm "${product.name}"? Nếu sản phẩm đã có đơn hàng, hệ thống sẽ tạm ẩn để giữ nguyên lịch sử đơn.`)) return
+    setDeletingProductId(product.id)
     try {
-      await adminService.deleteAdminProduct(product.id)
-      setNotice?.(`Đã xóa sản phẩm #${product.id}.`)
-      loadProducts()
+      const result = await adminService.deleteAdminProduct(product.id)
+      if (editingProduct?.id === product.id) setEditingProduct(null)
+      setNotice?.(result?.deleted === false
+        ? `Sản phẩm #${product.id} đã được tạm ẩn vì đang có trong đơn hàng.`
+        : `Đã xóa sản phẩm #${product.id}.`)
+      await loadProducts()
     } catch (error) {
-      setNotice?.(`Không xóa được sản phẩm: ${error.message}`)
+      setNotice?.(`Không thể xóa sản phẩm #${product.id}: ${error.message}`)
+    } finally {
+      setDeletingProductId(null)
     }
   }
 
@@ -273,6 +280,7 @@ export function ProductManagementPage({ setNotice }) {
                 onHide={hideProduct}
                 onRestore={restoreProduct}
                 onRemove={removeProduct}
+                deleting={deletingProductId === product.id}
               />
             ))}
           </div>
@@ -303,7 +311,7 @@ export function ProductManagementPage({ setNotice }) {
   )
 }
 
-function AdminProductCard({ product, selected, onEdit, onHide, onRestore, onRemove }) {
+function AdminProductCard({ product, selected, onEdit, onHide, onRestore, onRemove, deleting }) {
   const price = product.salePrice || product.basePrice
   const hasSale = product.salePrice && product.basePrice && product.salePrice < product.basePrice
   const stock = Number(product.totalStock || 0)
@@ -314,7 +322,7 @@ function AdminProductCard({ product, selected, onEdit, onHide, onRestore, onRemo
   return (
     <article className={`admin-product-card ${selected ? 'selected' : ''}`}>
       <div className="admin-product-card-media">
-        <SafeImage src={imageUrl} alt={product.name} fallbackLabel="Fashion item" />
+        <SafeImage src={imageUrl} alt={product.name} fallbackLabel="Sản phẩm thời trang" />
       </div>
 
       <div className="admin-product-card-head">
@@ -347,7 +355,7 @@ function AdminProductCard({ product, selected, onEdit, onHide, onRestore, onRemo
         ) : (
           <button type="button" onClick={() => onHide(product)}>Tạm ẩn</button>
         )}
-        <button type="button" className="danger" onClick={() => onRemove(product)}>Xóa</button>
+        <button type="button" className="danger" disabled={deleting} onClick={() => onRemove(product)}>{deleting ? 'Đang xóa…' : 'Xóa'}</button>
       </div>
     </article>
   )
@@ -413,6 +421,9 @@ function validateProductPayload(product) {
   if (!Number.isFinite(product.basePrice) || product.basePrice <= 0) return 'Giá bán phải lớn hơn 0.'
   if (product.salePrice != null && (!Number.isFinite(product.salePrice) || product.salePrice < 0)) {
     return 'Giá khuyến mãi không hợp lệ.'
+  }
+  if (product.salePrice != null && product.salePrice > product.basePrice) {
+    return 'Giá khuyến mãi không được lớn hơn giá niêm yết.'
   }
 
   if (!product.variants || product.variants.length === 0) {

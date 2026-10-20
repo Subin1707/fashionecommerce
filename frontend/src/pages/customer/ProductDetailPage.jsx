@@ -73,7 +73,7 @@ export function ProductDetailPage({ setNotice, setRoute }) {
 
   async function handleAdd(currentProduct, variant, quantity = 1) {
     if (isAdmin) {
-      setNotice?.('Gio hang chi danh cho tai khoan Customer. Admin vui long dung trang quan tri de van hanh san pham.')
+      setNotice?.('Giỏ hàng chỉ dành cho tài khoản khách hàng. Quản trị viên vui lòng sử dụng trang quản trị để vận hành sản phẩm.')
       return
     }
 
@@ -96,7 +96,7 @@ export function ProductDetailPage({ setNotice, setRoute }) {
 
   async function handleBuyNow(currentProduct, variant, quantity = 1) {
     if (isAdmin) {
-      setNotice?.('Mua hang va gio hang chi danh cho tai khoan Customer. Admin vui long dang xuat neu muon dat hang thu.')
+      setNotice?.('Mua hàng và giỏ hàng chỉ dành cho tài khoản khách hàng. Quản trị viên vui lòng đăng xuất để thử đặt hàng.')
       return
     }
 

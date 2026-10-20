@@ -96,7 +96,7 @@ export function RecommendationPage({ setNotice, setRoute }) {
         .filter((product) => !quiz.dislikedColor || !textOf(product).includes(quiz.dislikedColor.toLowerCase()))
       setStyleProducts(filtered)
       setOutfits(buildOutfits(filtered, quiz))
-      setNotice?.(`Đã tạo ${Math.min(3, buildOutfits(filtered, quiz).length)} outfit từ sản phẩm thật.`)
+      setNotice?.(`Đã tạo ${Math.min(3, buildOutfits(filtered, quiz).length)} bộ trang phục từ sản phẩm hiện có.`)
     } catch (error) {
       setStyleProducts([])
       setNotice?.(`Không thể gợi ý phong cách: ${error.message}`)
@@ -124,9 +124,9 @@ export function RecommendationPage({ setNotice, setRoute }) {
     setAddingOutfit(outfit.id)
     try {
       for (const product of outfit.products) await addToCart(product, firstAvailableVariant(product), 1)
-      setNotice?.(`Đã thêm outfit ${outfit.number} vào giỏ hàng.`)
+      setNotice?.(`Đã thêm bộ trang phục ${outfit.number} vào giỏ hàng.`)
     } catch (error) {
-      setNotice?.(`Chưa thể thêm toàn bộ outfit: ${error.message}`)
+      setNotice?.(`Chưa thể thêm toàn bộ bộ trang phục: ${error.message}`)
     } finally {
       setAddingOutfit(null)
     }
@@ -154,7 +154,7 @@ export function RecommendationPage({ setNotice, setRoute }) {
           <form className="style-panel" onSubmit={runSmartSize}>
             <div className="style-panel-heading">
               <div>
-                <p className="eyebrow">Smart size</p>
+                <p className="eyebrow">Gợi ý kích cỡ</p>
                 <h2>Hồ sơ vóc dáng</h2>
               </div>
               <span>BMI {bodySummary.bmi}</span>
@@ -190,7 +190,7 @@ export function RecommendationPage({ setNotice, setRoute }) {
           <form className="style-panel style-quiz-panel" onSubmit={runStyleRecommend}>
             <div className="style-panel-heading">
               <div>
-                <p className="eyebrow">Style quiz</p>
+                <p className="eyebrow">Chọn phong cách</p>
                 <h2>Bạn muốn mặc gì hôm nay?</h2>
               </div>
             </div>
@@ -200,19 +200,19 @@ export function RecommendationPage({ setNotice, setRoute }) {
                 <select value={quiz.occasion} onChange={(event) => setQuiz({ ...quiz, occasion: event.target.value })}>{quizOptions.occasion.map((option) => <option key={option}>{option}</option>)}</select>
               </label>
               <label>Phong cách yêu thích
-                <select value={quiz.style} onChange={(event) => setQuiz({ ...quiz, style: event.target.value })}>{quizOptions.style.map((option) => <option key={option}>{option}</option>)}</select>
+                <select value={quiz.style} onChange={(event) => setQuiz({ ...quiz, style: event.target.value })}>{quizOptions.style.map((option) => <option key={option} value={option}>{styleLabel(option)}</option>)}</select>
               </label>
               <label>Màu yêu thích
                 <select value={quiz.color} onChange={(event) => setQuiz({ ...quiz, color: event.target.value })}>{quizOptions.color.map((option) => <option key={option}>{option}</option>)}</select>
               </label>
               <label>Giới tính
                 <select value={quiz.gender} onChange={(event) => setQuiz({ ...quiz, gender: event.target.value })}>
-                  <option value="unisex">Unisex</option>
+                  <option value="unisex">Mọi giới tính</option>
                   <option value="female">Nữ</option>
                   <option value="male">Nam</option>
                 </select>
               </label>
-              <label>Ngân sách outfit
+              <label>Ngân sách cho bộ trang phục
                 <input type="number" min="0" step="50000" value={quiz.budget} onChange={(event) => setQuiz({ ...quiz, budget: Number(event.target.value) })} />
               </label>
               <label>Màu không thích
@@ -245,19 +245,19 @@ export function RecommendationPage({ setNotice, setRoute }) {
           <div className="style-products-panel">
             <div className="style-panel-heading">
               <div>
-                <p className="eyebrow">Style profile</p>
-                <h2>{outfits.length ? `${quiz.style} ${quiz.occasion.toLowerCase()}` : 'Chưa có hồ sơ phong cách'}</h2>
+                <p className="eyebrow">Hồ sơ phong cách</p>
+                <h2>{outfits.length ? `${styleLabel(quiz.style)} ${quiz.occasion.toLowerCase()}` : 'Chưa có hồ sơ phong cách'}</h2>
               </div>
             </div>
 
             {styleLoading && <p className="style-empty-state">Đang tìm sản phẩm phù hợp...</p>}
             {!styleLoading && !styleProducts.length && <p className="style-empty-state">Chọn bộ lọc phong cách rồi bấm tìm sản phẩm phù hợp.</p>}
 
-            {outfits.length > 0 && <p className="style-profile-copy">Bạn ưu tiên {quiz.style.toLowerCase()}, {quiz.color.toLowerCase()} và ngân sách dưới {formatCurrency(quiz.budget)}. Hệ thống chọn sản phẩm đang hoạt động trong catalog để phối thành outfit.</p>}
+            {outfits.length > 0 && <p className="style-profile-copy">Bạn ưu tiên phong cách {styleLabel(quiz.style).toLowerCase()}, màu {quiz.color.toLowerCase()} và ngân sách dưới {formatCurrency(quiz.budget)}. Hệ thống chọn sản phẩm đang kinh doanh để phối thành bộ trang phục.</p>}
             <div className="outfit-grid">
               {!styleLoading && outfits.map((outfit) => <OutfitCard key={outfit.id} outfit={outfit} onView={viewProduct} onAdd={addOutfit} adding={addingOutfit === outfit.id} />)}
             </div>
-            {!styleLoading && !outfits.length && <p className="style-empty-state">Trả lời quiz rồi bấm gợi ý để tạo outfit từ sản phẩm thật.</p>}
+            {!styleLoading && !outfits.length && <p className="style-empty-state">Chọn các tiêu chí rồi bấm gợi ý để tạo bộ trang phục từ sản phẩm đang kinh doanh.</p>}
           </div>
         </aside>
       </div>
@@ -268,15 +268,15 @@ export function RecommendationPage({ setNotice, setRoute }) {
 function buildLocalFashionAdvice(message, quiz) {
   const normalized = message.toLowerCase()
   if (normalized.includes('size') || normalized.includes('cỡ') || normalized.includes('kích')) {
-    return 'Bạn hãy mở Hồ sơ vóc dáng, nhập chiều cao và cân nặng để nhận size theo từng sản phẩm. Với outfit hiện tại, hệ thống sẽ hiển thị size khả dụng ngay dưới mỗi món.'
+    return 'Bạn hãy mở Hồ sơ vóc dáng, nhập chiều cao và cân nặng để nhận cỡ phù hợp cho từng sản phẩm. Với bộ trang phục hiện tại, hệ thống sẽ hiển thị cỡ khả dụng ngay dưới mỗi món.'
   }
   if (normalized.includes('giá') || normalized.includes('ngân sách') || normalized.includes('budget')) {
-    return `Bạn có thể đặt ngân sách ${formatCurrency(quiz.budget)} trong Style Quiz. Hệ thống sẽ ưu tiên outfit ${quiz.style.toLowerCase()} cho ${quiz.occasion.toLowerCase()} và lọc theo mức giá đó.`
+    return `Bạn có thể đặt ngân sách ${formatCurrency(quiz.budget)} trong phần Chọn phong cách. Hệ thống sẽ ưu tiên trang phục phong cách ${styleLabel(quiz.style).toLowerCase()} cho dịp ${quiz.occasion.toLowerCase()} và lọc theo mức giá đó.`
   }
   if (normalized.includes('đen') || normalized.includes('black')) {
-    return 'Bạn có thể chọn màu Đen trong Style Quiz, sau đó bấm Gợi ý phong cách để hệ thống phối các sản phẩm màu tối phù hợp.'
+    return 'Bạn có thể chọn màu Đen trong phần Chọn phong cách, sau đó bấm Gợi ý phong cách để hệ thống phối các sản phẩm màu tối phù hợp.'
   }
-  return `Với nhu cầu hiện tại, mình gợi ý phong cách ${quiz.style} cho ${quiz.occasion.toLowerCase()}, ưu tiên ${quiz.color.toLowerCase()} và ngân sách ${formatCurrency(quiz.budget)}. Hãy bấm Gợi ý phong cách để xem outfit từ catalog.`
+  return `Với nhu cầu hiện tại, mình gợi ý phong cách ${styleLabel(quiz.style)} cho dịp ${quiz.occasion.toLowerCase()}, ưu tiên màu ${quiz.color.toLowerCase()} và ngân sách ${formatCurrency(quiz.budget)}. Hãy bấm Gợi ý phong cách để xem các bộ trang phục từ danh mục sản phẩm.`
 }
 
 function StyleProductCard({ product, onView }) {
@@ -286,7 +286,7 @@ function StyleProductCard({ product, onView }) {
   return (
     <article className="style-product-card">
       <div className="style-product-image">
-        <SafeImage src={normalized.imageUrl} alt={normalized.name} fallbackLabel="Fashion item" />
+        <SafeImage src={normalized.imageUrl} alt={normalized.name} fallbackLabel="Sản phẩm thời trang" />
       </div>
       <div>
         <p className="eyebrow">{normalized.brandName || 'Thương hiệu'}</p>
@@ -307,21 +307,21 @@ function StyleProductCard({ product, onView }) {
 function OutfitCard({ outfit, onView, onAdd, adding }) {
   return (
     <article className="outfit-card">
-      <div className="outfit-card-heading"><div><p className="eyebrow">{outfit.number}</p><h3>{outfit.title}</h3></div><strong>{outfit.score}% phù hợp</strong></div>
+      <div className="outfit-card-heading"><div><p className="eyebrow">BỘ {outfit.number.slice(-2)}</p><h3>{outfit.title}</h3></div><strong>{outfit.score}% phù hợp</strong></div>
       <div className="outfit-product-list">
         {outfit.products.map((product) => {
           const normalized = normalizeProduct(product)
           return <div className="outfit-product" key={product.id}>
             <button type="button" className="outfit-product-image" onClick={() => onView(product)}>
-              <SafeImage src={normalized.imageUrl} alt={normalized.name} fallbackLabel="Fashion item" />
+              <SafeImage src={normalized.imageUrl} alt={normalized.name} fallbackLabel="Sản phẩm thời trang" />
             </button>
             <div><strong>{normalized.name}</strong><small>{sizeHint(product)} · {formatCurrency(priceOf(product))}</small></div>
           </div>
         })}
       </div>
-      <div className="outfit-total"><span>Tổng outfit</span><strong>{formatCurrency(outfit.total)}</strong></div>
+      <div className="outfit-total"><span>Tổng giá bộ trang phục</span><strong>{formatCurrency(outfit.total)}</strong></div>
       <p className="outfit-reason">Vì sao phù hợp? {outfit.reason}</p>
-      <div className="outfit-actions"><button type="button" className="ghost" onClick={() => onView(outfit.products[0])}>Xem sản phẩm</button><button type="button" onClick={() => onAdd(outfit)} disabled={adding}>{adding ? 'Đang thêm...' : 'Thêm cả outfit vào giỏ'}</button></div>
+      <div className="outfit-actions"><button type="button" className="ghost" onClick={() => onView(outfit.products[0])}>Xem sản phẩm</button><button type="button" onClick={() => onAdd(outfit)} disabled={adding}>{adding ? 'Đang thêm...' : 'Thêm cả bộ vào giỏ'}</button></div>
     </article>
   )
 }
@@ -333,11 +333,11 @@ function buildOutfits(products, quiz) {
   return groups.map((group, index) => ({
     id: `${quiz.style}-${index}`,
     number: `OUTFIT 0${index + 1}`,
-    title: `${quiz.style} ${quiz.occasion}`,
+    title: `${styleLabel(quiz.style)} ${quiz.occasion}`,
     products: group,
     total: group.reduce((sum, product) => sum + priceOf(product), 0),
     score: Math.max(78, 92 - index * 4),
-    reason: `Các item có màu ${quiz.color.toLowerCase()} và phom dáng ${quiz.style.toLowerCase()}, phù hợp cho ${quiz.occasion.toLowerCase()}.`,
+    reason: `Các sản phẩm có màu ${quiz.color.toLowerCase()} và kiểu dáng ${styleLabel(quiz.style).toLowerCase()}, phù hợp cho dịp ${quiz.occasion.toLowerCase()}.`,
   }))
 }
 
@@ -355,7 +355,11 @@ function firstAvailableVariant(product) {
 
 function sizeHint(product) {
   const variant = firstAvailableVariant(product)
-  return variant?.size ? `Size đề xuất: ${variant.size}` : 'Size theo sản phẩm'
+  return variant?.size ? `Cỡ đề xuất: ${variant.size}` : 'Cỡ theo sản phẩm'
+}
+
+function styleLabel(style) {
+  return ({ Basic: 'Cơ bản', basic: 'Cơ bản', Streetwear: 'Đường phố', streetwear: 'Đường phố', Minimal: 'Tối giản', minimal: 'Tối giản', office: 'Công sở', Vintage: 'Cổ điển', vintage: 'Cổ điển', Elegant: 'Thanh lịch', elegant: 'Thanh lịch', Sporty: 'Thể thao', sporty: 'Thể thao', Y2K: 'Phong cách Y2K', y2k: 'Phong cách Y2K' })[style] || style
 }
 
 function normalizeProduct(product) {

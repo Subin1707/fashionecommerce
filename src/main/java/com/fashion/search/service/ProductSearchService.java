@@ -50,6 +50,14 @@ public class ProductSearchService {
         }
     }
 
+    public void deleteProductFromSearchIndex(Long productId) {
+        try {
+            productSearchRepository.deleteById(productId);
+        } catch (RuntimeException exception) {
+            log.warn("Could not remove product {} from Elasticsearch: {}", productId, exception.getMessage());
+        }
+    }
+
     @Transactional(readOnly = true)
     public Page<ProductSearchResponse> searchProducts(ProductSearchRequest request, int page, int size) {
         Pageable pageable = PageRequest.of(page, size);

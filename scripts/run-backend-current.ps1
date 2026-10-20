@@ -4,6 +4,20 @@ $projectRoot = (Resolve-Path (Join-Path $PSScriptRoot '..')).Path
 $pomPath = Join-Path $projectRoot 'pom.xml'
 $applicationPath = Join-Path $projectRoot 'src/main/java/com/fashion/FashionApplication.java'
 $controllerPath = Join-Path $projectRoot 'src/main/java/com/fashion/event/controller/AdminCampaignEventController.java'
+$envFilePath = Join-Path $projectRoot '.env'
+
+if (Test-Path -LiteralPath $envFilePath) {
+    foreach ($line in Get-Content -LiteralPath $envFilePath) {
+        $entry = $line.Trim().TrimStart([char]0xFEFF)
+        if ($entry -match '^\s*#' -or $entry -notmatch '^\s*(MAIL_[A-Z_]+)\s*=\s*(.*?)\s*$') {
+            continue
+        }
+
+        $name = $Matches[1]
+        $value = $Matches[2].Trim().Trim('"').Trim("'")
+        [Environment]::SetEnvironmentVariable($name, $value, 'Process')
+    }
+}
 
 if (-not (Test-Path -LiteralPath $pomPath) -or -not (Test-Path -LiteralPath $applicationPath)) {
     throw "Fashion backend project not found: $projectRoot"

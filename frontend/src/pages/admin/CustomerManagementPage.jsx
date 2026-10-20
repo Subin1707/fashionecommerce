@@ -32,7 +32,7 @@ export function CustomerManagementPage({ setNotice }) {
         empty="Chưa có khách hàng."
         action={(row) => (
           <button type="button" onClick={() => setCustomerStatus(row, row.status === 'LOCKED' ? 'unlock' : 'lock')}>
-            {row.status === 'LOCKED' ? 'Unlock' : 'Lock'}
+            {row.status === 'LOCKED' ? 'Mở khóa' : 'Khóa tài khoản'}
           </button>
         )}
       />

@@ -22,7 +22,7 @@ export function ProductCard({
   return (
     <article className={`product-card ${selected ? 'selected' : ''}`} onClick={() => onSelect?.(product)}>
       <div className="product-image">
-        <SafeImage src={product.primaryImageUrl} alt={product.name} fallbackLabel={product.categoryName || 'Fashion item'} />
+        <SafeImage src={product.primaryImageUrl} alt={product.name} fallbackLabel={product.categoryName || 'Sản phẩm thời trang'} />
         {onToggleWishlist && <button
           type="button"
           className={`wishlist-toggle ${isWishlisted ? 'active' : ''}`}

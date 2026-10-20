@@ -58,7 +58,7 @@ export function DeliveryLocationPicker({ latitude, longitude, address, onChange 
   const selectedTarget = useRef(null)
   const [initial] = useState(() => latitude != null && longitude != null ? [latitude, longitude] : DEFAULT_CENTER)
   const center = useRef(initial)
-  const confirmed = draft && latitude === draft.latitude && longitude === draft.longitude && address === draft.displayName
+  const confirmed = draft && latitude === draft.latitude && longitude === draft.longitude
 
   useEffect(() => {
     mounted.current = true

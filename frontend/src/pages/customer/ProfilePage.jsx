@@ -1,6 +1,13 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useAuth } from '../../hooks/useAuth'
 import * as userService from '../../services/userService'
+import { validatePhone } from '../../utils/validators'
+
+const API_BASE = (import.meta.env.VITE_API_BASE_URL || '').replace(/\/$/, '')
+
+function avatarSource(url) {
+  return url?.startsWith('/uploads/avatars/') ? `${API_BASE}${url}` : url
+}
 
 const emptyProfile = {
   fullName: '',
@@ -15,6 +22,7 @@ export function ProfilePage({ setNotice }) {
   const [form, setForm] = useState(emptyProfile)
   const [loading, setLoading] = useState(true)
   const [saving, setSaving] = useState(false)
+  const [uploadingAvatar, setUploadingAvatar] = useState(false)
 
   useEffect(() => {
     let cancelled = false
@@ -55,6 +63,11 @@ export function ProfilePage({ setNotice }) {
 
   async function submit(event) {
     event.preventDefault()
+    const phoneError = validatePhone(form.phone)
+    if (phoneError) {
+      setNotice?.(phoneError)
+      return
+    }
     setSaving(true)
     try {
       const updated = await userService.updateProfile(form)
@@ -72,6 +85,28 @@ export function ProfilePage({ setNotice }) {
     setForm((current) => ({ ...current, [field]: value }))
   }
 
+  async function selectAvatar(file) {
+    if (!file) return
+    if (!['image/jpeg', 'image/png'].includes(file.type)) {
+      setNotice?.('Chỉ hỗ trợ ảnh JPEG hoặc PNG.')
+      return
+    }
+    if (file.size > 8 * 1024 * 1024) {
+      setNotice?.('Ảnh đại diện tối đa 8 MB.')
+      return
+    }
+    setUploadingAvatar(true)
+    try {
+      const result = await userService.uploadAvatar(file)
+      updateField('avatar', result.imageUrl)
+      setNotice?.('Đã tải ảnh đại diện lên. Nhấn “Lưu hồ sơ” để áp dụng.')
+    } catch (error) {
+      setNotice?.(`Không tải được ảnh đại diện: ${error.message}`)
+    } finally {
+      setUploadingAvatar(false)
+    }
+  }
+
   if (loading) {
     return (
       <section className="profile-page">
@@ -85,7 +120,7 @@ export function ProfilePage({ setNotice }) {
     <section className="profile-page">
       <div className="profile-hero-panel">
         <div className="profile-avatar-ring">
-          {form.avatar ? <img src={form.avatar} alt={form.fullName || auth?.email} /> : <span>{initials}</span>}
+          {form.avatar ? <img src={avatarSource(form.avatar)} alt={form.fullName || auth?.email} /> : <span>{initials}</span>}
         </div>
 
         <div className="profile-identity">
@@ -106,7 +141,7 @@ export function ProfilePage({ setNotice }) {
 
         <div className="profile-stat-grid">
           <div><span>Vai trò</span><strong>{profile?.role || auth?.role || '-'}</strong></div>
-          <div><span>Trạng thái</span><strong>{profile?.status || 'ACTIVE'}</strong></div>
+          <div><span>Trạng thái</span><strong>{profile?.status === 'LOCKED' ? 'Đã khóa' : 'Đang hoạt động'}</strong></div>
           <div><span>Ngày tạo</span><strong>{joinedDate}</strong></div>
           <div><span>Cập nhật</span><strong>{updatedDate}</strong></div>
         </div>
@@ -127,24 +162,26 @@ export function ProfilePage({ setNotice }) {
           </label>
 
           <label>Số điện thoại
-            <input value={form.phone} onChange={(event) => updateField('phone', event.target.value)} />
+            <input type="tel" inputMode="numeric" maxLength={20} value={form.phone} onChange={(event) => updateField('phone', event.target.value)} aria-invalid={Boolean(validatePhone(form.phone))} aria-describedby="profile-phone-error" />
+            {validatePhone(form.phone) && <small id="profile-phone-error" className="field-error" role="alert">{validatePhone(form.phone)}</small>}
           </label>
 
           <label className="profile-wide-field">Địa chỉ mặc định
             <textarea value={form.address} onChange={(event) => updateField('address', event.target.value)} />
           </label>
 
-          <label className="profile-wide-field">Ảnh đại diện URL
-            <input value={form.avatar} onChange={(event) => updateField('avatar', event.target.value)} placeholder="https://..." />
+          <label className="profile-wide-field">Ảnh đại diện
+            <input type="file" accept="image/jpeg,image/png" onChange={(event) => { selectAvatar(event.target.files?.[0]); event.target.value = '' }} disabled={uploadingAvatar || saving} />
+            <small>Chọn ảnh JPEG hoặc PNG, tối đa 8 MB. {uploadingAvatar ? 'Đang tải ảnh lên…' : 'Ảnh xem trước sẽ được lưu khi bạn nhấn “Lưu hồ sơ”.'}</small>
           </label>
         </div>
 
         <div className="profile-actions">
-          <button type="button" className="ghost" onClick={() => setForm(toProfileForm(profile))} disabled={saving}>
+          <button type="button" className="ghost" onClick={() => setForm(toProfileForm(profile))} disabled={saving || uploadingAvatar}>
             Hoàn tác
           </button>
-          <button type="submit" disabled={saving}>
-            {saving ? 'Đang lưu...' : 'Lưu hồ sơ'}
+          <button type="submit" disabled={saving || uploadingAvatar}>
+            {uploadingAvatar ? 'Đang tải ảnh…' : saving ? 'Đang lưu...' : 'Lưu hồ sơ'}
           </button>
         </div>
       </form>

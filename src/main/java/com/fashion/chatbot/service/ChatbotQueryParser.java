@@ -25,7 +25,7 @@ public class ChatbotQueryParser {
             "chuyen", "ship", "mua", "hien", "trong", "tat", "ca");
 
     public ChatbotFilters parse(String input) {
-        if (input == null || input.isBlank()) throw new IllegalArgumentException("Search text cannot be blank");
+        if (input == null || input.isBlank()) throw new IllegalArgumentException("Nội dung tìm kiếm không được để trống.");
         String normalized = normalize(input);
         return ChatbotFilters.builder().keyword(extractKeyword(input)).category(detectCategory(normalized))
                 .style(normalized.contains("di lam") || normalized.contains("cong so") || normalized.contains("office") || normalized.contains("formal") ? "OFFICE" : null)

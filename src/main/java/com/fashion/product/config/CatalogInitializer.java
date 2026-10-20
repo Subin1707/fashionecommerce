@@ -10,6 +10,7 @@ import com.fashion.product.entity.ProductVariant;
 import com.fashion.product.repository.ProductImageRepository;
 import com.fashion.product.repository.ProductRepository;
 import com.fashion.product.repository.ProductVariantRepository;
+import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.boot.CommandLineRunner;
@@ -28,6 +29,7 @@ public class CatalogInitializer implements CommandLineRunner {
     private final ProductRepository productRepository;
     private final ProductVariantRepository productVariantRepository;
     private final ProductImageRepository productImageRepository;
+    private final EntityManager entityManager;
 
     @Override
     @Transactional
@@ -225,23 +227,36 @@ public class CatalogInitializer implements CommandLineRunner {
                         variant("APS-001-BGE-L", "Beige", "L", 10, 0)),
                 List.of(image("APS-001-BGE-M", "https://product.hstatic.net/200000578961/product/00009672_89dda2a857204cdaac627b2dff4538be_master.jpg", "Áo polo pique nam RAFOZ màu be, ảnh sản phẩm", true, 1)));
 
-        seedProduct(
-                lethnic,
-                accessories,
-                "Ví gập da bò mềm thủ công",
-                "vi-gap-da-bo-mem-thu-cong",
-                "Ví gập da bò màu nâu, nhỏ gọn với nhiều ngăn thẻ.",
-                "Ví gập LETHNIC làm từ da bò sáp mềm, hoàn thiện thủ công tại Việt Nam. Thiết kế gọn có tám khe thẻ và một ngăn tiền giấy dài; bề mặt da lên màu tự nhiên theo thời gian sử dụng. Kích thước vừa túi quần, phù hợp dùng hằng ngày; tránh ngâm nước và dưỡng da định kỳ bằng khăn mềm.",
-                BigDecimal.valueOf(690000),
-                BigDecimal.valueOf(620000),
-                "Da bò sáp",
-                "One size",
-                "UNISEX",
-                false,
-                true,
-                List.of(variant("VGT-001-TAN-OS", "Tan", "OS", 18, 0)),
-                List.of(image("VGT-001-TAN-OS", "https://lethnic.vn/cdn/shop/products/Pasic_affc0d60-50c5-4d6c-a5df-95661d6ccf84_1200x1200.jpg?v=1619765600", "Ví gập da bò sáp LETHNIC màu nâu, ảnh sản phẩm", true, 1)));
+        removeSampleProduct("vi-gap-da-bo-mem-thu-cong");
+        removeSampleProductsByNameAndCategory("\u00c1O", "ao-khoac");
 
+    }
+
+    private void removeSampleProduct(String slug) {
+        List<?> ids = entityManager.createNativeQuery("select id from products where slug = :slug")
+                .setParameter("slug", slug)
+                .getResultList();
+        removeSampleProducts(ids);
+    }
+
+    private void removeSampleProductsByNameAndCategory(String name, String categorySlug) {
+        List<?> ids = entityManager.createNativeQuery(
+                        "select p.id from products p join categories c on c.id = p.category_id where lower(p.name) = lower(:name) and c.slug = :categorySlug")
+                .setParameter("name", name)
+                .setParameter("categorySlug", categorySlug)
+                .getResultList();
+        removeSampleProducts(ids);
+    }
+
+    private void removeSampleProducts(List<?> ids) {
+        for (Object productId : ids) {
+            entityManager.createNativeQuery("delete from cart_items where product_id = :productId").setParameter("productId", productId).executeUpdate();
+            entityManager.createNativeQuery("delete from wishlist_items where product_id = :productId").setParameter("productId", productId).executeUpdate();
+            entityManager.createNativeQuery("delete from product_size_charts where product_id = :productId").setParameter("productId", productId).executeUpdate();
+            entityManager.createNativeQuery("delete from product_images where product_id = :productId").setParameter("productId", productId).executeUpdate();
+            entityManager.createNativeQuery("delete from product_variants where product_id = :productId").setParameter("productId", productId).executeUpdate();
+            entityManager.createNativeQuery("delete from products where id = :productId").setParameter("productId", productId).executeUpdate();
+        }
     }
 
     private Brand ensureBrand(String name, String slug, String description, String logoUrl) {
@@ -343,11 +358,12 @@ public class CatalogInitializer implements CommandLineRunner {
     private record ImageSeed(String variantSku, String url, String altText, boolean primary, Integer displayOrder) {
     }
 
-    public CatalogInitializer(final BrandRepository brandRepository, final CategoryRepository categoryRepository, final ProductRepository productRepository, final ProductVariantRepository productVariantRepository, final ProductImageRepository productImageRepository) {
+    public CatalogInitializer(final BrandRepository brandRepository, final CategoryRepository categoryRepository, final ProductRepository productRepository, final ProductVariantRepository productVariantRepository, final ProductImageRepository productImageRepository, final EntityManager entityManager) {
         this.brandRepository = brandRepository;
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
         this.productVariantRepository = productVariantRepository;
         this.productImageRepository = productImageRepository;
+        this.entityManager = entityManager;
     }
 }

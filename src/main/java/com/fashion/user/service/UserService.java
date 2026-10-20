@@ -27,6 +27,11 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
+    public List<User> getAllCustomers() {
+        return userRepository.findAllByRole_NameIgnoreCase("CUSTOMER", Sort.by("id").ascending());
+    }
+
+    @Transactional(readOnly = true)
     public User getUserById(Long id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with id: " + id));
@@ -46,6 +51,7 @@ public class UserService {
 
         String roleName = request.getRole() == null || request.getRole().isBlank()
                 ? "CUSTOMER" : normalizeRoleName(request.getRole());
+        validatePhone(request.getPhone());
         Role role = findAllowedRole(roleName);
 
         User user = User.builder()
@@ -75,7 +81,10 @@ public class UserService {
         User existing = getUserById(id);
         existing.setFullName(updatedUser.getFullName());
         existing.setEmail(updatedUser.getEmail());
-        existing.setPhone(updatedUser.getPhone());
+        if (updatedUser.getPhone() != null) {
+            validatePhone(updatedUser.getPhone());
+            existing.setPhone(updatedUser.getPhone().trim());
+        }
         existing.setAddress(updatedUser.getAddress());
         existing.setAvatar(updatedUser.getAvatar());
         existing.setStatus(updatedUser.getStatus());
@@ -96,7 +105,9 @@ public class UserService {
             existing.setFullName(request.getFullName());
         }
         if (request.getPhone() != null) {
-            existing.setPhone(request.getPhone());
+            String phone = request.getPhone().trim();
+            validatePhone(phone);
+            existing.setPhone(phone);
         }
         if (request.getAddress() != null) {
             existing.setAddress(request.getAddress());
@@ -130,6 +141,19 @@ public class UserService {
         }
         String normalized = roleName.trim().toUpperCase(java.util.Locale.ROOT);
         return normalized.startsWith("ROLE_") ? normalized.substring("ROLE_".length()) : normalized;
+    }
+
+    private void validatePhone(String value) {
+        String phone = value == null ? "" : value.trim();
+        if (phone.isEmpty()) {
+            return;
+        }
+        if (!phone.matches("\\d+")) {
+            throw new IllegalArgumentException("Số điện thoại không được chứa chữ cái hoặc ký tự đặc biệt.");
+        }
+        if (!phone.matches("\\d{9,11}")) {
+            throw new IllegalArgumentException("Số điện thoại phải gồm từ 9 đến 11 chữ số.");
+        }
     }
 
 

@@ -31,6 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+.env
 
 ### Runtime logs and JVM crash reports ###
 *.log
@@ -41,5 +42,6 @@ replay_pid*.log
 test_output.txt
 mvn_*summary*.txt
 *.sql
+!src/main/resources/auth-otp-migration.sql
 *.lnk
 *.class

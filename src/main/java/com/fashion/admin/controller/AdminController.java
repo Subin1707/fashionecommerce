@@ -18,8 +18,7 @@ public class AdminController {
 
     @GetMapping("/customers")
     public ResponseEntity<List<UserResponse>> getAllCustomers() {
-        return ResponseEntity.ok(userService.getAllUsers().stream()
-                .filter(user -> user.getRole() != null && "CUSTOMER".equalsIgnoreCase(user.getRole().getName()))
+        return ResponseEntity.ok(userService.getAllCustomers().stream()
                 .map(UserResponse::fromEntity)
                 .toList());
     }

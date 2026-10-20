@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { apiRequest } from '../../services/api'
 import { formatCurrency } from '../../utils/formatCurrency'
 import { ShipmentMap } from './ShipmentMap'
+import { repairCatalogText } from '../../utils/repairCatalogText'
 import './ShipmentPanel.css'
 
 const labels = {
@@ -119,8 +120,15 @@ export function ShipmentPanel({ order, admin = false, onUpdated }) {
   const visibleStages = orderStages.filter((stage) => stage !== 'PENDING_PAYMENT' || order.orderStatus === 'PENDING_PAYMENT' || data?.orderHistory?.some((entry) => entry.status === 'PENDING_PAYMENT'))
   const currentStage = visibleStages.indexOf(order.orderStatus)
   const exceptional = ['CANCELLED', 'RETURNED'].includes(order.orderStatus) || ['DELIVERY_FAILED', 'RETURNING', 'RETURNED'].includes(shipment?.status)
-  const history = [...(data?.orderHistory || [])].reverse()
-  const tracking = [...(data?.tracking || [])].reverse()
+  const history = [...(data?.orderHistory || [])].map((entry) => ({
+    ...entry,
+    description: repairCatalogText(entry.description),
+  })).reverse()
+  const tracking = [...(data?.tracking || [])].map((entry) => ({
+    ...entry,
+    description: repairCatalogText(entry.description),
+    location: repairCatalogText(entry.location),
+  })).reverse()
 
   return <section className="shipment-panel">
     <header className="shipment-heading">

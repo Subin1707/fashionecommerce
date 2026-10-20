@@ -219,7 +219,7 @@ export function CampaignEventManagementPage({ setNotice }) {
 
           <form className="campaign-admin-form" onSubmit={saveEvent}>
             <div className="campaign-admin-two-columns">
-              <label>Tên sự kiện<input required maxLength={120} value={form.eventName} onChange={(e) => updateField('eventName', e.target.value)} placeholder="Ví dụ: Summer Sale 2026" /></label>
+              <label>Tên sự kiện<input required maxLength={120} value={form.eventName} onChange={(e) => updateField('eventName', e.target.value)} placeholder="Ví dụ: Khuyến mãi hè 2026" /></label>
               <label>Tiêu đề trên banner<input required maxLength={100} value={form.title} onChange={(e) => updateField('title', e.target.value)} placeholder="Hè rực rỡ, phong cách thăng hoa" /></label>
             </div>
             <label>Thông điệp ngắn<input maxLength={240} value={form.message} onChange={(e) => updateField('message', e.target.value)} placeholder="Làm mới tủ đồ với những thiết kế mùa hè." /></label>
