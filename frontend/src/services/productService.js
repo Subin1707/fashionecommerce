@@ -7,6 +7,7 @@ export async function searchProducts(filters = {}, { page = 0, size = 16, signal
   if (filters.categoryId) params.set('categoryId', String(filters.categoryId))
   if (filters.category) params.set('category', filters.category)
   if (filters.categoryName) params.set('categoryName', filters.categoryName)
+  if (filters.brandId) params.set('brandId', String(filters.brandId))
   if (filters.size) params.set('size', filters.size)
   if (filters.color) params.set('color', filters.color)
   const minPrice = parsePrice(filters.minPrice)

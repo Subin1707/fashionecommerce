@@ -54,9 +54,12 @@ public class OrderItem {
     @Column(nullable = false)
     private Double price;
 
+    @Column(nullable = false)
+    private Double vatAmount;
+
     public OrderItem() {
     }
-    public OrderItem(final Long id, final Order order, final Long productId, final Long variantId, final String sku, final String productName, final String color, final String size, final Integer quantity, final Double price) {
+    public OrderItem(final Long id, final Order order, final Long productId, final Long variantId, final String sku, final String productName, final String color, final String size, final Integer quantity, final Double price, final Double vatAmount) {
         this.id = id;
         this.order = order;
         this.productId = productId;
@@ -67,5 +70,6 @@ public class OrderItem {
         this.size = size;
         this.quantity = quantity;
         this.price = price;
+        this.vatAmount = vatAmount;
     }
 }

@@ -15,6 +15,8 @@ public class CampaignImageWebConfig implements WebMvcConfigurer {
                 .addResourceLocations(imageStorage.getEventDirectory().toUri().toString());
         registry.addResourceHandler("/uploads/avatars/**")
                 .addResourceLocations(imageStorage.getAvatarDirectory().toUri().toString());
+        registry.addResourceHandler("/uploads/products/**")
+                .addResourceLocations(imageStorage.getProductDirectory().toUri().toString());
     }
 
     public CampaignImageWebConfig(CampaignImageStorageService imageStorage) {

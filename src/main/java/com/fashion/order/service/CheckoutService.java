@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -40,6 +41,9 @@ public class CheckoutService {
     private final EventPublisher eventPublisher;
     private final VoucherService voucherService;
 
+    @Value("${fashion.tax.vat-rate:0.08}")
+    private double vatRate;
+
     @Transactional(readOnly = true)
     public CheckoutSummary calculateSummary(Long userId, CheckoutRequest request) {
         if (isBuyNow(request)) {
@@ -53,11 +57,13 @@ public class CheckoutService {
 
             double subtotal = calculateUnitPrice(product, variant) * quantity;
             double discountAmount = request == null ? 0.0 : calculateDiscount(request.getVoucherCode(), subtotal);
+            double vatAmount = calculateVat(subtotal - discountAmount);
             double shippingFee = calculateShippingFee(subtotal, request == null ? null : request.getVoucherCode());
-            double finalAmount = subtotal + shippingFee - discountAmount;
+            double finalAmount = subtotal + vatAmount + shippingFee - discountAmount;
 
             return CheckoutSummary.builder()
                     .subtotal(subtotal)
+                    .vatAmount(vatAmount)
                     .shippingFee(shippingFee)
                     .discountAmount(discountAmount)
                     .finalAmount(finalAmount)
@@ -78,11 +84,13 @@ public class CheckoutService {
         }
 
         double discountAmount = request == null ? 0.0 : calculateDiscount(request.getVoucherCode(), subtotal);
+        double vatAmount = calculateVat(subtotal - discountAmount);
         double shippingFee = calculateShippingFee(subtotal, request == null ? null : request.getVoucherCode());
-        double finalAmount = subtotal + shippingFee - discountAmount;
+        double finalAmount = subtotal + vatAmount + shippingFee - discountAmount;
 
         return CheckoutSummary.builder()
                 .subtotal(subtotal)
+                .vatAmount(vatAmount)
                 .shippingFee(shippingFee)
                 .discountAmount(discountAmount)
                 .finalAmount(finalAmount)
@@ -136,11 +144,13 @@ public class CheckoutService {
 
         double shippingFee = calculateShippingFee(subtotal, request.getVoucherCode());
         double discountAmount = calculateDiscount(request.getVoucherCode(), subtotal);
-        double finalAmount = subtotal + shippingFee - discountAmount;
+        double vatAmount = calculateVat(subtotal - discountAmount);
+        double finalAmount = subtotal + vatAmount + shippingFee - discountAmount;
 
         Order order = Order.builder()
                 .userId(userId)
                 .totalAmount(subtotal)
+                .vatAmount(vatAmount)
                 .shippingFee(shippingFee)
                 .discountAmount(discountAmount)
                 .finalAmount(finalAmount)
@@ -175,6 +185,7 @@ public class CheckoutService {
                     .size(cartItem.getSize())
                     .quantity(cartItem.getQuantity())
                     .price(unitPrice)
+                    .vatAmount(calculateItemVat(unitPrice * cartItem.getQuantity(), subtotal, discountAmount))
                     .build();
 
             order.getItems().add(orderItem);
@@ -228,11 +239,13 @@ public class CheckoutService {
         double subtotal = unitPrice * quantity;
         double shippingFee = calculateShippingFee(subtotal, request.getVoucherCode());
         double discountAmount = calculateDiscount(request.getVoucherCode(), subtotal);
-        double finalAmount = subtotal + shippingFee - discountAmount;
+        double vatAmount = calculateVat(subtotal - discountAmount);
+        double finalAmount = subtotal + vatAmount + shippingFee - discountAmount;
 
         Order order = Order.builder()
                 .userId(userId)
                 .totalAmount(subtotal)
+                .vatAmount(vatAmount)
                 .shippingFee(shippingFee)
                 .discountAmount(discountAmount)
                 .finalAmount(finalAmount)
@@ -256,6 +269,7 @@ public class CheckoutService {
                 .size(variant.getSize())
                 .quantity(quantity)
                 .price(unitPrice)
+                .vatAmount(vatAmount)
                 .build();
 
         order.getItems().add(orderItem);
@@ -302,6 +316,15 @@ public class CheckoutService {
         return product.getDisplayPrice()
                 .add(variant.getPriceAdjustment() == null ? java.math.BigDecimal.ZERO : variant.getPriceAdjustment())
                 .doubleValue();
+    }
+
+    private double calculateVat(double taxableAmount) {
+        return Math.round(taxableAmount * vatRate * 100.0) / 100.0;
+    }
+
+    private double calculateItemVat(double lineAmount, double subtotal, double discountAmount) {
+        if (subtotal <= 0) return 0.0;
+        return calculateVat(lineAmount * Math.max(0.0, subtotal - discountAmount) / subtotal);
     }
 
     private double calculateDiscount(String voucherCode, double subtotal) {

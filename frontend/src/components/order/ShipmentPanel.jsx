@@ -122,7 +122,7 @@ export function ShipmentPanel({ order, admin = false, onUpdated }) {
   const exceptional = ['CANCELLED', 'RETURNED'].includes(order.orderStatus) || ['DELIVERY_FAILED', 'RETURNING', 'RETURNED'].includes(shipment?.status)
   const history = [...(data?.orderHistory || [])].map((entry) => ({
     ...entry,
-    description: repairCatalogText(entry.description),
+    description: repairCatalogText(entry.description).replace(/đã\s*được/giu, 'đã được'),
   })).reverse()
   const tracking = [...(data?.tracking || [])].map((entry) => ({
     ...entry,

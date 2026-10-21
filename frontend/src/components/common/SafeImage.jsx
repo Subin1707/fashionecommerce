@@ -17,6 +17,10 @@ function optimizeImageUrl(src) {
       return url.toString()
     }
 
+    // Wikimedia URLs in the Vietnamese catalog already point to 500px
+    // thumbnails. Preserve the Commons URL instead of proxying it again.
+    if (url.hostname === 'upload.wikimedia.org') return src
+
     // Vendor product photos have no consistent resize API. Use a cached image
     // transformer to cap their dimensions and encode them as compact WebP.
     const optimized = new URL('https://wsrv.nl/')

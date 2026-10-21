@@ -9,6 +9,8 @@ export function AdminProductForm({
   brands = [],
   categories = [],
   saving = false,
+  onUploadImage,
+  uploadingImageIndex = null,
 }) {
   const parentCategoryIds = new Set(categories.map((category) => category.parent?.id).filter(Boolean))
   const assignableCategories = categories.filter((category) => (
@@ -327,7 +329,7 @@ export function AdminProductForm({
         </div>
 
         {images.length === 0 ? (
-          <p className="admin-product-image-empty">Chưa có ảnh. Thêm URL ảnh để khách hàng xem được sản phẩm ở trang chủ, giỏ hàng và chi tiết.</p>
+          <p className="admin-product-image-empty">Chưa có ảnh. Tải ảnh từ máy lên để khách hàng xem sản phẩm trên catalog.</p>
         ) : (
           <div className="admin-product-image-list">
             {images.map((image, index) => (
@@ -337,12 +339,18 @@ export function AdminProductForm({
                 </div>
 
                 <div className="admin-product-image-fields">
-                  <label className="admin-product-image-url-field">URL ảnh
+                  <label className="admin-product-image-upload-field">Ảnh từ máy
                     <input
-                      value={image.imageUrl || ''}
-                      onChange={(event) => updateImage(index, 'imageUrl', event.target.value)}
-                      placeholder="https://... hoặc /images/san-pham.jpg"
+                      type="file"
+                      accept="image/jpeg,image/png"
+                      disabled={uploadingImageIndex === index}
+                      onChange={(event) => {
+                        const file = event.target.files?.[0]
+                        event.target.value = ''
+                        if (file) onUploadImage?.(index, file)
+                      }}
                     />
+                    <small>{uploadingImageIndex === index ? 'Đang tải ảnh lên…' : 'JPEG hoặc PNG, tối đa 8 MB.'}</small>
                   </label>
 
                   <label>Văn bản thay thế

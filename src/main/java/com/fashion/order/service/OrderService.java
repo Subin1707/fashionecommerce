@@ -18,6 +18,7 @@ import com.fashion.product.repository.ProductRepository;
 import com.fashion.voucher.dto.VoucherValidationResult;
 import com.fashion.voucher.service.VoucherService;
 import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -36,6 +37,9 @@ public class OrderService {
     private final com.fashion.order.repository.OrderStatusHistoryRepository historyRepository;
     private final EventPublisher eventPublisher;
     private final VoucherService voucherService;
+
+    @Value("${fashion.tax.vat-rate:0.08}")
+    private double vatRate;
 
     @Transactional
     public Order createOrderFromCart(Long userId, CreateOrderRequest request) {
@@ -104,11 +108,13 @@ public class OrderService {
 
         double shippingFee = SHIPPING_FEE;
         double discountAmount = calculateDiscount(request.getVoucherCode(), totalAmount);
-        double finalAmount = totalAmount + shippingFee - discountAmount;
+        double vatAmount = calculateVat(totalAmount - discountAmount);
+        double finalAmount = totalAmount + vatAmount + shippingFee - discountAmount;
 
         Order order = Order.builder()
                 .userId(userId)
                 .totalAmount(totalAmount)
+                .vatAmount(vatAmount)
                 .shippingFee(shippingFee)
                 .discountAmount(discountAmount)
                 .finalAmount(finalAmount)
@@ -131,6 +137,10 @@ public class OrderService {
                     .findFirst()
                     .orElseThrow(() -> new IllegalArgumentException("SKU không tồn tại trong giỏ hàng"));
 
+            double unitPrice = product.getDisplayPrice()
+                    .add(variant.getPriceAdjustment() == null ? java.math.BigDecimal.ZERO : variant.getPriceAdjustment())
+                    .doubleValue();
+
             OrderItem orderItem = OrderItem.builder()
                     .order(order)
                     .productId(product.getId())
@@ -140,9 +150,8 @@ public class OrderService {
                     .color(variant.getColor())
                     .size(cartItem.getSize())
                     .quantity(cartItem.getQuantity())
-                        .price(product.getDisplayPrice()
-                            .add(variant.getPriceAdjustment() == null ? java.math.BigDecimal.ZERO : variant.getPriceAdjustment())
-                            .doubleValue())
+                    .vatAmount(calculateItemVat(unitPrice * cartItem.getQuantity(), totalAmount, discountAmount))
+                    .price(unitPrice)
                     .build();
 
             if (order.getItems() == null) {
@@ -183,6 +192,15 @@ public class OrderService {
             throw new IllegalArgumentException(result.getMessage());
         }
         return Math.min(Math.max(result.getDiscountAmount(), 0.0), subtotal);
+    }
+
+    private double calculateVat(double taxableAmount) {
+        return Math.round(taxableAmount * vatRate * 100.0) / 100.0;
+    }
+
+    private double calculateItemVat(double lineAmount, double subtotal, double discountAmount) {
+        if (subtotal <= 0) return 0.0;
+        return calculateVat(lineAmount * Math.max(0.0, subtotal - discountAmount) / subtotal);
     }
 
     @Transactional(readOnly = true)

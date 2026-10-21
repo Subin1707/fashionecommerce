@@ -10,7 +10,6 @@ import com.fashion.product.entity.ProductVariant;
 import com.fashion.product.repository.ProductImageRepository;
 import com.fashion.product.repository.ProductRepository;
 import com.fashion.product.repository.ProductVariantRepository;
-import jakarta.persistence.EntityManager;
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.boot.CommandLineRunner;
@@ -29,7 +28,6 @@ public class CatalogInitializer implements CommandLineRunner {
     private final ProductRepository productRepository;
     private final ProductVariantRepository productVariantRepository;
     private final ProductImageRepository productImageRepository;
-    private final EntityManager entityManager;
 
     @Override
     @Transactional
@@ -227,41 +225,12 @@ public class CatalogInitializer implements CommandLineRunner {
                         variant("APS-001-BGE-L", "Beige", "L", 10, 0)),
                 List.of(image("APS-001-BGE-M", "https://product.hstatic.net/200000578961/product/00009672_89dda2a857204cdaac627b2dff4538be_master.jpg", "Áo polo pique nam RAFOZ màu be, ảnh sản phẩm", true, 1)));
 
-        removeSampleProduct("vi-gap-da-bo-mem-thu-cong");
-        removeSampleProductsByNameAndCategory("\u00c1O", "ao-khoac");
-
-    }
-
-    private void removeSampleProduct(String slug) {
-        List<?> ids = entityManager.createNativeQuery("select id from products where slug = :slug")
-                .setParameter("slug", slug)
-                .getResultList();
-        removeSampleProducts(ids);
-    }
-
-    private void removeSampleProductsByNameAndCategory(String name, String categorySlug) {
-        List<?> ids = entityManager.createNativeQuery(
-                        "select p.id from products p join categories c on c.id = p.category_id where lower(p.name) = lower(:name) and c.slug = :categorySlug")
-                .setParameter("name", name)
-                .setParameter("categorySlug", categorySlug)
-                .getResultList();
-        removeSampleProducts(ids);
-    }
-
-    private void removeSampleProducts(List<?> ids) {
-        for (Object productId : ids) {
-            entityManager.createNativeQuery("delete from cart_items where product_id = :productId").setParameter("productId", productId).executeUpdate();
-            entityManager.createNativeQuery("delete from wishlist_items where product_id = :productId").setParameter("productId", productId).executeUpdate();
-            entityManager.createNativeQuery("delete from product_size_charts where product_id = :productId").setParameter("productId", productId).executeUpdate();
-            entityManager.createNativeQuery("delete from product_images where product_id = :productId").setParameter("productId", productId).executeUpdate();
-            entityManager.createNativeQuery("delete from product_variants where product_id = :productId").setParameter("productId", productId).executeUpdate();
-            entityManager.createNativeQuery("delete from products where id = :productId").setParameter("productId", productId).executeUpdate();
-        }
     }
 
     private Brand ensureBrand(String name, String slug, String description, String logoUrl) {
-        Brand brand = brandRepository.findBySlug(slug)
-                .orElseGet(() -> Brand.builder().slug(slug).build());
+        var existing = brandRepository.findBySlug(slug);
+        if (existing.isPresent()) return existing.get();
+        Brand brand = Brand.builder().slug(slug).build();
         brand.setName(name);
         brand.setDescription(description);
         brand.setLogoUrl(logoUrl);
@@ -270,8 +239,9 @@ public class CatalogInitializer implements CommandLineRunner {
     }
 
     private Category ensureCategory(String name, String slug, String description) {
-        Category category = categoryRepository.findBySlug(slug)
-                .orElseGet(() -> Category.builder().slug(slug).build());
+        var existing = categoryRepository.findBySlug(slug);
+        if (existing.isPresent()) return existing.get();
+        Category category = Category.builder().slug(slug).build();
         category.setName(name);
         category.setSlug(slug);
         category.setDescription(description);
@@ -295,46 +265,53 @@ public class CatalogInitializer implements CommandLineRunner {
             boolean isNew,
             List<VariantSeed> variants,
             List<ImageSeed> images) {
-        Product product = productRepository.findBySlug(slug)
-                .orElseGet(() -> Product.builder().slug(slug).build());
-        product.setBrand(brand);
-        product.setCategory(category);
-        product.setName(name);
-        product.setShortDescription(shortDescription);
-        product.setDescription(description);
-        product.setBasePrice(basePrice);
-        product.setSalePrice(salePrice);
-        product.setMaterial(material);
-        product.setFit(fit);
-        product.setGender(gender);
-        product.setStatus("ACTIVE");
-        product.setIsFeatured(featured);
-        product.setIsNew(isNew);
+        if (productRepository.findBySlug(slug).isPresent()) return;
+        Product product = Product.builder()
+                .brand(brand)
+                .category(category)
+                .name(name)
+                .slug(slug)
+                .shortDescription(shortDescription)
+                .description(description)
+                .basePrice(basePrice)
+                .salePrice(salePrice)
+                .material(material)
+                .fit(fit)
+                .gender(gender)
+                .status("ACTIVE")
+                .isFeatured(featured)
+                .isNew(isNew)
+                .build();
         Product savedProduct = productRepository.save(product);
 
         for (VariantSeed seed : variants) {
-            ProductVariant productVariant = productVariantRepository.findBySku(seed.sku())
-                    .or(() -> productVariantRepository.findByProductAndColorIgnoreCaseAndSizeIgnoreCase(
-                            savedProduct, seed.color(), seed.size()))
-                    .orElseGet(() -> ProductVariant.builder().sku(seed.sku()).build());
-            productVariant.setProduct(savedProduct);
-            productVariant.setSku(seed.sku());
-            productVariant.setColor(seed.color());
-            productVariant.setSize(seed.size());
-            productVariant.setStockQty(seed.stockQty());
-            productVariant.setPriceAdjustment(BigDecimal.valueOf(seed.priceAdjustment()));
-            productVariant.setIsActive(true);
+            if (productVariantRepository.findBySku(seed.sku()).isPresent()) continue;
+            if (productVariantRepository.findByProductAndColorIgnoreCaseAndSizeIgnoreCase(
+                    savedProduct, seed.color(), seed.size()).isPresent()) continue;
+            ProductVariant productVariant = ProductVariant.builder()
+                    .product(savedProduct)
+                    .sku(seed.sku())
+                    .color(seed.color())
+                    .size(seed.size())
+                    .stockQty(seed.stockQty())
+                    .priceAdjustment(BigDecimal.valueOf(seed.priceAdjustment()))
+                    .isActive(true)
+                    .build();
             productVariantRepository.save(productVariant);
         }
 
-        productImageRepository.deleteAll(productImageRepository.findByProduct(savedProduct));
         List<ImageSeed> usableImages = images == null ? List.of() : images.stream()
                 .filter(image -> image != null && image.url() != null && !image.url().isBlank())
                 .toList();
         for (ImageSeed image : usableImages) {
+            var variant = productVariantRepository.findBySku(image.variantSku())
+                    .filter(found -> found.getProduct() != null && savedProduct.getId().equals(found.getProduct().getId()));
+            if (variant.isEmpty()) continue;
+            if (productImageRepository.findByProduct(savedProduct).stream()
+                    .anyMatch(existing -> image.url().equals(existing.getImageUrl()))) continue;
             ProductImage productImage = ProductImage.builder()
                     .product(savedProduct)
-                    .variant(productVariantRepository.findBySku(image.variantSku()).orElse(null))
+                    .variant(variant.get())
                     .imageUrl(image.url())
                     .altText(image.altText())
                     .isPrimary(image.primary())
@@ -358,12 +335,11 @@ public class CatalogInitializer implements CommandLineRunner {
     private record ImageSeed(String variantSku, String url, String altText, boolean primary, Integer displayOrder) {
     }
 
-    public CatalogInitializer(final BrandRepository brandRepository, final CategoryRepository categoryRepository, final ProductRepository productRepository, final ProductVariantRepository productVariantRepository, final ProductImageRepository productImageRepository, final EntityManager entityManager) {
+    public CatalogInitializer(final BrandRepository brandRepository, final CategoryRepository categoryRepository, final ProductRepository productRepository, final ProductVariantRepository productVariantRepository, final ProductImageRepository productImageRepository) {
         this.brandRepository = brandRepository;
         this.categoryRepository = categoryRepository;
         this.productRepository = productRepository;
         this.productVariantRepository = productVariantRepository;
         this.productImageRepository = productImageRepository;
-        this.entityManager = entityManager;
     }
 }

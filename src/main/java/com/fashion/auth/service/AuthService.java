@@ -4,6 +4,7 @@ import com.fashion.auth.dto.LoginRequest;
 import com.fashion.auth.dto.LoginResponse;
 import com.fashion.auth.dto.RegisterRequest;
 import com.fashion.auth.dto.VerifyOtpRequest;
+import com.fashion.auth.dto.VerifyOtpResponse;
 import com.fashion.auth.dto.ResetPasswordRequest;
 import com.fashion.auth.entity.EmailOtp;
 import com.fashion.auth.repository.EmailOtpRepository;
@@ -132,16 +133,18 @@ public class AuthService {
     }
 
     @Transactional
-    public boolean verifyOtp(VerifyOtpRequest request) {
+    public VerifyOtpResponse verifyOtp(VerifyOtpRequest request) {
         String email = request.email().trim().toLowerCase(Locale.ROOT);
         EmailOtp otp = emailOtpRepository.findByEmail(email)
                 .orElse(null);
         if (otp == null) {
-            return false;
+            return new VerifyOtpResponse(false, false, 0, 5, "Mã OTP không đúng hoặc đã hết hạn.");
         }
         LocalDateTime now = LocalDateTime.now();
         if (otp.getRegistrationLockedUntil() != null && otp.getRegistrationLockedUntil().isAfter(now)) {
-            return false;
+            long secondsLeft = java.time.Duration.between(now, otp.getRegistrationLockedUntil()).toSeconds();
+            return new VerifyOtpResponse(false, true, Math.max(1, secondsLeft), 0,
+                    "Bạn đã nhập sai OTP 5 lần. Vui lòng chờ hết thời gian khóa.");
         }
         if (otp.getRegistrationLockedUntil() != null) {
             otp.setRegistrationLockedUntil(null);
@@ -149,7 +152,7 @@ public class AuthService {
         }
         if (otp.getExpiresAt().isBefore(now)) {
             emailOtpRepository.delete(otp);
-            return false;
+            return new VerifyOtpResponse(false, false, 0, 5, "Mã OTP đã hết hạn. Vui lòng gửi mã mới.");
         }
         if (request.code() == null || !request.code().matches("\\d{6}")
                 || !passwordEncoder.matches(request.code(), otp.getCodeHash())) {
@@ -159,14 +162,19 @@ public class AuthService {
                 otp.setRegistrationLockedUntil(now.plusMinutes(5));
             }
             emailOtpRepository.save(otp);
-            return false;
+            if (failedAttempts >= 5) {
+                return new VerifyOtpResponse(false, true, 300, 0,
+                        "Bạn đã nhập sai OTP 5 lần. Tạm khóa xác minh trong 5 phút.");
+            }
+            return new VerifyOtpResponse(false, false, 0, 5 - failedAttempts,
+                    "Mã OTP không đúng. Bạn còn " + (5 - failedAttempts) + " lần thử.");
         }
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new IllegalArgumentException("Registration account not found"));
         user.setStatus("ACTIVE");
         userRepository.save(user);
         emailOtpRepository.delete(otp);
-        return true;
+        return new VerifyOtpResponse(true, false, 0, 5, "Xác thực email thành công.");
     }
 
     @Transactional

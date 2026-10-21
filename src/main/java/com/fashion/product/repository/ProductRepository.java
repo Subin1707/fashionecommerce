@@ -98,6 +98,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                                       or lower(childCategory.slug) = :category
                                       or lower(childCategory.name) = lower(:categoryName))
                            ))
+                      and (:brandId is null or b.id = :brandId)
                       and (:style is null
                            or lower(p.name) like :style
                            or lower(p.description) like :style
@@ -149,6 +150,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
                                       or lower(childCategory.slug) = :category
                                       or lower(childCategory.name) = lower(:categoryName))
                            ))
+                      and (:brandId is null or b.id = :brandId)
                       and (:style is null
                            or lower(p.name) like :style
                            or lower(p.description) like :style
@@ -181,6 +183,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             @Param("category") String category,
             @Param("categoryName") String categoryName,
             @Param("categoryId") Long categoryId,
+            @Param("brandId") Long brandId,
             @Param("style") String style,
             @Param("size") String size,
             @Param("color") String color,

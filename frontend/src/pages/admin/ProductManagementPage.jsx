@@ -21,6 +21,7 @@ export function ProductManagementPage({ setNotice }) {
   const [statusFilter, setStatusFilter] = useState('ALL')
   const [loading, setLoading] = useState(true)
   const [deletingProductId, setDeletingProductId] = useState(null)
+  const [uploadingImageIndex, setUploadingImageIndex] = useState(null)
 
   const loadProducts = useCallback(async function loadProducts() {
     setLoading(true)
@@ -109,6 +110,28 @@ export function ProductManagementPage({ setNotice }) {
           : [],
       images: normalizeProductImages(product.images),
     })
+  }
+
+  async function uploadImage(index, file) {
+    if (file.size > 8 * 1024 * 1024) {
+      setNotice?.('Ảnh sản phẩm tối đa 8 MB.')
+      return
+    }
+    setUploadingImageIndex(index)
+    try {
+      const result = await adminService.uploadAdminProductImage(file)
+      setEditingProduct((current) => current ? ({
+        ...current,
+        images: current.images.map((image, imageIndex) => imageIndex === index
+          ? { ...image, imageUrl: result.imageUrl }
+          : image),
+      }) : current)
+      setNotice?.('Đã tải ảnh sản phẩm lên.')
+    } catch (error) {
+      setNotice?.(`Không tải được ảnh sản phẩm: ${error.message}`)
+    } finally {
+      setUploadingImageIndex(null)
+    }
   }
 
   async function updateProduct(event) {
@@ -292,6 +315,8 @@ export function ProductManagementPage({ setNotice }) {
               value={editingProduct}
               onChange={setEditingProduct}
               onSubmit={editingProduct.id ? updateProduct : createProduct}
+              onUploadImage={uploadImage}
+              uploadingImageIndex={uploadingImageIndex}
               brands={brands}
               categories={categories}
               title={editingProduct.id ? `Sửa sản phẩm #${editingProduct.id}` : 'Thêm sản phẩm'}

@@ -8,6 +8,7 @@ export function ProductCard({
   onAdd,
   onBuyNow,
   onView,
+  onBrandClick,
   onToggleWishlist,
   isWishlisted = false,
   isTogglingWishlist = false,
@@ -34,7 +35,13 @@ export function ProductCard({
       </div>
 
       <div className="card-row">
-        <span>{product.brandName || 'Thương hiệu'}</span>
+        {onBrandClick && product.brandName ? (
+          <button
+            type="button"
+            className="product-brand-link"
+            onClick={(event) => { event.stopPropagation(); onBrandClick(product.brandName) }}
+          >{product.brandName}</button>
+        ) : <span>{product.brandName || 'Thương hiệu'}</span>}
         {product.isNew && <mark>Mới</mark>}
       </div>
 

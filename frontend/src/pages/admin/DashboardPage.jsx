@@ -1,17 +1,23 @@
 import { useEffect, useMemo, useState } from 'react'
 import { formatCurrency } from '../../utils/formatCurrency'
 import * as adminService from '../../services/adminService'
+import { ROUTES } from '../../utils/constants'
 
-export function DashboardPage({ setNotice }) {
+export function DashboardPage({ setNotice, setRoute }) {
   const [dashboard, setDashboard] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [refreshing, setRefreshing] = useState(false)
+  const [lastUpdated, setLastUpdated] = useState(null)
 
   useEffect(() => {
     let cancelled = false
 
     adminService.getDashboard()
       .then((data) => {
-        if (!cancelled) setDashboard(data)
+        if (!cancelled) {
+          setDashboard(data)
+          setLastUpdated(new Date())
+        }
       })
       .catch((error) => setNotice?.(`Chưa đọc được bảng điều khiển: ${error.message}`))
       .finally(() => {
@@ -22,6 +28,18 @@ export function DashboardPage({ setNotice }) {
       cancelled = true
     }
   }, [setNotice])
+
+  async function refreshDashboard() {
+    setRefreshing(true)
+    try {
+      setDashboard(await adminService.getDashboard())
+      setLastUpdated(new Date())
+    } catch (error) {
+      setNotice?.(`Chưa làm mới được bảng điều khiển: ${error.message}`)
+    } finally {
+      setRefreshing(false)
+    }
+  }
 
   const insights = useMemo(() => {
     const totalRevenue = Number(dashboard?.totalRevenue || 0)
@@ -52,6 +70,19 @@ export function DashboardPage({ setNotice }) {
 
   return (
     <section className="dashboard-page">
+      <div className="dashboard-page-heading">
+        <div>
+          <p className="eyebrow">BẢNG ĐIỀU KHIỂN</p>
+          <h1>Tổng quan cửa hàng</h1>
+          <p>Theo dõi doanh thu, đơn hàng và hàng hóa trong một nơi.</p>
+        </div>
+        <div className="dashboard-heading-actions">
+          <span>{lastUpdated ? `Cập nhật ${lastUpdated.toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit' })}` : formatDate(dashboard?.dateTo)}</span>
+          <button type="button" className="dashboard-refresh-button" onClick={refreshDashboard} disabled={refreshing}>
+            <span aria-hidden="true">↻</span>{refreshing ? 'Đang cập nhật' : 'Làm mới'}
+          </button>
+        </div>
+      </div>
       <div className="dashboard-hero-panel">
         <div>
           <p className="eyebrow">Tổng quan vận hành</p>
@@ -68,12 +99,12 @@ export function DashboardPage({ setNotice }) {
       </div>
 
       <div className="dashboard-kpi-grid">
-        <DashboardKpi label="Doanh thu hôm nay" value={formatCurrency(dashboard?.revenueToday)} note={`${dashboard?.ordersToday || 0} đơn hôm nay`} tone="warm" />
-        <DashboardKpi label="Đơn hàng" value={dashboard?.totalOrders || 0} note={`Giá trị TB ${formatCurrency(insights.averageOrderValue)}`} />
-        <DashboardKpi label="Sản phẩm" value={dashboard?.totalProducts || 0} note={`${insights.stockPerProduct} tồn kho/sản phẩm`} />
-        <DashboardKpi label="Khách hàng" value={dashboard?.totalCustomers || 0} note="Tài khoản khách hàng" />
-        <DashboardKpi label="Tồn kho" value={dashboard?.totalStock || 0} note="Tổng số lượng SKU" tone="green" />
-        <DashboardKpi label="Mật độ đơn" value={insights.orderDensity} note="Đơn hàng trên mỗi sản phẩm" />
+        <DashboardKpi icon="₫" label="Doanh thu hôm nay" value={formatCurrency(dashboard?.revenueToday)} note={`${dashboard?.ordersToday || 0} đơn hôm nay`} tone="warm" />
+        <DashboardKpi icon="↗" label="Đơn hàng" value={dashboard?.totalOrders || 0} note={`Giá trị TB ${formatCurrency(insights.averageOrderValue)}`} />
+        <DashboardKpi icon="▦" label="Sản phẩm" value={dashboard?.totalProducts || 0} note={`${insights.stockPerProduct} tồn kho/sản phẩm`} />
+        <DashboardKpi icon="♙" label="Khách hàng" value={dashboard?.totalCustomers || 0} note="Tài khoản khách hàng" />
+        <DashboardKpi icon="▤" label="Tồn kho" value={dashboard?.totalStock || 0} note="Tổng số lượng SKU" tone="green" />
+        <DashboardKpi icon="◎" label="Mật độ đơn" value={insights.orderDensity} note="Đơn hàng trên mỗi sản phẩm" />
       </div>
 
       <div className="dashboard-content-grid">
@@ -115,9 +146,9 @@ export function DashboardPage({ setNotice }) {
             </div>
           </div>
           <div className="dashboard-action-grid">
-            <ActionCard title="Kiểm tra đơn mới" text="Xem các đơn PENDING để cập nhật trạng thái giao hàng kịp thời." />
-            <ActionCard title="Rà tồn kho thấp" text="Ưu tiên các SKU bán tốt nhưng số lượng còn ít." />
-            <ActionCard title="Đẩy sản phẩm nổi bật" text="Chọn sản phẩm có ảnh đẹp, giá tốt và còn hàng để đưa lên đầu catalog." />
+            <ActionCard title="Kiểm tra đơn mới" text="Mở danh sách đơn để theo dõi và cập nhật trạng thái giao hàng." route={ROUTES.ADMIN_ORDERS} setRoute={setRoute} />
+            <ActionCard title="Rà tồn kho thấp" text="Kiểm tra số lượng SKU và bổ sung những mặt hàng sắp hết." route={ROUTES.ADMIN_INVENTORY} setRoute={setRoute} />
+            <ActionCard title="Quản lý sản phẩm" text="Cập nhật hình ảnh, giá bán và sản phẩm nổi bật trên catalog." route={ROUTES.ADMIN_PRODUCTS} setRoute={setRoute} />
           </div>
         </div>
       </div>
@@ -125,10 +156,10 @@ export function DashboardPage({ setNotice }) {
   )
 }
 
-function DashboardKpi({ label, value, note, tone = '' }) {
+function DashboardKpi({ icon, label, value, note, tone = '' }) {
   return (
     <article className={`dashboard-kpi-card ${tone}`}>
-      <span>{label}</span>
+      <div className="dashboard-kpi-label"><span>{label}</span><i aria-hidden="true">{icon}</i></div>
       <strong>{value}</strong>
       <p>{note}</p>
     </article>
@@ -144,12 +175,13 @@ function SignalItem({ label, value }) {
   )
 }
 
-function ActionCard({ title, text }) {
+function ActionCard({ title, text, route, setRoute }) {
   return (
-    <article className="dashboard-action-card">
+    <button type="button" className="dashboard-action-card" onClick={() => setRoute?.(route)}>
       <strong>{title}</strong>
       <p>{text}</p>
-    </article>
+      <span className="dashboard-action-arrow" aria-hidden="true">→</span>
+    </button>
   )
 }
 

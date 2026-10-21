@@ -42,6 +42,10 @@ replay_pid*.log
 test_output.txt
 mvn_*summary*.txt
 *.sql
+!src/main/resources/return-request-migration.sql
+!src/main/resources/vat-migration.sql
 !src/main/resources/auth-otp-migration.sql
+!database/seed.sql
+!database/seed_vietnamese_catalog.sql
 *.lnk
 *.class

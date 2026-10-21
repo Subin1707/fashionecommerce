@@ -49,12 +49,15 @@ public class CampaignEventInitializer implements CommandLineRunner {
         LocalDateTime springEnd = LocalDateTime.of(EVENT_YEAR, Month.MAY, 31, 23, 59);
         LocalDateTime summerStart = LocalDateTime.of(EVENT_YEAR, Month.JUNE, 1, 0, 0);
         LocalDateTime summerEnd = LocalDateTime.of(EVENT_YEAR, Month.AUGUST, 31, 23, 59);
-        LocalDateTime fallStart = LocalDateTime.of(EVENT_YEAR, Month.SEPTEMBER, 1, 0, 0);
-        LocalDateTime fallEnd = LocalDateTime.of(EVENT_YEAR, Month.NOVEMBER, 30, 23, 59);
+        LocalDateTime now = LocalDateTime.now(eventZone);
+        int fallYear = now.getMonthValue() >= Month.SEPTEMBER.getValue()
+                && now.getMonthValue() <= Month.NOVEMBER.getValue() ? now.getYear() : EVENT_YEAR;
+        LocalDateTime fallStart = LocalDateTime.of(fallYear, Month.SEPTEMBER, 1, 0, 0);
+        LocalDateTime fallEnd = LocalDateTime.of(fallYear, Month.NOVEMBER, 30, 23, 59);
 
         String springImage = "https://images.unsplash.com/photo-1674401737764-b06c16041f0b?auto=format&fit=crop&w=1800&q=85";
         String summerImage = "https://images.unsplash.com/photo-1723649563005-1932a682864e?auto=format&fit=crop&w=1800&q=85";
-        String fallImage = "https://afamilycdn.com/2019/10/27/va07020-1572169333440.jpg";
+        String fallImage = "/images/campaign-thu-vang.svg";
         String winterImage = "https://kenh14cdn.com/203336854389633024/2025/11/4/4485123614258375137467602706146881496888182n-1762169888746579138417-1762226349133-1762226349770256563166.jpg";
         migrateSeedEvent("Xuân rạng rỡ", "Xuan rang ro",
                 "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1800&q=85", springImage);
@@ -62,6 +65,7 @@ public class CampaignEventInitializer implements CommandLineRunner {
                 "https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1800&q=85", summerImage);
         migrateSeedEvent(FALL_EVENT, "Thu vang - thanh lich moi ngay",
                 "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1800&q=85", fallImage);
+        repairSeededFallEvent(fallStart, fallEnd, fallImage, now);
         migrateSeedEvent("Đông ấm áp", "Dong am ap",
                 "https://images.unsplash.com/photo-1548126032-079a0fb0099d?auto=format&fit=crop&w=1800&q=85", winterImage);
 
@@ -70,9 +74,33 @@ public class CampaignEventInitializer implements CommandLineRunner {
         createIfAbsent("Hè rực nắng", "Phong cách ngày nắng", "Nhẹ nhàng, thoáng mát và sẵn sàng cho mọi chuyến đi.",
                 summerImage, summerStart, summerEnd, null, null, "products", CampaignEventStatus.SCHEDULED, 40);
         createIfAbsent(FALL_EVENT, "Thu vàng thanh lịch", "Làm mới tủ đồ với những thiết kế dành cho ngày thu.",
-                fallImage, fallStart, fallEnd, null, null, "products", CampaignEventStatus.SCHEDULED, 40);
+                fallImage, fallStart, fallEnd, null, null, "products",
+                now.isBefore(fallStart) ? CampaignEventStatus.SCHEDULED
+                        : now.isAfter(fallEnd) ? CampaignEventStatus.ENDED : CampaignEventStatus.ACTIVE, 40);
         createIfAbsent("Đông ấm áp", "Ấm áp theo cách riêng", "Hoàn thiện phong cách mùa lạnh với những lớp áo tinh tế.",
                 winterImage, winterStart, winterEnd, null, null, "products", CampaignEventStatus.SCHEDULED, 40);
+    }
+
+    private void repairSeededFallEvent(LocalDateTime start, LocalDateTime end, String image, LocalDateTime now) {
+        CampaignEvent event = eventRepository.findFirstByEventNameIgnoreCase(FALL_EVENT).orElse(null);
+        if (event == null || !Integer.valueOf(40).equals(event.getPriority())) return;
+
+        boolean changed = false;
+        String oldFallImage = "https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1800&q=85";
+        if (event.getDesktopImageUrl() == null || event.getDesktopImageUrl().contains("afamilycdn.com")
+                || oldFallImage.equals(event.getDesktopImageUrl())) {
+            event.setDesktopImageUrl(image);
+            changed = true;
+        }
+        // Correct the original seed's one-year date error while leaving administrator-managed dates alone.
+        if (event.getStartAt() != null && event.getStartAt().getYear() == EVENT_YEAR) {
+            event.setStartAt(start);
+            event.setEndAt(end);
+            event.setStatus(now.isBefore(start) ? CampaignEventStatus.SCHEDULED
+                    : now.isAfter(end) ? CampaignEventStatus.ENDED : CampaignEventStatus.ACTIVE);
+            changed = true;
+        }
+        if (changed) eventRepository.save(event);
     }
 
     private void migrateSeedEvent(String eventName, String legacyName, String previousSeedImage, String vietnameseImage) {

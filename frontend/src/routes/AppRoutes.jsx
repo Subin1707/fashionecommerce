@@ -71,6 +71,7 @@ export function AppRoutes({ route, setRoute, setNotice }) {
     case ROUTES.PRODUCTS:
       page = (
         <ProductListPage
+          route={currentRoute}
           setNotice={setNotice}
           setRoute={setRoute}
         />
@@ -251,6 +252,7 @@ export function AppRoutes({ route, setRoute, setNotice }) {
         <AdminRoutes
           route={route}
           setNotice={setNotice}
+          setRoute={setRoute}
         />
       )
   }
@@ -261,10 +263,12 @@ export function AppRoutes({ route, setRoute, setNotice }) {
 function AdminRoutes({
   route,
   setNotice,
+  setRoute,
 }) {
   let page = (
     <DashboardPage
       setNotice={setNotice}
+      setRoute={setRoute}
     />
   )
 

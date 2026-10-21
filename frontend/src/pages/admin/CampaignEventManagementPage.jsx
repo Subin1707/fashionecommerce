@@ -273,7 +273,7 @@ export function CampaignEventManagementPage({ setNotice }) {
               {events.map((event) => (
                 <article className="campaign-admin-event" key={event.id}>
                   <div className="campaign-admin-event-image">
-                    {event.desktopImageUrl && <img src={campaignImageSource(event.desktopImageUrl)} alt="" />}
+                    {event.desktopImageUrl && <img src={campaignImageSource(event.desktopImageUrl)} alt="" onError={(error) => { error.currentTarget.style.display = 'none' }} />}
                     <span className={`campaign-status status-${event.status.toLowerCase()}`}>{STATUS_LABELS[event.status] || event.status}</span>
                   </div>
                   <div className="campaign-admin-event-info">

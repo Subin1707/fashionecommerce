@@ -21,6 +21,15 @@ export function pageContent(payload) {
   return Array.isArray(payload) ? payload : payload?.content || []
 }
 
+export async function fetchAuthenticatedBlob(path) {
+  const auth = getStoredAuth()
+  const response = await fetch(`${API_BASE}${path}`, {
+    headers: auth?.token ? { Authorization: `Bearer ${auth.token}` } : {},
+  })
+  if (!response.ok) throw new Error(`Không tải được tệp minh chứng (HTTP ${response.status})`)
+  return URL.createObjectURL(await response.blob())
+}
+
 export async function apiRequest(path, options = {}) {
   const auth = getStoredAuth()
   const controller = new AbortController()

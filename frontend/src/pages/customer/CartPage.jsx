@@ -49,7 +49,8 @@ export function CartPage({ setNotice, setRoute }) {
     return 0
   }, [appliedVoucher, total])
 
-  const finalTotal = Math.max(0, total + shippingFee - discountAmount)
+  const vatAmount = Math.round(Math.max(0, total - discountAmount) * 0.08)
+  const finalTotal = Math.max(0, total + vatAmount + shippingFee - discountAmount)
 
   // ===============================
   // LOAD CART
@@ -522,6 +523,11 @@ export function CartPage({ setNotice, setRoute }) {
                 ) : (
                   <strong>{formatCurrency(shippingFee)}</strong>
                 )}
+              </div>
+
+              <div className="summary-row">
+                <span>Thuế VAT</span>
+                <strong>{formatCurrency(vatAmount)}</strong>
               </div>
 
               {appliedVoucher && (

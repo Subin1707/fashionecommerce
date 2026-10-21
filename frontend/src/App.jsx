@@ -24,7 +24,7 @@ function isAuthRoute(route) {
   return AUTH_ROUTES.includes((route || '').split('?')[0])
 }
 
-function getRouteFromHash(fallbackRoute = ROUTES.LOGIN) {
+function getRouteFromHash(fallbackRoute = ROUTES.HOME) {
   const currentHash = window.location.hash.replace(/^#/, '').trim()
   if (currentHash) {
     return currentHash
@@ -35,9 +35,7 @@ function getRouteFromHash(fallbackRoute = ROUTES.LOGIN) {
 
 function App() {
   const [route, setRouteState] = useState(() => getRouteFromHash())
-  const [notice, setNotice] = useState(() => (
-    getStoredAuth() ? '' : 'Đăng nhập hoặc tạo tài khoản để bắt đầu mua sắm.'
-  ))
+  const [notice, setNotice] = useState('')
   const authRoute = isAuthRoute(route)
 
   useEffect(() => {

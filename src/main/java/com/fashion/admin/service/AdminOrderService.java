@@ -93,6 +93,7 @@ public class AdminOrderService {
                 .userId(order.getUserId())
                 .shippingAddress(order.getShippingAddress())
                 .totalAmount(order.getTotalAmount())
+                .vatAmount(order.getVatAmount())
                 .shippingFee(order.getShippingFee())
                 .discountAmount(order.getDiscountAmount())
                 .finalAmount(order.getFinalAmount())

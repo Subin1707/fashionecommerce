@@ -27,6 +27,20 @@ export function getOrder(id) {
   return apiRequest(`/api/orders/${id}`).then(repairOrder)
 }
 
+export function getReturnRequests() {
+  return apiRequest('/api/orders/return-requests')
+}
+
+export function createReturnRequest(orderId, payload, files) {
+  const body = new FormData()
+  Object.entries(payload).forEach(([key, value]) => body.append(key, String(value)))
+  files.forEach((file) => body.append('files', file))
+  return apiRequest(`/api/orders/${orderId}/return-requests`, {
+    method: 'POST',
+    body,
+  })
+}
+
 export function checkout(payload) {
   return apiRequest('/api/checkout', {
     method: 'POST',

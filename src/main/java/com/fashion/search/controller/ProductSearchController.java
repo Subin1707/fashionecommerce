@@ -32,6 +32,7 @@ public class ProductSearchController {
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String categoryName,
             @RequestParam(required = false) Long categoryId,
+            @RequestParam(required = false) Long brandId,
             @RequestParam(required = false) String style,
             @RequestParam(required = false) String size,
             @RequestParam(required = false) String color,
@@ -46,6 +47,7 @@ public class ProductSearchController {
                 .category(category)
                 .categoryName(categoryName)
                 .categoryId(categoryId)
+                .brandId(brandId)
                 .style(style)
                 .size(size)
                 .color(color)

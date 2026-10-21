@@ -145,6 +145,7 @@ export function ProductDetail({ product, onAdd, onBuyNow, isAdding = false, isBu
           {hasSale && <del>{formatCurrency(product.basePrice)}</del>}
           {hasSale && <mark>Đang giảm giá</mark>}
         </div>
+        <small className="detail-vat-note">Giá sản phẩm chưa bao gồm thuế VAT.</small>
 
         <div className="detail-rating-row">
           <span>{product.averageRating || 0}/5</span>

@@ -37,6 +37,9 @@ public class Order {
     private Double totalAmount;
 
     @Column(nullable = false)
+    private Double vatAmount;
+
+    @Column(nullable = false)
     private Double shippingFee;
 
     @Column(nullable = false)
@@ -86,10 +89,11 @@ public class Order {
 
     public Order() {
     }
-    public Order(final Long id, final Long userId, final Double totalAmount, final Double shippingFee, final Double discountAmount, final Double finalAmount, final String shippingAddress, final Double shippingLat, final Double shippingLng, final String paymentMethod, final String paymentStatus, final String orderStatus, final String couponCode, final LocalDateTime createdAt, final LocalDateTime updatedAt, final LocalDateTime completedAt, final List<OrderItem> items) {
+    public Order(final Long id, final Long userId, final Double totalAmount, final Double vatAmount, final Double shippingFee, final Double discountAmount, final Double finalAmount, final String shippingAddress, final Double shippingLat, final Double shippingLng, final String paymentMethod, final String paymentStatus, final String orderStatus, final String couponCode, final LocalDateTime createdAt, final LocalDateTime updatedAt, final LocalDateTime completedAt, final List<OrderItem> items) {
         this.id = id;
         this.userId = userId;
         this.totalAmount = totalAmount;
+        this.vatAmount = vatAmount;
         this.shippingFee = shippingFee;
         this.discountAmount = discountAmount;
         this.finalAmount = finalAmount;

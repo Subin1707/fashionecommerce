@@ -22,6 +22,11 @@ public class CategoryController {
         return ResponseEntity.ok(categoryService.getAllCategories().stream().map(CategoryResponse::from).toList());
     }
 
+    @GetMapping("/with-products")
+    public ResponseEntity<List<CategoryResponse>> getCategoriesWithProducts() {
+        return ResponseEntity.ok(categoryService.getCategoriesWithSellableProducts().stream().map(CategoryResponse::from).toList());
+    }
+
     @GetMapping("/{id}")
     public ResponseEntity<CategoryResponse> getCategoryById(@PathVariable Long id) {
         return ResponseEntity.ok(CategoryResponse.from(categoryService.getCategoryById(id)));

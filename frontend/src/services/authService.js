@@ -24,7 +24,11 @@ export function verifyOtp(payload) {
   return apiRequest('/api/auth/verify-otp', {
     method: 'POST',
     body: JSON.stringify(payload),
-  })
+  }).then((result) => ({
+    ...result,
+    // Older backend versions return { message, email, role } on successful verification.
+    verified: result?.verified ?? Boolean(result?.email),
+  }))
 }
 
 export function requestPasswordReset(email) {

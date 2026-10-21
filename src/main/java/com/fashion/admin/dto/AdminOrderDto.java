@@ -12,6 +12,7 @@ public class AdminOrderDto {
     private Long userId;
 
     private Double totalAmount;
+    private Double vatAmount;
 
     private Double shippingFee;
 
@@ -35,10 +36,11 @@ public class AdminOrderDto {
 
     public AdminOrderDto() {
     }
-    public AdminOrderDto(final Long id, final Long userId, final Double totalAmount, final Double shippingFee, final Double discountAmount, final Double finalAmount, final String shippingAddress, final String paymentMethod, final String paymentStatus, final String orderStatus, final LocalDateTime createdAt, final LocalDateTime updatedAt, final LocalDateTime completedAt) {
+    public AdminOrderDto(final Long id, final Long userId, final Double totalAmount, final Double vatAmount, final Double shippingFee, final Double discountAmount, final Double finalAmount, final String shippingAddress, final String paymentMethod, final String paymentStatus, final String orderStatus, final LocalDateTime createdAt, final LocalDateTime updatedAt, final LocalDateTime completedAt) {
         this.id = id;
         this.userId = userId;
         this.totalAmount = totalAmount;
+        this.vatAmount = vatAmount;
         this.shippingFee = shippingFee;
         this.discountAmount = discountAmount;
         this.finalAmount = finalAmount;

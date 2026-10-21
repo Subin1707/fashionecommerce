@@ -5,6 +5,7 @@ import com.fashion.auth.dto.LoginRequest;
 import com.fashion.auth.dto.LoginResponse;
 import com.fashion.auth.dto.RegisterRequest;
 import com.fashion.auth.dto.VerifyOtpRequest;
+import com.fashion.auth.dto.VerifyOtpResponse;
 import com.fashion.auth.dto.ForgotPasswordRequest;
 import com.fashion.auth.dto.ResetPasswordRequest;
 import com.fashion.auth.service.AuthService;
@@ -34,14 +35,8 @@ public class AuthController {
     }
 
     @PostMapping("/verify-otp")
-    public ResponseEntity<AuthMessageResponse> verifyOtp(@RequestBody VerifyOtpRequest request) {
-        if (!authService.verifyOtp(request)) {
-            throw new IllegalArgumentException("Mã OTP không đúng hoặc đã hết hạn. Nhập sai 5 lần sẽ tạm khóa đăng ký trong 5 phút.");
-        }
-        return ResponseEntity.ok(new AuthMessageResponse(
-                "Email verified successfully",
-                request.email(),
-                "CUSTOMER"));
+    public ResponseEntity<VerifyOtpResponse> verifyOtp(@RequestBody VerifyOtpRequest request) {
+        return ResponseEntity.ok(authService.verifyOtp(request));
     }
 
     @PostMapping("/login")

@@ -66,6 +66,7 @@ public class ProductSearchService {
                 normalizeCategorySlug(request.getCategory()),
                 lower(request.getCategoryName()),
                 request.getCategoryId(),
+                request.getBrandId(),
                 pattern(request.getStyle()),
                 lower(request.getSize()),
                 lower(request.getColor()),

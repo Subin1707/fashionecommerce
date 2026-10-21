@@ -36,10 +36,11 @@ export function CheckoutForm({
   onApplyVoucher,
   onSubmit,
 }) {
+  const discountAmount = Number(checkout.discountAmount || 0)
+  const vatAmount = Math.round(Math.max(0, Number(total || 0) - discountAmount) * 0.08)
   const [showLocationPicker, setShowLocationPicker] = useState(() => checkout.shippingLat != null && checkout.shippingLng != null)
   const shippingFee = total > 0 ? Number(checkout.shippingFee || 0) : 0
-  const discountAmount = Number(checkout.discountAmount || 0)
-  const finalTotal = Math.max(0, Number(total || 0) + shippingFee - discountAmount)
+  const finalTotal = Math.max(0, Number(total || 0) + vatAmount + shippingFee - discountAmount)
   function updateField(field, value) {
     onChange({
       ...checkout,
@@ -213,6 +214,7 @@ export function CheckoutForm({
 
         <div className="checkout-price-box">
           <div><span>Tạm tính</span><strong>{formatCurrency(total)}</strong></div>
+          <div><span>Thuế VAT</span><strong>{formatCurrency(vatAmount)}</strong></div>
           <div><span>Phí vận chuyển</span><strong>{formatCurrency(shippingFee)}</strong></div>
           <div><span>Giảm giá</span><strong>-{formatCurrency(discountAmount)}</strong></div>
           <div className="checkout-grand-total"><span>Tổng thanh toán</span><strong>{formatCurrency(finalTotal)}</strong></div>

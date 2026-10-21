@@ -6,6 +6,11 @@ export async function getCategories() {
   return Array.isArray(data) ? data.map(normalizeCategory) : data
 }
 
+export async function getCategoriesWithProducts() {
+  const data = await apiRequest('/api/categories/with-products')
+  return Array.isArray(data) ? data.map(normalizeCategory) : data
+}
+
 export async function getCategoryById(id) {
   return normalizeCategory(await apiRequest(`/api/categories/${id}`))
 }

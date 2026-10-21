@@ -5,23 +5,17 @@ import { ProductFilters } from '../../components/product/ProductFilters'
 import { useAuth } from '../../hooks/useAuth'
 import { useCart } from '../../hooks/useCart'
 import * as categoryService from '../../services/categoryService'
+import * as brandService from '../../services/brandService'
 import * as productService from '../../services/productService'
 import * as wishlistService from '../../services/wishlistService'
 import { ROUTES } from '../../utils/constants'
 
-const initialFilters = { categoryId: '', category: '', categoryName: '', size: '', color: '', minPrice: '', maxPrice: '' }
-const fallbackCategories = [
-  { slug: 'ao-thun', name: 'Áo thun' },
-  { slug: 'quan', name: 'Quần' },
-  { slug: 'ao-khoac', name: 'Áo khoác' },
-  { slug: 'dam', name: 'Đầm' },
-  { slug: 'phu-kien', name: 'Phụ kiện' },
-]
-
-export function ProductListPage({ setNotice, setRoute }) {
+const initialFilters = { categoryId: '', category: '', categoryName: '', brandId: '', brandName: '', size: '', color: '', minPrice: '', maxPrice: '' }
+export function ProductListPage({ route, setNotice, setRoute }) {
   const [query, setQuery] = useState('')
   const [filters, setFilters] = useState(initialFilters)
   const [categories, setCategories] = useState([])
+  const [brands, setBrands] = useState([])
   const [sort, setSort] = useState('featured')
   const [products, setProducts] = useState([])
   const [totalPages, setTotalPages] = useState(1)
@@ -47,12 +41,25 @@ export function ProductListPage({ setNotice, setRoute }) {
   }, [isCustomer])
 
   useEffect(() => {
-    loadProducts(initialFilters)
-    categoryService.getCategories()
+    const params = new URLSearchParams(route?.split('?')[1] || '')
+    const routeFilters = {
+      ...initialFilters,
+      categoryId: params.get('categoryId') || '',
+      category: params.get('category') || '',
+      categoryName: params.get('categoryName') || '',
+      brandId: params.get('brandId') || '',
+      brandName: params.get('brandName') || '',
+    }
+    setFilters(routeFilters)
+    loadProducts(routeFilters)
+    categoryService.getCategoriesWithProducts()
       .then((rows) => setCategories(Array.isArray(rows) ? rows : []))
       .catch(() => {})
+    brandService.getBrands()
+      .then((rows) => setBrands(Array.isArray(rows) ? rows.filter((brand) => brand.isActive !== false) : []))
+      .catch(() => {})
     // oxlint-disable-next-line exhaustive-deps
-  }, [])
+  }, [route])
 
   const sortedProducts = useMemo(() => {
     return [...products].sort((left, right) => {
@@ -63,7 +70,7 @@ export function ProductListPage({ setNotice, setRoute }) {
       return Number(Boolean(right.isFeatured)) - Number(Boolean(left.isFeatured))
     })
   }, [products, sort])
-  const visibleCategories = categories.length ? categories : fallbackCategories
+  const visibleCategories = categories
 
   async function loadProducts(extra = filters, keyword = query) {
     currentFilters.current = extra
@@ -254,7 +261,7 @@ export function ProductListPage({ setNotice, setRoute }) {
         <div className="catalog-summary">
           <div>
             <p className="eyebrow">Danh mục sản phẩm</p>
-            <h2>Sản phẩm đang bán</h2>
+            <h2>{filters.brandName ? `Sản phẩm ${filters.brandName}` : filters.categoryName ? `Bộ sưu tập ${filters.categoryName}` : 'Sản phẩm đang bán'}</h2>
           </div>
           <div className="summary-pills">
             <span>{sortedProducts.length} sản phẩm đã tải</span>
@@ -275,9 +282,7 @@ export function ProductListPage({ setNotice, setRoute }) {
               <button
                 key={cat.id || cat.slug}
                 type="button"
-                className={`category-pill-btn ${cat.id
-                  ? filters.categoryId === String(cat.id)
-                  : filters.category === cat.slug ? 'active' : ''}`}
+                className={`category-pill-btn ${(cat.id && filters.categoryId === String(cat.id)) || filters.category === cat.slug ? 'active' : ''}`}
                 onClick={() => handleSelectCategory(cat)}
               >
                 {cat.parent?.name ? `${cat.parent.name} · ${cat.name}` : cat.name}
@@ -290,6 +295,7 @@ export function ProductListPage({ setNotice, setRoute }) {
           query={query}
           filters={filters}
           categories={visibleCategories}
+          brands={brands}
           sort={sort}
           onQueryChange={updateQuery}
           onFilterFieldChange={updateFilters}
@@ -315,6 +321,10 @@ export function ProductListPage({ setNotice, setRoute }) {
               onAdd={handleAdd}
               onBuyNow={handleBuyNow}
               onView={handleView}
+              onBrandClick={(brandName) => {
+                const brand = brands.find((item) => item.name === brandName)
+                if (brand) setRoute(`${ROUTES.PRODUCTS}?brandId=${brand.id}&brandName=${encodeURIComponent(brand.name)}`)
+              }}
               onToggleWishlist={handleToggleWishlist}
               isWishlisted={wishlistIds.has(String(product.id))}
               isTogglingWishlist={togglingWishlistId === product.id}

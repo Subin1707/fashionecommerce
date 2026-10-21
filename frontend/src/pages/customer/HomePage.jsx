@@ -211,7 +211,7 @@ export function HomePage({ route, setNotice, setRoute }) {
           <button
             type="button"
             className="fashion-collection-card fashion-collection-large"
-            onClick={() => setRoute(ROUTES.PRODUCTS)}
+            onClick={() => setRoute(catalogCategoryRoute('ao-thun', 'Áo thun'))}
           >
             <div className="fashion-collection-background collection-one" />
 
@@ -233,7 +233,7 @@ export function HomePage({ route, setNotice, setRoute }) {
           <button
             type="button"
             className="fashion-collection-card"
-            onClick={() => setRoute(ROUTES.PRODUCTS)}
+            onClick={() => setRoute(catalogCategoryRoute('quan', 'Quần'))}
           >
             <div className="fashion-collection-background collection-two" />
 
@@ -255,7 +255,7 @@ export function HomePage({ route, setNotice, setRoute }) {
           <button
             type="button"
             className="fashion-collection-card"
-            onClick={() => setRoute(ROUTES.PRODUCTS)}
+            onClick={() => setRoute(catalogCategoryRoute('ao-khoac', 'Áo khoác'))}
           >
             <div className="fashion-collection-background collection-three" />
 
@@ -292,7 +292,12 @@ export function HomePage({ route, setNotice, setRoute }) {
         ) : brands.length > 0 ? (
           <div className="fashion-brand-grid">
             {brands.map((brand) => (
-              <article className="fashion-brand-card" key={brand.id}>
+              <button
+                type="button"
+                className="fashion-brand-card"
+                key={brand.id}
+                onClick={() => setRoute(`${ROUTES.PRODUCTS}?brandId=${brand.id}&brandName=${encodeURIComponent(brand.name)}`)}
+              >
                 <span className="fashion-brand-logo">
                   {brand.logoUrl
                     ? <SafeImage src={brand.logoUrl} alt={brand.name} fallbackLabel={brand.name?.slice(0, 2) || 'BR'} />
@@ -300,7 +305,7 @@ export function HomePage({ route, setNotice, setRoute }) {
                 </span>
                 <strong>{brand.name}</strong>
                 {brand.description && <p>{brand.description}</p>}
-              </article>
+              </button>
             ))}
           </div>
         ) : (
@@ -367,4 +372,8 @@ export function HomePage({ route, setNotice, setRoute }) {
       </section>
     </div>
   )
+}
+
+function catalogCategoryRoute(slug, name) {
+  return `${ROUTES.PRODUCTS}?category=${encodeURIComponent(slug)}&categoryName=${encodeURIComponent(name)}`
 }

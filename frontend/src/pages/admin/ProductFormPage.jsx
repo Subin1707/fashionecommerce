@@ -10,6 +10,7 @@ export function ProductFormPage({ setNotice }) {
   const [brands, setBrands] = useState([])
   const [categories, setCategories] = useState([])
   const [saving, setSaving] = useState(false)
+  const [uploadingImageIndex, setUploadingImageIndex] = useState(null)
 
   useEffect(() => {
     Promise.all([
@@ -53,6 +54,28 @@ export function ProductFormPage({ setNotice }) {
     }
   }
 
+  async function uploadImage(index, file) {
+    if (file.size > 8 * 1024 * 1024) {
+      setNotice?.('Ảnh sản phẩm tối đa 8 MB.')
+      return
+    }
+    setUploadingImageIndex(index)
+    try {
+      const result = await adminService.uploadAdminProductImage(file)
+      setForm((current) => ({
+        ...current,
+        images: current.images.map((image, imageIndex) => imageIndex === index
+          ? { ...image, imageUrl: result.imageUrl }
+          : image),
+      }))
+      setNotice?.('Đã tải ảnh sản phẩm lên.')
+    } catch (error) {
+      setNotice?.(`Không tải được ảnh sản phẩm: ${error.message}`)
+    } finally {
+      setUploadingImageIndex(null)
+    }
+  }
+
   return (
     <AdminProductForm
       value={form}
@@ -63,6 +86,8 @@ export function ProductFormPage({ setNotice }) {
       brands={brands}
       categories={categories}
       saving={saving}
+      onUploadImage={uploadImage}
+      uploadingImageIndex={uploadingImageIndex}
     />
   )
 }

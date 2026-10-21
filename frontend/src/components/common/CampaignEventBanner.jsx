@@ -70,7 +70,6 @@ export function CampaignEventBanner({ setRoute }) {
             src={campaignImageSource(event.desktopImageUrl)}
             alt=""
             onError={() => setImageFailed(true)}
-            onError={() => setImageFailed(true)}
           />
         </picture>
         <span className={`campaign-banner-shade${imageFailed ? ' image-failed' : ''}`} />

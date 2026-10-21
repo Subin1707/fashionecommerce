@@ -22,10 +22,12 @@ public class CampaignImageStorageService {
     private static final long MAX_IMAGE_PIXELS = 25_000_000L;
     private final Path eventDirectory;
     private final Path avatarDirectory;
+    private final Path productDirectory;
 
     public CampaignImageStorageService(@Value("${fashion.upload.directory:uploads}") String uploadDirectory) {
         this.eventDirectory = Path.of(uploadDirectory).toAbsolutePath().normalize().resolve("events").normalize();
         this.avatarDirectory = Path.of(uploadDirectory).toAbsolutePath().normalize().resolve("avatars").normalize();
+        this.productDirectory = Path.of(uploadDirectory).toAbsolutePath().normalize().resolve("products").normalize();
     }
 
     public String store(MultipartFile file) {
@@ -34,6 +36,10 @@ public class CampaignImageStorageService {
 
     public String storeAvatar(MultipartFile file) {
         return store(file, avatarDirectory, "avatars", "ảnh đại diện");
+    }
+
+    public String storeProduct(MultipartFile file) {
+        return store(file, productDirectory, "products", "product image");
     }
 
     private String store(MultipartFile file, Path directory, String folder, String label) {
@@ -102,5 +108,9 @@ public class CampaignImageStorageService {
 
     public Path getAvatarDirectory() {
         return avatarDirectory;
+    }
+
+    public Path getProductDirectory() {
+        return productDirectory;
     }
 }

@@ -3,6 +3,7 @@ import { useCallback, useEffect, useMemo, useState } from 'react'
 import { ORDER_STATUSES } from '../../utils/constants'
 import { formatCurrency } from '../../utils/formatCurrency'
 import * as adminService from '../../services/adminService'
+import { ReturnEvidence } from '../../components/order/ReturnEvidence'
 
 const statusLabels = {
   PENDING: 'Chờ xác nhận',
@@ -200,8 +201,43 @@ export function OrderManagementPage({ setNotice }) {
           {selectedOrder && <ShipmentPanel key={selectedOrder.id} order={selectedOrder} admin onUpdated={loadOrders} />}
         </aside>
       </div>
+      <ReturnRequestQueue setNotice={setNotice} />
     </section>
   )
+}
+
+function ReturnRequestQueue({ setNotice }) {
+  const [requests, setRequests] = useState([])
+  const [busyId, setBusyId] = useState(null)
+  const load = useCallback(() => adminService.getAdminReturnRequests().then(setRequests).catch((error) => setNotice?.(`Không tải được yêu cầu đổi trả: ${error.message}`)), [setNotice])
+  useEffect(() => { load() }, [load])
+
+  async function review(request, status) {
+    const prompts = { APPROVED: 'Ghi chú cho khách (không bắt buộc):', REJECTED: 'Lý do từ chối:', RECEIVED: 'Ghi chú nhận hàng (không bắt buộc):', COMPLETED: 'Ghi chú hoàn tất (không bắt buộc):' }
+    const adminNote = window.prompt(prompts[status] || 'Ghi chú cho khách (không bắt buộc):')
+    if (adminNote === null) return
+    setBusyId(request.id)
+    try {
+      const updated = await adminService.reviewReturnRequest(request.id, status, adminNote)
+      setRequests((current) => current.map((item) => item.id === updated.id ? updated : item))
+      setNotice?.(`Đã ${status === 'APPROVED' ? 'duyệt' : 'từ chối'} yêu cầu đổi trả #${request.id}.`)
+    } catch (error) { setNotice?.(`Không xử lý được yêu cầu #${request.id}: ${error.message}`) }
+    finally { setBusyId(null) }
+  }
+
+  return <div className="order-admin-list-panel" style={{ marginTop: 20 }}>
+    <div className="order-admin-panel-heading"><div><p className="eyebrow">Hậu mãi</p><h2>Yêu cầu đổi trả</h2></div><button type="button" className="ghost" onClick={load}>Làm mới</button></div>
+    {requests.length === 0 ? <p className="empty-state">Chưa có yêu cầu đổi trả.</p> : requests.map((request) => <article className="review-card" key={request.id}>
+      <strong>#{request.id} · Đơn #{request.orderId} · Sản phẩm #{request.orderItemId}</strong>
+      <p>Khách #{request.userId} · {request.requestType === 'EXCHANGE' ? 'Đổi hàng' : 'Trả hàng'} · Số lượng {request.quantity}</p>
+      <p>Lý do: {request.reason}</p>
+      <ReturnEvidence files={request.evidenceFiles} />
+      <p>Trạng thái: {({ PENDING: 'Chờ xử lý', APPROVED: 'Đã duyệt, chờ gửi hàng', REJECTED: 'Từ chối', RECEIVED: 'Shop đã nhận hàng', COMPLETED: 'Đã hoàn tất' })[request.status] || request.status}{request.adminNote ? ` · ${request.adminNote}` : ''}</p>
+      {request.status === 'PENDING' && <div className="order-admin-danger-row"><button type="button" disabled={busyId === request.id} onClick={() => review(request, 'APPROVED')}>Duyệt</button><button type="button" className="danger" disabled={busyId === request.id} onClick={() => review(request, 'REJECTED')}>Từ chối</button></div>}
+      {request.status === 'APPROVED' && <button type="button" disabled={busyId === request.id} onClick={() => review(request, 'RECEIVED')}>Xác nhận đã nhận hàng hoàn</button>}
+      {request.status === 'RECEIVED' && <button type="button" disabled={busyId === request.id} onClick={() => review(request, 'COMPLETED')}>Hoàn tất đổi trả</button>}
+    </article>)}
+  </div>
 }
 
 function OrderKpi({ label, value, tone = '' }) {
@@ -295,6 +331,7 @@ function OrderDetail({ order, saving, onStatusChange }) {
 
       <dl className="order-admin-detail-list">
         <div><dt>Tạm tính</dt><dd>{formatCurrency(order.totalAmount || 0)}</dd></div>
+        <div><dt>Thuế VAT</dt><dd>{formatCurrency(order.vatAmount || 0)}</dd></div>
         <div><dt>Phí vận chuyển</dt><dd>{formatCurrency(order.shippingFee || 0)}</dd></div>
         <div><dt>Giảm giá</dt><dd>{formatCurrency(order.discountAmount || 0)}</dd></div>
         <div><dt>Thanh toán</dt><dd>{paymentLabels[order.paymentStatus] || order.paymentStatus || '-'}</dd></div>

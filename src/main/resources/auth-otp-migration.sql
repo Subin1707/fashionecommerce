@@ -7,13 +7,11 @@ CREATE TABLE IF NOT EXISTS email_otps (
     failed_attempts INTEGER NOT NULL DEFAULT 0,
     registration_failed_attempts INTEGER NOT NULL DEFAULT 0,
     registration_locked_until TIMESTAMP
-);
+)@@
 
 ALTER TABLE email_otps
-    ADD COLUMN IF NOT EXISTS failed_attempts INTEGER NOT NULL DEFAULT 0;
-
+    ADD COLUMN IF NOT EXISTS failed_attempts INTEGER NOT NULL DEFAULT 0@@
 ALTER TABLE email_otps
-    ADD COLUMN IF NOT EXISTS registration_failed_attempts INTEGER NOT NULL DEFAULT 0;
-
+    ADD COLUMN IF NOT EXISTS registration_failed_attempts INTEGER NOT NULL DEFAULT 0@@
 ALTER TABLE email_otps
-    ADD COLUMN IF NOT EXISTS registration_locked_until TIMESTAMP;
+    ADD COLUMN IF NOT EXISTS registration_locked_until TIMESTAMP@@

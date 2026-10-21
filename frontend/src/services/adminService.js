@@ -28,6 +28,12 @@ export function updateAdminProduct(productId, payload) {
   })
 }
 
+export function uploadAdminProductImage(file) {
+  const body = new FormData()
+  body.append('file', file)
+  return apiRequest('/api/admin/products/images', { method: 'POST', body })
+}
+
 export function deleteAdminProduct(productId) {
   return apiRequest(`/api/admin/products/${productId}`, { method: 'DELETE' })
 }
@@ -48,6 +54,17 @@ export function updateAdminOrderStatus(orderId, orderStatus) {
   return apiRequest(`/api/admin/orders/${orderId}/status`, {
     method: 'PUT',
     body: JSON.stringify({ orderStatus }),
+  })
+}
+
+export function getAdminReturnRequests() {
+  return apiRequest('/api/admin/return-requests')
+}
+
+export function reviewReturnRequest(id, status, adminNote = '') {
+  return apiRequest(`/api/admin/return-requests/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify({ status, adminNote }),
   })
 }
 

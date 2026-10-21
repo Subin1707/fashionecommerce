@@ -21,6 +21,11 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
+    public List<Category> getCategoriesWithSellableProducts() {
+        return categoryRepository.findActiveCategoriesWithSellableProducts();
+    }
+
+    @Transactional(readOnly = true)
     @Cacheable(cacheNames = "categories", key = "#id")
     public Category getCategoryById(Long id) {
         return categoryRepository.findById(id)
