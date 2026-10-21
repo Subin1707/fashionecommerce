@@ -7,11 +7,8 @@ export function AuthLayout({ title, active, setRoute, children }) {
       <div className="auth-showcase">
         <img
           className="auth-showcase-image"
-          src="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=760&q=56"
-          srcSet="https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=560&q=52 560w, https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=760&q=56 760w, https://images.unsplash.com/photo-1529139574466-a303027c1d8b?auto=format&fit=crop&w=980&q=58 980w"
-          sizes="(max-width: 900px) 100vw, 56vw"
-          alt=""
-          aria-hidden="true"
+          src="/images/auth-elegant-vietnamese.jpg"
+          alt="Người mẫu Việt Nam trong tà áo dài hồng pastel nhẹ nhàng"
           fetchPriority="high"
           loading="eager"
           decoding="async"

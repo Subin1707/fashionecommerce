@@ -4,6 +4,16 @@ CREATE TABLE IF NOT EXISTS email_otps (
     code_hash VARCHAR(100) NOT NULL,
     expires_at TIMESTAMP NOT NULL,
     last_sent_at TIMESTAMP NOT NULL,
-    failed_attempts INTEGER NOT NULL DEFAULT 0
-);@@
-ALTER TABLE email_otps ADD COLUMN IF NOT EXISTS failed_attempts INTEGER NOT NULL DEFAULT 0;@@
+    failed_attempts INTEGER NOT NULL DEFAULT 0,
+    registration_failed_attempts INTEGER NOT NULL DEFAULT 0,
+    registration_locked_until TIMESTAMP
+);
+
+ALTER TABLE email_otps
+    ADD COLUMN IF NOT EXISTS failed_attempts INTEGER NOT NULL DEFAULT 0;
+
+ALTER TABLE email_otps
+    ADD COLUMN IF NOT EXISTS registration_failed_attempts INTEGER NOT NULL DEFAULT 0;
+
+ALTER TABLE email_otps
+    ADD COLUMN IF NOT EXISTS registration_locked_until TIMESTAMP;

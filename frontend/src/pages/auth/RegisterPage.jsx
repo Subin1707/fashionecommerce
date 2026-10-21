@@ -77,7 +77,7 @@ export function RegisterPage({ setRoute }) {
       {feedback && <p className={`auth-feedback ${feedback.type}`} role="status" aria-live="polite">{feedback.message}</p>}
       {otpStep ? (
         <form className="form-grid auth-form register-form" onSubmit={verify}>
-          <p>Nhập mã OTP gồm 6 chữ số đã gửi đến <strong>{form.email}</strong>. Mã có hiệu lực trong 10 phút.</p>
+          <p>Nhập mã OTP gồm 6 chữ số đã gửi đến <strong>{form.email}</strong>. Mã có hiệu lực trong 1 phút. Nhập sai 5 lần sẽ tạm khóa đăng ký trong 5 phút.</p>
           <label>Mã xác thực OTP
             <input inputMode="numeric" autoComplete="one-time-code" maxLength={6} value={code} onChange={(event) => setCode(event.target.value.replace(/\D/g, ''))} />
           </label>

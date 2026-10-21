@@ -33,4 +33,10 @@ public class EmailOtp {
 
     @Column(nullable = false)
     private int failedAttempts;
+
+    @Column(nullable = false)
+    private int registrationFailedAttempts;
+
+    @Column
+    private LocalDateTime registrationLockedUntil;
 }

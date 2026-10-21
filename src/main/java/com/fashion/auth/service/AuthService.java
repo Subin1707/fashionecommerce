@@ -74,6 +74,17 @@ public class AuthService {
         if (existing != null && "ACTIVE".equalsIgnoreCase(existing.getStatus())) {
             throw new IllegalArgumentException("Email n\u00e0y \u0111\u00e3 \u0111\u01b0\u1ee3c \u0111\u0103ng k\u00fd. H\u00e3y \u0111\u0103ng nh\u1eadp ho\u1eb7c d\u00f9ng email kh\u00e1c.");
         }
+        LocalDateTime now = LocalDateTime.now();
+        EmailOtp otp = emailOtpRepository.findByEmail(email).orElseGet(EmailOtp::new);
+        if (otp.getRegistrationLockedUntil() != null && otp.getRegistrationLockedUntil().isAfter(now)) {
+            long secondsLeft = java.time.Duration.between(now, otp.getRegistrationLockedUntil()).toSeconds();
+            throw new IllegalArgumentException("Bạn đã nhập sai mã OTP quá 5 lần. Vui lòng thử đăng ký lại sau "
+                    + Math.max(1, (secondsLeft + 59) / 60) + " phút.");
+        }
+        if (otp.getRegistrationLockedUntil() != null) {
+            otp.setRegistrationLockedUntil(null);
+            otp.setRegistrationFailedAttempts(0);
+        }
         if (!phone.isBlank() && userRepository.existsByPhoneAndEmailNot(phone, email)) {
             throw new IllegalArgumentException("S\u1ed1 \u0111i\u1ec7n tho\u1ea1i n\u00e0y \u0111\u00e3 \u0111\u01b0\u1ee3c s\u1eed d\u1ee5ng. Vui l\u00f2ng d\u00f9ng s\u1ed1 kh\u00e1c.");
         }
@@ -83,8 +94,6 @@ public class AuthService {
         }
 
         String code = String.format("%06d", secureRandom.nextInt(1_000_000));
-        LocalDateTime now = LocalDateTime.now();
-        EmailOtp otp = emailOtpRepository.findByEmail(email).orElseGet(EmailOtp::new);
         if (otp.getLastSentAt() != null && otp.getLastSentAt().isAfter(now.minusSeconds(60))) {
             throw new IllegalArgumentException("Please wait before requesting another OTP");
         }
@@ -105,8 +114,9 @@ public class AuthService {
         userRepository.save(user);
         otp.setEmail(email);
         otp.setCodeHash(passwordEncoder.encode(code));
-        otp.setExpiresAt(now.plusMinutes(10));
+        otp.setExpiresAt(now.plusMinutes(1));
         otp.setLastSentAt(now);
+        otp.setRegistrationFailedAttempts(0);
         emailOtpRepository.save(otp);
 
         try {
@@ -114,7 +124,7 @@ public class AuthService {
             message.setFrom(mailFrom);
             message.setTo(email);
             message.setSubject("FASHION account verification code");
-            message.setText("Your registration OTP is " + code + ". It expires in 10 minutes. Do not share this code.");
+            message.setText("Your registration OTP is " + code + ". It expires in 1 minute. Do not share this code.");
             mailSender.send(message);
         } catch (RuntimeException exception) {
             throw new IllegalStateException("Could not send OTP email. Check SMTP configuration.", exception);
@@ -126,21 +136,29 @@ public class AuthService {
         String email = request.email().trim().toLowerCase(Locale.ROOT);
         EmailOtp otp = emailOtpRepository.findByEmail(email)
                 .orElse(null);
-        if (otp == null || otp.getFailedAttempts() >= 5) {
+        if (otp == null) {
             return false;
         }
-        if (otp.getExpiresAt().isBefore(LocalDateTime.now())) {
+        LocalDateTime now = LocalDateTime.now();
+        if (otp.getRegistrationLockedUntil() != null && otp.getRegistrationLockedUntil().isAfter(now)) {
+            return false;
+        }
+        if (otp.getRegistrationLockedUntil() != null) {
+            otp.setRegistrationLockedUntil(null);
+            otp.setRegistrationFailedAttempts(0);
+        }
+        if (otp.getExpiresAt().isBefore(now)) {
             emailOtpRepository.delete(otp);
             return false;
         }
         if (request.code() == null || !request.code().matches("\\d{6}")
                 || !passwordEncoder.matches(request.code(), otp.getCodeHash())) {
-            otp.setFailedAttempts(otp.getFailedAttempts() + 1);
-            if (otp.getFailedAttempts() >= 5) {
-                emailOtpRepository.delete(otp);
-            } else {
-                emailOtpRepository.save(otp);
+            int failedAttempts = otp.getRegistrationFailedAttempts() + 1;
+            otp.setRegistrationFailedAttempts(failedAttempts);
+            if (failedAttempts >= 5) {
+                otp.setRegistrationLockedUntil(now.plusMinutes(5));
             }
+            emailOtpRepository.save(otp);
             return false;
         }
         User user = userRepository.findByEmail(email)

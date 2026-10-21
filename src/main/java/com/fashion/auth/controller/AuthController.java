@@ -36,7 +36,7 @@ public class AuthController {
     @PostMapping("/verify-otp")
     public ResponseEntity<AuthMessageResponse> verifyOtp(@RequestBody VerifyOtpRequest request) {
         if (!authService.verifyOtp(request)) {
-            throw new IllegalArgumentException("OTP is invalid, expired, or has exceeded the attempt limit");
+            throw new IllegalArgumentException("Mã OTP không đúng hoặc đã hết hạn. Nhập sai 5 lần sẽ tạm khóa đăng ký trong 5 phút.");
         }
         return ResponseEntity.ok(new AuthMessageResponse(
                 "Email verified successfully",
