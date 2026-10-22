@@ -1,0 +1,90 @@
+[
+  {
+    "image_id": 1893,
+    "product_id": 1,
+    "variant_id": 3,
+    "image_url": "/assets/products/seed-catalog/29787.jpg",
+    "alt_text": "?o thun tr?ng; ?nh m?u ngu?n dataset: Basics Men White T-shirt.",
+    "is_primary": true,
+    "display_order": 1,
+    "product_name": "Basics Men T-shirt (White / Black)",
+    "product_slug": "ao-thun-basic"
+  },
+  {
+    "image_id": 1894,
+    "product_id": 1,
+    "variant_id": 2,
+    "image_url": "/assets/products/seed-catalog/21219.jpg",
+    "alt_text": "?o thun ?en; ?nh m?u ngu?n dataset: Basics Men Black T-shirt.",
+    "is_primary": false,
+    "display_order": 2,
+    "product_name": "Basics Men T-shirt (White / Black)",
+    "product_slug": "ao-thun-basic"
+  },
+  {
+    "image_id": 1895,
+    "product_id": 2,
+    "variant_id": 5,
+    "image_url": "/assets/products/seed-catalog/39386.jpg",
+    "alt_text": "Qu?n jean xanh; ?nh m?u ngu?n dataset: Peter England Men Party Blue Jeans.",
+    "is_primary": true,
+    "display_order": 1,
+    "product_name": "Peter England Men Party Blue Jeans",
+    "product_slug": "quan-jean-relaxed"
+  },
+  {
+    "image_id": 1896,
+    "product_id": 3,
+    "variant_id": 7,
+    "image_url": "/assets/products/seed-catalog/15322.jpg",
+    "alt_text": "?o kho?c ?en; ?nh m?u ngu?n dataset: Nike Men Solid Black Jacket.",
+    "is_primary": true,
+    "display_order": 1,
+    "product_name": "Nike Men Solid Black Jacket",
+    "product_slug": "ao-khoac-bomber"
+  },
+  {
+    "image_id": 1898,
+    "product_id": 5,
+    "variant_id": 13,
+    "image_url": "/assets/products/seed-catalog/20790.jpg",
+    "alt_text": "?o kho?c xanh washed; ?nh m?u ngu?n dataset: Basics Men Blue Washed Jacket.",
+    "is_primary": true,
+    "display_order": 1,
+    "product_name": "Basics Men Blue Washed Jacket",
+    "product_slug": "ao-khoac-denim-lightwash"
+  },
+  {
+    "image_id": 1899,
+    "product_id": 6,
+    "variant_id": 15,
+    "image_url": "/assets/products/seed-catalog/27441.jpg",
+    "alt_text": "?o tank tr?ng racerback; ?nh m?u ngu?n dataset: Jockey Women White Racerback Tank Top.",
+    "is_primary": true,
+    "display_order": 1,
+    "product_name": "Jockey Women White Racerback Tank Top",
+    "product_slug": "ao-knit-tank-ivory"
+  },
+  {
+    "image_id": 1900,
+    "product_id": 7,
+    "variant_id": 16,
+    "image_url": "/assets/products/seed-catalog/21946.jpg",
+    "alt_text": "T?i x?ch ?en; ?nh m?u ngu?n dataset: Murcia Women Casual Black Handbag.",
+    "is_primary": true,
+    "display_order": 1,
+    "product_name": "Murcia Women Casual Black Handbag",
+    "product_slug": "tui-mini-crescent"
+  },
+  {
+    "image_id": 1901,
+    "product_id": 8,
+    "variant_id": 19,
+    "image_url": "/assets/products/seed-catalog/23882.jpg",
+    "alt_text": "Gi?y th? thao x?m; ?nh m?u ngu?n dataset: Fila Men Destiny Grey Sports Shoes.",
+    "is_primary": true,
+    "display_order": 1,
+    "product_name": "Fila Men Destiny Grey Sports Shoes",
+    "product_slug": "sneaker-cloud-runner"
+  }
+]

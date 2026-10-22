@@ -397,8 +397,8 @@ mark,
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 14px;
 }
 
 .product-card {
@@ -441,8 +441,8 @@ mark,
 
 .product-image {
   aspect-ratio: 4 / 5;
-  max-height: 420px;
-  align-self: start;
+  max-height: 300px;
+  align-self: stretch;
 }
 
 .product-image img,
@@ -736,11 +736,14 @@ dd {
 }
 
 .detail-hero-image img {
-  transition: transform 420ms ease;
+  object-fit: contain;
+  padding: 12px;
+  filter: contrast(1.04) saturate(1.06);
+  transition: filter 240ms ease;
 }
 
 .detail-hero-image:hover img {
-  transform: scale(1.035);
+  filter: contrast(1.08) saturate(1.1);
 }
 
 .detail-image-badges {
@@ -5230,6 +5233,10 @@ pre,
   .side-nav {
     position: static;
     height: auto;
+  }
+
+  .product-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .filters,

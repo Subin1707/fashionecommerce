@@ -1,0 +1,101 @@
+{
+  "product": [
+    {
+      "id": 164,
+      "brand_id": 98,
+      "category_id": 4,
+      "name": "Arrow Woman Solid Cream Dress",
+      "slug": "dam-midi-linen",
+      "short_description": "??m n? m?u kem t? dataset.",
+      "description": "T?n v? ?nh l?y t? c?ng b?n ghi dataset. Gi? v? t?n kho l? d? li?u demo, kh?ng ph?i gi? g?c t? ngu?n.",
+      "base_price": 760000.0,
+      "sale_price": 670000.0,
+      "material": null,
+      "fit": null,
+      "gender": "FEMALE",
+      "status": "ACTIVE",
+      "is_featured": true,
+      "is_new": true,
+      "created_at": "2026-10-20T12:31:30.643083",
+      "updated_at": "2026-10-21T21:35:45.108332"
+    }
+  ],
+  "variants": [
+    {
+      "id": 10,
+      "product_id": 164,
+      "sku": "DML-001-SND-S",
+      "color": "Cream",
+      "size": "S",
+      "stock_qty": 11,
+      "price_adjustment": 0.0,
+      "is_active": true,
+      "created_at": "2026-09-24T23:48:52.656113",
+      "updated_at": "2026-10-20T12:31:30.657996"
+    },
+    {
+      "id": 11,
+      "product_id": 164,
+      "sku": "DML-001-SND-M",
+      "color": "Cream",
+      "size": "M",
+      "stock_qty": 13,
+      "price_adjustment": 0.0,
+      "is_active": true,
+      "created_at": "2026-09-24T23:48:52.666146",
+      "updated_at": "2026-10-20T12:31:30.672575"
+    }
+  ],
+  "images": [
+    {
+      "id": 1897,
+      "product_id": 164,
+      "variant_id": 11,
+      "image_url": "/assets/products/seed-catalog/18896.jpg",
+      "alt_text": "??m m?u kem; ?nh m?u ngu?n dataset: Arrow Woman Solid Cream Dress.",
+      "is_primary": true,
+      "display_order": 1,
+      "created_at": "2026-10-21T21:33:40.175309"
+    }
+  ],
+  "wishlist_items": [
+    {
+      "id": 10,
+      "user_id": 61,
+      "product_id": 164,
+      "created_at": "2026-10-21T17:35:43.702779"
+    }
+  ],
+  "collection_products": [
+    {
+      "collection_id": 1,
+      "product_id": 164,
+      "display_order": 5
+    }
+  ],
+  "product_size_charts": [],
+  "size_guides": [
+    {
+      "id": 7,
+      "product_id": 164,
+      "category_id": 4,
+      "size_label": "S",
+      "chest_cm": 88.0,
+      "waist_cm": 68.0,
+      "hip_cm": 94.0,
+      "shoulder_cm": 37.0,
+      "fit_note": "Dang A-line nhe"
+    },
+    {
+      "id": 8,
+      "product_id": 164,
+      "category_id": 4,
+      "size_label": "M",
+      "chest_cm": 92.0,
+      "waist_cm": 72.0,
+      "hip_cm": 98.0,
+      "shoulder_cm": 38.0,
+      "fit_note": "Thoai mai cho cong so"
+    }
+  ]
+}

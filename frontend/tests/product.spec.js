@@ -12,6 +12,23 @@ test.describe('Products and variants', () => {
     await expect(page.locator('.product-detail-experience h1')).toBeVisible()
   })
 
+  test('Arrow local catalog image loads on the product list and detail page', async ({ page }) => {
+    await page.goto('/#products')
+    const search = page.locator('.product-toolbar input').first()
+    await search.fill('Arrow Woman Solid Cream Dress')
+    await search.press('Enter')
+    const card = page.locator('.product-card').filter({ hasText: 'Arrow Woman Solid Cream Dress' }).first()
+    const cardImage = card.locator('.product-image img')
+    await expect(cardImage).toHaveAttribute('src', /dresses-cream-arrow-woman-solid-cream-dress-18896\.jpg$/)
+    await expect.poll(() => cardImage.evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true)
+
+    await page.goto('/#product-detail?id=164')
+    await expect(page.locator('.product-detail-experience h1')).toHaveText('Arrow Woman Solid Cream Dress')
+    const detailImage = page.locator('.product-detail-gallery img').first()
+    await expect(detailImage).toHaveAttribute('src', /dresses-cream-arrow-woman-solid-cream-dress-18896\.jpg$/)
+    await expect.poll(() => detailImage.evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true)
+  })
+
   test('TC-08 search returns a catalog state', async ({ page }) => {
     await openProducts(page)
     const search = page.locator('.product-toolbar input').first()

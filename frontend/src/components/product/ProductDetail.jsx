@@ -97,7 +97,7 @@ export function ProductDetail({ product, onAdd, onBuyNow, isAdding = false, isBu
             {hasSale && <span>Ưu đãi</span>}
           </div>
           {heroImage ? (
-            <SafeImage src={heroImage} alt={product.name} fallbackLabel="Product photo" />
+            <SafeImage src={heroImage} alt={product.name} fallbackLabel="Product photo" loading="eager" fetchPriority="high" />
           ) : (
             <div className="detail-image-fallback">
               <strong>{product.categoryName || 'Fashion'}</strong>

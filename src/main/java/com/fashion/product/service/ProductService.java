@@ -21,7 +21,7 @@ public class ProductService {
 
     @Transactional(readOnly = true)
     public List<Product> getAllProducts() {
-        return productRepository.findAll();
+        return productRepository.findByStatusIgnoreCase("ACTIVE");
     }
 
     @Transactional(readOnly = true)

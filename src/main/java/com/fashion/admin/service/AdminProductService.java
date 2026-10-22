@@ -220,6 +220,15 @@ public class AdminProductService {
         entityManager.createNativeQuery("delete from wishlist_items where product_id = :productId")
                 .setParameter("productId", productId)
                 .executeUpdate();
+        entityManager.createNativeQuery("delete from collection_products where product_id = :productId")
+                .setParameter("productId", productId)
+                .executeUpdate();
+        entityManager.createNativeQuery("delete from voucher_products where product_id = :productId")
+                .setParameter("productId", productId)
+                .executeUpdate();
+        entityManager.createNativeQuery("delete from size_guides where product_id = :productId")
+                .setParameter("productId", productId)
+                .executeUpdate();
         entityManager.createNativeQuery("delete from product_size_charts where product_id = :productId")
                 .setParameter("productId", productId)
                 .executeUpdate();

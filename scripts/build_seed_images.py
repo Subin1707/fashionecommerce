@@ -24,6 +24,7 @@ BASE = {
     "ao-thun-basic-secondary": ("ao-thun-basic", "ATB-001-BLK-M", False),
     "quan-jean-relaxed": ("quan-jean-relaxed", "QJR-001-BLU-30", True),
     "ao-khoac-bomber": ("ao-khoac-bomber", "AKB-001-BLK-M", True),
+    "dam-midi-linen": ("dam-midi-linen", "DML-001-SND-M", True),
     "ao-khoac-denim-lightwash": ("ao-khoac-denim-lightwash", "ADL-001-BLU-M", True),
     "ao-knit-tank-ivory": ("ao-knit-tank-ivory", "AKT-001-IVR-M", True),
     "tui-mini-crescent": ("tui-mini-crescent", "TMC-001-BLK-OS", True),
@@ -280,10 +281,11 @@ def update_seed_base_paths(base_rows: list[dict]) -> None:
             quote(f"{row['sourceName']} - {row['articleType']} ({row['color']})"),
             "TRUE" if primary else "FALSE", "1" if primary else "2",
         ]) + ")")
-    section = start_marker + "\nDELETE FROM product_images i USING products p\nWHERE i.product_id=p.id AND p.slug IN (" + ",".join(quote(slug) for slug in sorted({v[0] for v in BASE.values()})) + ");\n"
+    managed_slugs = sorted({value[0] for key, value in BASE.items() if key != "dam-midi-linen"})
+    section = start_marker + "\nDELETE FROM product_images i USING products p\nWHERE i.product_id=p.id AND p.slug IN (" + ",".join(quote(slug) for slug in managed_slugs) + ");\n"
     section += "INSERT INTO product_images (product_id,variant_id,image_url,alt_text,is_primary,display_order)\n"
     section += "SELECT p.id,v.id,m.image_url,m.alt_text,m.is_primary,m.display_order\nFROM (VALUES\n    " + ",\n    ".join(rows) + "\n) AS m(product_slug,variant_sku,image_url,alt_text,is_primary,display_order)\n"
-    section += "JOIN products p ON p.slug=m.product_slug JOIN product_variants v ON v.product_id=p.id AND v.sku=m.variant_sku;\n\n"
+    section += "JOIN products p ON p.slug=m.product_slug JOIN product_variants v ON v.product_id=p.id AND v.sku=m.variant_sku\nWHERE (p.name='Arrow Woman Solid Cream Dress' AND NOT EXISTS (SELECT 1 FROM product_images i WHERE i.product_id=p.id AND i.variant_id=v.id AND i.image_url=m.image_url)) OR p.slug<>'dam-midi-linen';\n\n"
     text = text[:start] + section + text[end:]
     # Review photo uses the white tee photo from the same local seed catalog.
     review_path = by_key["ao-thun-basic-primary"]["localImage"]
@@ -304,7 +306,9 @@ def update_seed_base_paths(base_rows: list[dict]) -> None:
         text = before + "\n" + image_marker + "\n" + generated + "\n" + image_end + "\n" + after
     else:
         text = text.rstrip() + "\n\n" + image_marker + "\n" + generated + "\n" + image_end + "\n"
-    if re.search(r"https?://", text, re.I):
+    unexpected_external = re.findall(r"https?://[^'\s]+", text, re.I)
+    allowed_hity_image = "https://product.hstatic.net/1000154340/product/vai_lanh_do_dam_co_tim_kieu_vintage_co_dien_thoi_trang_thiet_ke_hity_2_dd759789d7d4499c91a79600b78dfaac_master.jpg"
+    if any(url != allowed_hity_image for url in unexpected_external):
         raise ValueError("External URL remains in seed.sql")
     SEED_SQL.write_text(text, encoding="utf-8", newline="")
 

@@ -11,9 +11,9 @@ function optimizeImageUrl(src) {
       url.searchParams.set('auto', 'format')
       url.searchParams.set('fit', url.searchParams.get('fit') || 'crop')
       const width = Number(url.searchParams.get('w'))
-      if (!width || width > 720) url.searchParams.set('w', '720')
+      if (!width || width > 1600) url.searchParams.set('w', '1600')
       const quality = Number(url.searchParams.get('q'))
-      if (!quality || quality > 70) url.searchParams.set('q', '70')
+      if (!quality || quality < 85) url.searchParams.set('q', '88')
       return url.toString()
     }
 
@@ -25,19 +25,19 @@ function optimizeImageUrl(src) {
     // transformer to cap their dimensions and encode them as compact WebP.
     const optimized = new URL('https://wsrv.nl/')
     optimized.searchParams.set('url', url.toString())
-    optimized.searchParams.set('w', '640')
-    optimized.searchParams.set('h', '800')
+    optimized.searchParams.set('w', '1600')
+    optimized.searchParams.set('h', '2000')
     optimized.searchParams.set('fit', 'inside')
     optimized.searchParams.set('we', '')
     optimized.searchParams.set('output', 'webp')
-    optimized.searchParams.set('q', '68')
+    optimized.searchParams.set('q', '88')
     return optimized.toString()
   } catch {
     return src
   }
 }
 
-export function SafeImage({ src, alt = '', fallbackLabel = 'Fashion', className = '', loading = 'lazy', fetchPriority }) {
+export function SafeImage({ src, alt = '', fallbackLabel = 'Fashion', className = '', loading = 'lazy', fetchPriority, imageWidth = 1600, imageHeight = 2000 }) {
   const optimizedSrc = optimizeImageUrl(src)
   const [failedSource, setFailedSource] = useState(null)
   const [unoptimizedSource, setUnoptimizedSource] = useState(null)
@@ -65,8 +65,8 @@ export function SafeImage({ src, alt = '', fallbackLabel = 'Fashion', className 
       loading={loading}
       decoding="async"
       fetchPriority={fetchPriority}
-      width="640"
-      height="800"
+      width={imageWidth}
+      height={imageHeight}
       onError={() => {
         console.warn(`[SafeImage] Failed to load image; using fallback. URL: ${src}`, { attemptedUrl: displaySrc })
         if (displaySrc !== src) setUnoptimizedSource(optimizedSrc)

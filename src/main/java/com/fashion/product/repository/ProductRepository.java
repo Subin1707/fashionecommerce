@@ -42,6 +42,9 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findAll();
 
     @EntityGraph(attributePaths = {"brand", "category", "variants"})
+    List<Product> findByStatusIgnoreCase(String status);
+
+    @EntityGraph(attributePaths = {"brand", "category", "variants"})
     @Query("""
             select distinct p
             from Product p

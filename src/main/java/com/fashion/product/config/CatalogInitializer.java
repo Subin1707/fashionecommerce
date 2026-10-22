@@ -36,6 +36,7 @@ public class CatalogInitializer implements CommandLineRunner {
         Brand mazzola = ensureBrand("Mazzola", "mazzola", "Thương hiệu Việt chuyên denim với phom dáng hiện đại và chất liệu bền.", null);
         Brand heboz = ensureBrand("HEBOZ", "heboz", "Thời trang nam Việt Nam với các thiết kế ứng dụng cho đời sống đô thị.", null);
         Brand hity = ensureBrand("Hity", "hity", "Thương hiệu thiết kế Việt chú trọng chất liệu tự nhiên và phom dáng thanh lịch.", null);
+        Brand datasetSample = ensureBrand("Dataset Sample", "dataset-sample-myntra", "Technical brand for Fashion Product Images Dataset samples.", null);
         Brand h2t = ensureBrand("H2T Store", "h2t-store", "Thời trang trẻ Việt Nam, tập trung vào sản phẩm denim và trang phục thường ngày.", null);
         Brand gianSaigon = ensureBrand("GIAN Sài Gòn", "gian-sai-gon", "Local brand Sài Gòn với các thiết kế dệt gân và phom dáng tối giản.", null);
         Brand vascara = ensureBrand("Vascara", "vascara", "Thương hiệu phụ kiện Việt Nam với túi xách và giày dép cho nữ.", null);
@@ -124,9 +125,28 @@ public class CatalogInitializer implements CommandLineRunner {
                 true,
                 true,
                 List.of(
-                        variant("DML-001-SND-S", "Sand", "S", 11, 0),
-                        variant("DML-001-SND-M", "Sand", "M", 13, 0)),
-                List.of(image("DML-001-SND-M", "https://product.hstatic.net/1000154340/product/vai_lanh_do_dam_co_tim_kieu_vintage_co_dien_thoi_trang_thiet_ke_hity_2_dd759789d7d4499c91a79600b78dfaac_master.jpg", "Đầm linen cổ tim dáng midi Hity, ảnh sản phẩm", true, 1)));
+                        variant("HITY-DML-001-SND-S", "Sand", "S", 11, 0),
+                        variant("HITY-DML-001-SND-M", "Sand", "M", 13, 0)),
+                List.of(image("HITY-DML-001-SND-M", "https://product.hstatic.net/1000154340/product/vai_lanh_do_dam_co_tim_kieu_vintage_co_dien_thoi_trang_thiet_ke_hity_2_dd759789d7d4499c91a79600b78dfaac_master.jpg", "Đầm linen cổ tim dáng midi Hity, ảnh sản phẩm", true, 1)));
+
+        seedProduct(
+                datasetSample,
+                dresses,
+                "Arrow Woman Solid Cream Dress",
+                "dam-midi-linen",
+                "??m n? m?u kem t? dataset.",
+                "T?n v? ?nh l?y t? c?ng b?n ghi dataset. Gi? v? t?n kho l? d? li?u demo, kh?ng ph?i gi? g?c t? ngu?n.",
+                BigDecimal.valueOf(760000),
+                BigDecimal.valueOf(670000),
+                null,
+                null,
+                "FEMALE",
+                true,
+                true,
+                List.of(
+                        variant("DML-001-SND-S", "Cream", "S", 11, 0),
+                        variant("DML-001-SND-M", "Cream", "M", 13, 0)),
+                List.of(image("DML-001-SND-M", "/assets/products/seed-catalog/dresses-cream-arrow-woman-solid-cream-dress-18896.jpg", "Arrow Woman Solid Cream Dress - Dresses (Cream)", true, 1)));
 
         seedProduct(
                 h2t,

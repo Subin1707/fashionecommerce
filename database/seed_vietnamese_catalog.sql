@@ -6,17 +6,35 @@ INSERT INTO brands (name, slug, description, is_active)
 VALUES ('Di Sản Việt Demo', 'di-san-viet-demo', 'Thương hiệu demo cho catalog trang phục truyền thống Việt Nam.', TRUE)
 ON CONFLICT (slug) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, is_active=TRUE;
 
-INSERT INTO categories (name, slug, description, is_active) VALUES
-('Việt phục cổ', 'viet-phuc-co-demo', 'Mẫu demo lấy cảm hứng từ kiểu áo truyền thống; không khẳng định phục dựng lịch sử.', TRUE),
-('Áo dài truyền thống', 'ao-dai-truyen-thong-demo', 'Áo dài và biến thể lấy cảm hứng từ trang phục Việt.', TRUE),
-('Áo bà ba', 'ao-ba-ba-demo', 'Trang phục áo bà ba lấy cảm hứng từ đời sống Nam Bộ.', TRUE),
-('Trang phục lễ hội Việt', 'trang-phuc-le-hoi-viet-demo', 'Trang phục demo dùng trong dịp lễ, cưới và sự kiện văn hóa.', TRUE),
-('Phụ kiện Việt truyền thống', 'phu-kien-viet-truyen-thong-demo', 'Phụ kiện phối cùng Việt phục.', TRUE)
-ON CONFLICT (slug) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, is_active=TRUE;
+UPDATE categories AS target
+SET name = source.name, description = source.description, is_active = source.is_active
+FROM (VALUES
+  ('Việt phục cổ', 'viet-phuc-co-demo', 'Mẫu demo lấy cảm hứng từ kiểu áo truyền thống; không khẳng định phục dựng lịch sử.', TRUE),
+  ('Áo dài truyền thống', 'ao-dai-truyen-thong-demo', 'Áo dài và biến thể lấy cảm hứng từ trang phục Việt.', TRUE),
+  ('Áo bà ba', 'ao-ba-ba-demo', 'Trang phục áo bà ba lấy cảm hứng từ đời sống Nam Bộ.', TRUE),
+  ('Trang phục lễ hội Việt', 'trang-phuc-le-hoi-viet-demo', 'Trang phục demo dùng trong dịp lễ, cưới và sự kiện văn hóa.', TRUE),
+  ('Phụ kiện Việt truyền thống', 'phu-kien-viet-truyen-thong-demo', 'Phụ kiện phối cùng Việt phục.', TRUE)
+) AS source(name, slug, description, is_active)
+WHERE target.slug = source.slug;
+
+INSERT INTO categories (name, slug, description, is_active)
+SELECT source.name, source.slug, source.description, source.is_active
+FROM (VALUES
+  ('Việt phục cổ', 'viet-phuc-co-demo', 'Mẫu demo lấy cảm hứng từ kiểu áo truyền thống; không khẳng định phục dựng lịch sử.', TRUE),
+  ('Áo dài truyền thống', 'ao-dai-truyen-thong-demo', 'Áo dài và biến thể lấy cảm hứng từ trang phục Việt.', TRUE),
+  ('Áo bà ba', 'ao-ba-ba-demo', 'Trang phục áo bà ba lấy cảm hứng từ đời sống Nam Bộ.', TRUE),
+  ('Trang phục lễ hội Việt', 'trang-phuc-le-hoi-viet-demo', 'Trang phục demo dùng trong dịp lễ, cưới và sự kiện văn hóa.', TRUE),
+  ('Phụ kiện Việt truyền thống', 'phu-kien-viet-truyen-thong-demo', 'Phụ kiện phối cùng Việt phục.', TRUE)
+) AS source(name, slug, description, is_active)
+WHERE NOT EXISTS (SELECT 1 FROM categories AS target WHERE target.slug = source.slug);
+
+UPDATE collections
+SET name='Nét Việt truyền thống', description='Catalog demo trang phục lấy cảm hứng từ các kiểu Việt phục.', season='ALL_SEASON', is_featured=TRUE
+WHERE slug='net-viet-truyen-thong-demo';
 
 INSERT INTO collections (name, slug, description, season, is_featured)
-VALUES ('Nét Việt truyền thống', 'net-viet-truyen-thong-demo', 'Catalog demo trang phục lấy cảm hứng từ các kiểu Việt phục.', 'ALL_SEASON', TRUE)
-ON CONFLICT (slug) DO UPDATE SET name=EXCLUDED.name, description=EXCLUDED.description, is_featured=TRUE;
+SELECT 'Nét Việt truyền thống', 'net-viet-truyen-thong-demo', 'Catalog demo trang phục lấy cảm hứng từ các kiểu Việt phục.', 'ALL_SEASON', TRUE
+WHERE NOT EXISTS (SELECT 1 FROM collections WHERE slug='net-viet-truyen-thong-demo');
 
 CREATE TEMP TABLE vietnamese_traditional_seed (
  slug text PRIMARY KEY, category_slug text NOT NULL, name text NOT NULL, description text NOT NULL,
@@ -78,29 +96,34 @@ ON CONFLICT DO NOTHING;
 CREATE TEMP TABLE vietnamese_traditional_images ON COMMIT DROP AS
 SELECT p.id AS product_id,
        (SELECT v.id FROM product_variants v WHERE v.product_id=p.id ORDER BY v.is_active DESC,v.id LIMIT 1) AS variant_id,
-       CASE p.slug
-         WHEN 'viet-phuc-ao-tac-nu-demo' THEN '/assets/products/vietnamese-traditional/ao-tac/viet-phuc-ao-tac-nu-demo/main.webp'
-         WHEN 'ao-ba-ba-nu-demo' THEN '/assets/products/vietnamese-traditional/ao-ba-ba/ao-ba-ba-nu-demo/main.webp'
-         WHEN 'ao-dai-nu-co-dien-demo' THEN '/assets/products/vietnamese-traditional/ao-dai/ao-dai-nu-co-dien-demo/main.webp'
-         ELSE CASE c.slug
-           WHEN 'viet-phuc-co-demo' THEN 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/Rio_m%C3%A3_ch%C3%A2u_%C3%A1o_t%E1%BA%A5c.jpg/500px-Rio_m%C3%A3_ch%C3%A2u_%C3%A1o_t%E1%BA%A5c.jpg'
-           WHEN 'ao-ba-ba-demo' THEN 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Vietnam_2011.jpg/500px-Vietnam_2011.jpg'
-           ELSE 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a0/%C3%81o_d%C3%A0i%2C_H%E1%BB%93_G%C6%B0%C6%A1m.jpg/500px-%C3%81o_d%C3%A0i%2C_H%E1%BB%93_G%C6%B0%C6%A1m.jpg'
-         END
+       '/assets/products/trangphuccotruyen/' || CASE p.slug
+         WHEN 'viet-phuc-ngu-than-nam-demo' THEN 'ao-ngu-than-nam-be-trang-doi-nguoi.jpg'
+         WHEN 'viet-phuc-ngu-than-nu-demo' THEN 'trang-phuc-dan-toc-nu-vung-cao.jpg'
+         WHEN 'viet-phuc-ao-tac-nam-demo' THEN 'ao-hoang-bao-vang-nam.jpg'
+         WHEN 'viet-phuc-ao-tac-nu-demo' THEN 'trang-phuc-dan-toc-nu-khan-do.jpg'
+         WHEN 'viet-phuc-giao-linh-demo' THEN 'ao-tho-cam-den-hoa-tiet-mau.jpg'
+         WHEN 'viet-phuc-vien-linh-demo' THEN 'trang-phuc-dan-toc-nu-tho-cam.jpg'
+         WHEN 'viet-phuc-doi-kham-demo' THEN 'trang-phuc-dan-toc-nu-hong-xanh.jpg'
+         WHEN 'viet-phuc-nhat-binh-demo' THEN 'tranh-minh-hoa-trang-phuc-hoang-gia-viet.jpg'
+         WHEN 'ao-dai-nu-co-dien-demo' THEN 'ao-dai-trang-nu-chan-dung-co-dien.jpg'
+         WHEN 'ao-dai-nam-co-dung-demo' THEN 'anh-tu-lieu-ao-dai-truyen-thong-den-trang.jpg'
+         WHEN 'ao-dai-ngu-than-demo' THEN 'ao-dai-nau-nu.jpg'
+         WHEN 'ao-dai-khan-van-demo' THEN 'ao-dai-trang-nu-khan-do.jpg'
+         WHEN 'ao-dai-cuoi-do-demo' THEN 'ao-dai-cuoi-do-vang-gan.jpg'
+         WHEN 'ao-dai-cuoi-nam-demo' THEN 'ao-dai-do-cach-tan-nu-san-khau.jpg'
+         WHEN 'ao-ba-ba-nam-demo' THEN 'ao-ba-ba-nau-nu-quan-den.jpg'
+         WHEN 'ao-ba-ba-nu-demo' THEN 'ao-ba-ba-hong-nu-dung-pho.jpg'
+         WHEN 'ao-ba-ba-linen-demo' THEN 'ao-ba-ba-trang-nu-phoi-quan-xanh.jpg'
+         WHEN 'ao-ba-ba-cham-demo' THEN 'ao-ba-ba-tim-nu-quan-den.jpg'
+         WHEN 'khan-van-truyen-thong-demo' THEN 'khan-lua-tim-truyen-thong.jpg'
+         WHEN 'khan-dong-nam-demo' THEN 'khan-dong-truyen-thong-mau-nau.jpg'
+         WHEN 'khan-ran-nam-bo-demo' THEN 'khan-tho-cam-dan-toc-dang-vai.jpg'
+         WHEN 'guoc-go-truyen-thong-demo' THEN 'huong-dan-chon-giay-da-nam.jpg'
+         WHEN 'dai-vai-phoi-viet-phuc-demo' THEN 'vai-tho-cam-do-hoa-tiet-dan-toc.jpg'
        END AS image_url,
-       CASE p.slug
-         WHEN 'viet-phuc-ao-tac-nu-demo' THEN 'Ảnh áo tấc: Ptdtch, CC BY-SA 4.0.'
-         WHEN 'ao-ba-ba-nu-demo' THEN 'Ảnh áo bà ba: 4bangoai, CC BY-SA 4.0.'
-         WHEN 'ao-dai-nu-co-dien-demo' THEN 'Ảnh áo dài: tq2cute, CC BY 2.0.'
-         ELSE CASE c.slug
-           WHEN 'viet-phuc-co-demo' THEN 'Ảnh tham khảo áo tấc. Ptdtch, CC BY-SA 4.0.'
-           WHEN 'ao-ba-ba-demo' THEN 'Ảnh tham khảo áo bà ba. 4bangoai, CC BY-SA 4.0.'
-           ELSE 'Ảnh tham khảo áo dài/phong cách Việt phục. tq2cute, CC BY 2.0.'
-         END
-       END AS alt_text
+       'Ảnh tham khảo từ bộ sưu tập trangphuccotruyen; ảnh phụ kiện/biến thể là ảnh minh họa.' AS alt_text
 FROM products p JOIN categories c ON c.id=p.category_id
 WHERE p.slug IN (SELECT slug FROM vietnamese_traditional_seed);
-
 -- Keep and refresh one representative image per product; never delete the rest.
 UPDATE product_images i SET variant_id=src.variant_id,image_url=src.image_url,alt_text=src.alt_text,is_primary=TRUE,display_order=1
 FROM vietnamese_traditional_images src
@@ -113,4 +136,3 @@ FROM vietnamese_traditional_images src
 WHERE NOT EXISTS (SELECT 1 FROM product_images i WHERE i.product_id=src.product_id);
 
 COMMIT;
-
