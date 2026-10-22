@@ -142,9 +142,13 @@ def build(archive_path: Path) -> None:
     ASSET_DIR.mkdir(parents=True, exist_ok=True)
     with zipfile.ZipFile(archive_path) as archive:
         rows = load_rows(archive)
-        selected_ids = {row["id"] for row in rows}
+        image_names = {
+            row["id"]: f"{safe_slug(row.get('articleType') or row['_category'])}-{safe_slug(row['productDisplayName'])[:90]}-{row['id']}.jpg"
+            for row in rows
+        }
+        expected_images = set(image_names.values())
         for old_image in ASSET_DIR.glob("*.jpg"):
-            if old_image.stem.isdigit() and old_image.stem not in selected_ids:
+            if old_image.name not in expected_images:
                 old_image.unlink()
         manifest = []
         values = []
@@ -152,7 +156,7 @@ def build(archive_path: Path) -> None:
             dataset_id = row["id"]
             category = row["_category"]
             title = row["productDisplayName"].strip()
-            image_rel = f"/assets/products/myntra-sample/{dataset_id}.jpg"
+            image_rel = f"/assets/products/myntra-sample/{image_names[dataset_id]}"
             local_image = ROOT / "frontend" / "public" / image_rel.lstrip("/")
             with archive.open(f"images/{dataset_id}.jpg") as source, local_image.open("wb") as target:
                 shutil.copyfileobj(source, target)

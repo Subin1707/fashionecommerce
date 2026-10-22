@@ -1,0 +1,2772 @@
+[
+  {
+    "slug": "ao-bra-th-thao-modern-089",
+    "name": "Áo bra thể thao Modern",
+    "variants": [
+      {
+        "sku": "FS089-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS089-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS089-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS089-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-khoac-bomber-078",
+    "name": "Áo khoác Bomber",
+    "variants": [
+      {
+        "sku": "FS078-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS078-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS078-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-khoac-coach-everyday-084",
+    "name": "Áo khoác Coach Everyday",
+    "variants": [
+      {
+        "sku": "FS084-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS084-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS084-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-khoac-denim-079",
+    "name": "Áo khoác Denim",
+    "variants": [
+      {
+        "sku": "FS079-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS079-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS079-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-khoac-puffer-nh-classic-085",
+    "name": "Áo khoác Puffer nhẹ Classic",
+    "variants": [
+      {
+        "sku": "FS085-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS085-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS085-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-khoac-running-091",
+    "name": "Áo khoác Running",
+    "variants": [
+      {
+        "sku": "FS091-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS091-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS091-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS091-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-khoac-utility-premium-082",
+    "name": "Áo khoác Utility Premium",
+    "variants": [
+      {
+        "sku": "FS082-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS082-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS082-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-khoac-varsity-081",
+    "name": "Áo khoác Varsity",
+    "variants": [
+      {
+        "sku": "FS081-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS081-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS081-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-khoac-windbreaker-080",
+    "name": "Áo khoác Windbreaker",
+    "variants": [
+      {
+        "sku": "FS080-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS080-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS080-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-knit-polo-040",
+    "name": "Áo knit polo",
+    "variants": [
+      {
+        "sku": "FS040-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS040-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS040-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS040-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-len-c-l-modern-038",
+    "name": "Áo len cổ lọ Modern",
+    "variants": [
+      {
+        "sku": "FS038-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS038-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS038-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS038-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-len-c-tron-035",
+    "name": "Áo len cổ tròn",
+    "variants": [
+      {
+        "sku": "FS035-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS035-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS035-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS035-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-len-g-n-037",
+    "name": "Áo len gân",
+    "variants": [
+      {
+        "sku": "FS037-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS037-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS037-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS037-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-ng-satin-093",
+    "name": "Áo ngủ Satin",
+    "variants": [
+      {
+        "sku": "FS093-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS093-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS093-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS093-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-polo-classic-021",
+    "name": "Áo polo Classic",
+    "variants": [
+      {
+        "sku": "FS021-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS021-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS021-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS021-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-polo-contrast-024",
+    "name": "Áo polo Contrast",
+    "variants": [
+      {
+        "sku": "FS024-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS024-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS024-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS024-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-polo-knit-premium-025",
+    "name": "Áo polo Knit Premium",
+    "variants": [
+      {
+        "sku": "FS025-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS025-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS025-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS025-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-polo-minimal-023",
+    "name": "Áo polo Minimal",
+    "variants": [
+      {
+        "sku": "FS023-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS023-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS023-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS023-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-polo-pique-022",
+    "name": "Áo polo Pique",
+    "variants": [
+      {
+        "sku": "FS022-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS022-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS022-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS022-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-polo-premium-classic-028",
+    "name": "Áo polo Premium Classic",
+    "variants": [
+      {
+        "sku": "FS028-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS028-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS028-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS028-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-polo-slim-everyday-027",
+    "name": "Áo polo Slim Everyday",
+    "variants": [
+      {
+        "sku": "FS027-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS027-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS027-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS027-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-polo-sport-026",
+    "name": "Áo polo Sport",
+    "variants": [
+      {
+        "sku": "FS026-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS026-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS026-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS026-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-so-mi-c-tau-classic-018",
+    "name": "Áo sơ mi Cổ tàu Classic",
+    "variants": [
+      {
+        "sku": "FS018-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS018-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS018-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS018-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-so-mi-cong-s-modern-019",
+    "name": "Áo sơ mi Công sở Modern",
+    "variants": [
+      {
+        "sku": "FS019-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS019-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS019-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS019-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-so-mi-cuban-014",
+    "name": "Áo sơ mi Cuban",
+    "variants": [
+      {
+        "sku": "FS014-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS014-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS014-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS014-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-so-mi-denim-016",
+    "name": "Áo sơ mi Denim",
+    "variants": [
+      {
+        "sku": "FS016-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS016-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS016-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS016-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-so-mi-flannel-premium-020",
+    "name": "Áo sơ mi Flannel Premium",
+    "variants": [
+      {
+        "sku": "FS020-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS020-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS020-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS020-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-so-mi-k-s-c-013",
+    "name": "Áo sơ mi Kẻ sọc",
+    "variants": [
+      {
+        "sku": "FS013-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS013-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS013-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS013-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-so-mi-linen-012",
+    "name": "Áo sơ mi Linen",
+    "variants": [
+      {
+        "sku": "FS012-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS012-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS012-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS012-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-so-mi-oversize-everyday-017",
+    "name": "Áo sơ mi Oversize Everyday",
+    "variants": [
+      {
+        "sku": "FS017-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS017-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS017-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS017-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-so-mi-oxford-011",
+    "name": "Áo sơ mi Oxford",
+    "variants": [
+      {
+        "sku": "FS011-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS011-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS011-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS011-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-so-mi-poplin-015",
+    "name": "Áo sơ mi Poplin",
+    "variants": [
+      {
+        "sku": "FS015-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS015-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS015-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS015-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-th-thao-quick-dry-086",
+    "name": "Áo thể thao Quick Dry",
+    "variants": [
+      {
+        "sku": "FS086-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS086-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS086-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS086-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-thun-basic-005",
+    "name": "Áo thun Basic",
+    "variants": [
+      {
+        "sku": "FS005-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS005-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS005-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS005-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-thun-boxy-everyday-007",
+    "name": "Áo thun Boxy Everyday",
+    "variants": [
+      {
+        "sku": "FS007-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS007-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS007-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS007-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-thun-cotton-premium-classic-008",
+    "name": "Áo thun Cotton Premium Classic",
+    "variants": [
+      {
+        "sku": "FS008-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS008-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS008-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS008-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-thun-essential-001",
+    "name": "Áo thun Essential",
+    "variants": [
+      {
+        "sku": "FS001-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS001-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS001-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS001-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-thun-graphic-002",
+    "name": "Áo thun Graphic",
+    "variants": [
+      {
+        "sku": "FS002-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS002-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS002-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS002-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-thun-lounge-premium-096",
+    "name": "Áo thun Lounge Premium",
+    "variants": [
+      {
+        "sku": "FS096-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS096-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS096-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS096-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-thun-minimal-premium-010",
+    "name": "Áo thun Minimal Premium",
+    "variants": [
+      {
+        "sku": "FS010-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS010-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS010-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS010-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-thun-oversize-003",
+    "name": "Áo thun Oversize",
+    "variants": [
+      {
+        "sku": "FS003-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS003-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS003-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS003-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-thun-pocket-006",
+    "name": "Áo thun Pocket",
+    "variants": [
+      {
+        "sku": "FS006-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS006-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS006-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS006-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-thun-raglan-modern-009",
+    "name": "Áo thun Raglan Modern",
+    "variants": [
+      {
+        "sku": "FS009-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS009-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS009-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS009-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ao-thun-rib-004",
+    "name": "Áo thun Rib",
+    "variants": [
+      {
+        "sku": "FS004-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS004-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS004-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS004-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "b-m-c-nha-cotton-092",
+    "name": "Bộ mặc nhà Cotton",
+    "variants": [
+      {
+        "sku": "FS092-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS092-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS092-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS092-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "b-pijama-s-c-modern-095",
+    "name": "Bộ pijama sọc Modern",
+    "variants": [
+      {
+        "sku": "FS095-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS095-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS095-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS095-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "balo-everyday-109",
+    "name": "Balo Everyday",
+    "variants": [
+      {
+        "sku": "FS109-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  },
+  {
+    "slug": "blazer-casual-083",
+    "name": "Blazer Casual",
+    "variants": [
+      {
+        "sku": "FS083-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS083-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS083-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "cardigan-knit-036",
+    "name": "Cardigan Knit",
+    "variants": [
+      {
+        "sku": "FS036-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS036-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS036-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS036-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "cardigan-nut-premium-039",
+    "name": "Cardigan nút Premium",
+    "variants": [
+      {
+        "sku": "FS039-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS039-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS039-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS039-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ch-n-vay-ch-a-063",
+    "name": "Chân váy chữ A",
+    "variants": [
+      {
+        "sku": "FS063-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS063-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS063-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS063-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ch-n-vay-denim-065",
+    "name": "Chân váy Denim",
+    "variants": [
+      {
+        "sku": "FS065-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS065-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS065-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS065-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ch-n-vay-linen-premium-067",
+    "name": "Chân váy Linen Premium",
+    "variants": [
+      {
+        "sku": "FS067-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS067-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS067-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS067-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ch-n-vay-midi-064",
+    "name": "Chân váy Midi",
+    "variants": [
+      {
+        "sku": "FS064-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS064-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS064-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS064-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ch-n-vay-mini-everyday-069",
+    "name": "Chân váy Mini Everyday",
+    "variants": [
+      {
+        "sku": "FS069-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS069-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS069-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS069-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ch-n-vay-pleated-modern-066",
+    "name": "Chân váy Pleated Modern",
+    "variants": [
+      {
+        "sku": "FS066-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS066-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS066-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS066-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "ch-n-vay-wrap-068",
+    "name": "Chân váy Wrap",
+    "variants": [
+      {
+        "sku": "FS068-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS068-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS068-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS068-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "dam-babydoll-075",
+    "name": "Đầm Babydoll",
+    "variants": [
+      {
+        "sku": "FS075-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS075-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS075-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS075-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "dam-knit-everyday-076",
+    "name": "Đầm Knit Everyday",
+    "variants": [
+      {
+        "sku": "FS076-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS076-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS076-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS076-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "dam-linen-everyday-071",
+    "name": "Đầm Linen Everyday",
+    "variants": [
+      {
+        "sku": "FS071-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS071-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS071-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS071-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "dam-maxi-floral-classic-077",
+    "name": "Đầm Maxi Floral Classic",
+    "variants": [
+      {
+        "sku": "FS077-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS077-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS077-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS077-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "dam-midi-minimal-070",
+    "name": "Đầm Midi Minimal",
+    "variants": [
+      {
+        "sku": "FS070-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS070-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS070-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS070-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "dam-shirt-dress-072",
+    "name": "Đầm Shirt Dress",
+    "variants": [
+      {
+        "sku": "FS072-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS072-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS072-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS072-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "dam-slip-premium-074",
+    "name": "Đầm Slip Premium",
+    "variants": [
+      {
+        "sku": "FS074-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS074-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS074-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS074-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "dam-wrap-073",
+    "name": "Đầm Wrap",
+    "variants": [
+      {
+        "sku": "FS073-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS073-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS073-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS073-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "dep-quai-ban-103",
+    "name": "Dép quai bản",
+    "variants": [
+      {
+        "sku": "FS103-BLK-38",
+        "color": "Black",
+        "size": "38"
+      },
+      {
+        "sku": "FS103-WHT-39",
+        "color": "White",
+        "size": "39"
+      },
+      {
+        "sku": "FS103-NVY-40",
+        "color": "Navy",
+        "size": "40"
+      },
+      {
+        "sku": "FS103-BLK-41",
+        "color": "Black",
+        "size": "41"
+      },
+      {
+        "sku": "FS103-WHT-42",
+        "color": "White",
+        "size": "42"
+      }
+    ]
+  },
+  {
+    "slug": "hoodie-essential-029",
+    "name": "Hoodie Essential",
+    "variants": [
+      {
+        "sku": "FS029-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS029-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS029-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "hoodie-fleece-034",
+    "name": "Hoodie Fleece",
+    "variants": [
+      {
+        "sku": "FS034-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS034-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS034-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "hoodie-oversize-modern-032",
+    "name": "Hoodie Oversize Modern",
+    "variants": [
+      {
+        "sku": "FS032-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS032-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS032-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "hoodie-zip-030",
+    "name": "Hoodie Zip",
+    "variants": [
+      {
+        "sku": "FS030-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS030-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS030-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "kh-n-choang-nh-premium-114",
+    "name": "Khăn choàng nhẹ Premium",
+    "variants": [
+      {
+        "sku": "FS114-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  },
+  {
+    "slug": "legging-active-088",
+    "name": "Legging Active",
+    "variants": [
+      {
+        "sku": "FS088-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS088-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS088-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS088-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "loafer-minimal-modern-101",
+    "name": "Loafer Minimal Modern",
+    "variants": [
+      {
+        "sku": "FS101-BLK-38",
+        "color": "Black",
+        "size": "38"
+      },
+      {
+        "sku": "FS101-WHT-39",
+        "color": "White",
+        "size": "39"
+      },
+      {
+        "sku": "FS101-NVY-40",
+        "color": "Navy",
+        "size": "40"
+      },
+      {
+        "sku": "FS101-BLK-41",
+        "color": "Black",
+        "size": "41"
+      },
+      {
+        "sku": "FS101-WHT-42",
+        "color": "White",
+        "size": "42"
+      }
+    ]
+  },
+  {
+    "slug": "m-bucket-115",
+    "name": "Mũ Bucket",
+    "variants": [
+      {
+        "sku": "FS115-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  },
+  {
+    "slug": "m-lu-i-trai-111",
+    "name": "Mũ lưỡi trai",
+    "variants": [
+      {
+        "sku": "FS111-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  },
+  {
+    "slug": "quan-cargo-045",
+    "name": "Quần cargo",
+    "variants": [
+      {
+        "sku": "FS045-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS045-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS045-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS045-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-chinos-046",
+    "name": "Quần chinos",
+    "variants": [
+      {
+        "sku": "FS046-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS046-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS046-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS046-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-denim-washed-modern-049",
+    "name": "Quần denim Washed Modern",
+    "variants": [
+      {
+        "sku": "FS049-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS049-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS049-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS049-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-jean-baggy-044",
+    "name": "Quần jean Baggy",
+    "variants": [
+      {
+        "sku": "FS044-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS044-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS044-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS044-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-jean-slim-043",
+    "name": "Quần jean Slim",
+    "variants": [
+      {
+        "sku": "FS043-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS043-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS043-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS043-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-jean-straight-041",
+    "name": "Quần jean Straight",
+    "variants": [
+      {
+        "sku": "FS041-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS041-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS041-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS041-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-jean-wide-leg-042",
+    "name": "Quần jean Wide Leg",
+    "variants": [
+      {
+        "sku": "FS042-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS042-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS042-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS042-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-jogger-everyday-047",
+    "name": "Quần jogger Everyday",
+    "variants": [
+      {
+        "sku": "FS047-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS047-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS047-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS047-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-jogger-training-087",
+    "name": "Quần jogger Training",
+    "variants": [
+      {
+        "sku": "FS087-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS087-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS087-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS087-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "quan-kaki-straight-classic-048",
+    "name": "Quần kaki Straight Classic",
+    "variants": [
+      {
+        "sku": "FS048-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS048-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS048-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS048-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-lounge-094",
+    "name": "Quần lounge",
+    "variants": [
+      {
+        "sku": "FS094-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS094-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS094-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS094-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "quan-short-cargo-modern-054",
+    "name": "Quần short Cargo Modern",
+    "variants": [
+      {
+        "sku": "FS054-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS054-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS054-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS054-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "quan-short-denim-052",
+    "name": "Quần short Denim",
+    "variants": [
+      {
+        "sku": "FS052-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS052-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS052-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS052-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "quan-short-kaki-051",
+    "name": "Quần short Kaki",
+    "variants": [
+      {
+        "sku": "FS051-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS051-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS051-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS051-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "quan-short-linen-053",
+    "name": "Quần short Linen",
+    "variants": [
+      {
+        "sku": "FS053-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS053-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS053-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS053-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "quan-short-lounge-097",
+    "name": "Quần short Lounge",
+    "variants": [
+      {
+        "sku": "FS097-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS097-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS097-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS097-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "quan-short-relaxed-056",
+    "name": "Quần short Relaxed",
+    "variants": [
+      {
+        "sku": "FS056-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS056-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS056-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS056-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "quan-short-sport-premium-055",
+    "name": "Quần short Sport Premium",
+    "variants": [
+      {
+        "sku": "FS055-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS055-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS055-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS055-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "quan-t-y-office-062",
+    "name": "Quần tây Office",
+    "variants": [
+      {
+        "sku": "FS062-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS062-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS062-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS062-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-t-y-pleated-059",
+    "name": "Quần tây Pleated",
+    "variants": [
+      {
+        "sku": "FS059-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS059-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS059-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS059-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-t-y-slim-057",
+    "name": "Quần tây Slim",
+    "variants": [
+      {
+        "sku": "FS057-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS057-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS057-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS057-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-t-y-wide-leg-modern-060",
+    "name": "Quần tây Wide Leg Modern",
+    "variants": [
+      {
+        "sku": "FS060-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS060-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS060-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS060-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-trousers-minimal-premium-061",
+    "name": "Quần trousers Minimal Premium",
+    "variants": [
+      {
+        "sku": "FS061-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS061-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS061-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS061-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-u-straight-058",
+    "name": "Quần âu Straight",
+    "variants": [
+      {
+        "sku": "FS058-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS058-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS058-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS058-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "quan-utility-premium-050",
+    "name": "Quần Utility Premium",
+    "variants": [
+      {
+        "sku": "FS050-BLK-28",
+        "color": "Black",
+        "size": "28"
+      },
+      {
+        "sku": "FS050-WHT-30",
+        "color": "White",
+        "size": "30"
+      },
+      {
+        "sku": "FS050-NVY-32",
+        "color": "Navy",
+        "size": "32"
+      },
+      {
+        "sku": "FS050-BLK-34",
+        "color": "Black",
+        "size": "34"
+      }
+    ]
+  },
+  {
+    "slug": "sandal-quai-ngang-100",
+    "name": "Sandal quai ngang",
+    "variants": [
+      {
+        "sku": "FS100-BLK-38",
+        "color": "Black",
+        "size": "38"
+      },
+      {
+        "sku": "FS100-WHT-39",
+        "color": "White",
+        "size": "39"
+      },
+      {
+        "sku": "FS100-NVY-40",
+        "color": "Navy",
+        "size": "40"
+      },
+      {
+        "sku": "FS100-BLK-41",
+        "color": "Black",
+        "size": "41"
+      },
+      {
+        "sku": "FS100-WHT-42",
+        "color": "White",
+        "size": "42"
+      }
+    ]
+  },
+  {
+    "slug": "set-th-thao-basic-premium-090",
+    "name": "Set thể thao Basic Premium",
+    "variants": [
+      {
+        "sku": "FS090-BLK-S",
+        "color": "Black",
+        "size": "S"
+      },
+      {
+        "sku": "FS090-WHT-M",
+        "color": "White",
+        "size": "M"
+      },
+      {
+        "sku": "FS090-NVY-L",
+        "color": "Navy",
+        "size": "L"
+      },
+      {
+        "sku": "FS090-BLK-XL",
+        "color": "Black",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "slip-on-canvas-premium-102",
+    "name": "Slip-on Canvas Premium",
+    "variants": [
+      {
+        "sku": "FS102-BLK-38",
+        "color": "Black",
+        "size": "38"
+      },
+      {
+        "sku": "FS102-WHT-39",
+        "color": "White",
+        "size": "39"
+      },
+      {
+        "sku": "FS102-NVY-40",
+        "color": "Navy",
+        "size": "40"
+      },
+      {
+        "sku": "FS102-BLK-41",
+        "color": "Black",
+        "size": "41"
+      },
+      {
+        "sku": "FS102-WHT-42",
+        "color": "White",
+        "size": "42"
+      }
+    ]
+  },
+  {
+    "slug": "sneaker-everyday-098",
+    "name": "Sneaker Everyday",
+    "variants": [
+      {
+        "sku": "FS098-BLK-38",
+        "color": "Black",
+        "size": "38"
+      },
+      {
+        "sku": "FS098-WHT-39",
+        "color": "White",
+        "size": "39"
+      },
+      {
+        "sku": "FS098-NVY-40",
+        "color": "Navy",
+        "size": "40"
+      },
+      {
+        "sku": "FS098-BLK-41",
+        "color": "Black",
+        "size": "41"
+      },
+      {
+        "sku": "FS098-WHT-42",
+        "color": "White",
+        "size": "42"
+      }
+    ]
+  },
+  {
+    "slug": "sneaker-retro-099",
+    "name": "Sneaker Retro",
+    "variants": [
+      {
+        "sku": "FS099-BLK-38",
+        "color": "Black",
+        "size": "38"
+      },
+      {
+        "sku": "FS099-WHT-39",
+        "color": "White",
+        "size": "39"
+      },
+      {
+        "sku": "FS099-NVY-40",
+        "color": "Navy",
+        "size": "40"
+      },
+      {
+        "sku": "FS099-BLK-41",
+        "color": "Black",
+        "size": "41"
+      },
+      {
+        "sku": "FS099-WHT-42",
+        "color": "White",
+        "size": "42"
+      }
+    ]
+  },
+  {
+    "slug": "sweatshirt-logo-031",
+    "name": "Sweatshirt Logo",
+    "variants": [
+      {
+        "sku": "FS031-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS031-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS031-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "sweatshirt-minimal-premium-033",
+    "name": "Sweatshirt Minimal Premium",
+    "variants": [
+      {
+        "sku": "FS033-BLK-M",
+        "color": "Black",
+        "size": "M"
+      },
+      {
+        "sku": "FS033-WHT-L",
+        "color": "White",
+        "size": "L"
+      },
+      {
+        "sku": "FS033-NVY-XL",
+        "color": "Navy",
+        "size": "XL"
+      }
+    ]
+  },
+  {
+    "slug": "tat-c-trung-modern-113",
+    "name": "Tất cổ trung Modern",
+    "variants": [
+      {
+        "sku": "FS113-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  },
+  {
+    "slug": "th-t-lung-basic-110",
+    "name": "Thắt lưng Basic",
+    "variants": [
+      {
+        "sku": "FS110-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  },
+  {
+    "slug": "tui-bucket-premium-108",
+    "name": "Túi Bucket Premium",
+    "variants": [
+      {
+        "sku": "FS108-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  },
+  {
+    "slug": "tui-crossbody-106",
+    "name": "Túi Crossbody",
+    "variants": [
+      {
+        "sku": "FS106-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  },
+  {
+    "slug": "tui-deo-vai-mini-105",
+    "name": "Túi đeo vai Mini",
+    "variants": [
+      {
+        "sku": "FS105-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  },
+  {
+    "slug": "tui-di-lam-minimal-modern-107",
+    "name": "Túi đi làm Minimal Modern",
+    "variants": [
+      {
+        "sku": "FS107-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  },
+  {
+    "slug": "tui-tote-canvas-104",
+    "name": "Túi tote Canvas",
+    "variants": [
+      {
+        "sku": "FS104-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  },
+  {
+    "slug": "vi-gap-minimal-112",
+    "name": "Ví gập Minimal",
+    "variants": [
+      {
+        "sku": "FS112-BLK-OS",
+        "color": "Black",
+        "size": "OS"
+      }
+    ]
+  }
+]

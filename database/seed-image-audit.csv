@@ -1,0 +1,296 @@
+﻿productSlug,image,sourceArticleType,sourceColor,targetGroup,variantSku,isPrimary,displayOrder,sourceName
+ao-thun-basic,/assets/products/seed-catalog/tshirts-white-basics-men-white-t-shirt-29787.jpg,Tshirts,White,,ATB-001-WHT-M,True,1,Basics Men White T-shirt
+ao-thun-basic,/assets/products/seed-catalog/tshirts-black-basics-men-black-t-shirt-21219.jpg,Tshirts,Black,,ATB-001-BLK-M,False,2,Basics Men Black T-shirt
+quan-jean-relaxed,/assets/products/seed-catalog/jeans-blue-peter-england-men-party-blue-jeans-39386.jpg,Jeans,Blue,,QJR-001-BLU-30,True,1,Peter England Men Party Blue Jeans
+ao-khoac-bomber,/assets/products/seed-catalog/jackets-black-nike-men-solid-black-jacket-15322.jpg,Jackets,Black,,AKB-001-BLK-M,True,1,Nike Men Solid Black Jacket
+dam-midi-linen,/assets/products/seed-catalog/dresses-cream-arrow-woman-solid-cream-dress-18896.jpg,Dresses,Cream,,DML-001-SND-M,True,1,Arrow Woman Solid Cream Dress
+ao-khoac-denim-lightwash,/assets/products/seed-catalog/jackets-blue-basics-men-blue-washed-jacket-20790.jpg,Jackets,Blue,,ADL-001-BLU-M,True,1,Basics Men Blue Washed Jacket
+ao-knit-tank-ivory,/assets/products/seed-catalog/tops-white-jockey-women-white-racerback-tank-top-27441.jpg,Tops,White,,AKT-001-IVR-M,True,1,Jockey Women White Racerback Tank Top
+tui-mini-crescent,/assets/products/seed-catalog/handbags-black-murcia-women-casual-black-handbag-21946.jpg,Handbags,Black,,TMC-001-BLK-OS,True,1,Murcia Women Casual Black Handbag
+sneaker-cloud-runner,/assets/products/seed-catalog/sports-shoes-grey-fila-men-destiny-grey-sports-shoes-23882.jpg,Sports Shoes,Grey,,SCR-001-GRY-40,True,1,Fila Men Destiny Grey Sports Shoes
+ao-bra-th-thao-modern-089,/assets/products/myntra-sample/tops-and-women-solid-black-tops-14200.jpg,Tops,Black,Sports Top,FS089-BLK-S,True,1,AND Women Solid Black Tops
+ao-bra-th-thao-modern-089,/assets/products/myntra-sample/tops-ucb-women-s-basic-racerback-white-top-6312.jpg,Tops,White,Sports Top,FS089-WHT-M,False,2,UCB Women's Basic Racerback White Top
+ao-bra-th-thao-modern-089,/assets/products/myntra-sample/tops-lee-women-pepper-black-top-35267.jpg,Tops,Black,Sports Top,FS089-BLK-XL,False,3,Lee Women Pepper Black Top
+ao-khoac-bomber-078,/assets/products/myntra-sample/jackets-puma-men-ferrari-black-fleece-jacket-1528.jpg,Jackets,Black,Jackets/Blazers,FS078-BLK-M,True,1,Puma Men Ferrari Black Fleece Jacket
+ao-khoac-bomber-078,/assets/products/myntra-sample/jackets-domyos-unisex-feather-light-jacket-1584.jpg,Jackets,White,Jackets/Blazers,FS078-WHT-L,False,2,Domyos Unisex Feather-light Jacket
+ao-khoac-bomber-078,/assets/products/myntra-sample/jackets-reebok-navy-jacket-1610.jpg,Jackets,Navy Blue,Jackets/Blazers,FS078-NVY-XL,False,3,Reebok Navy Jacket
+ao-khoac-coach-everyday-084,/assets/products/myntra-sample/jackets-nike-men-track-black-jacket-4462.jpg,Jackets,Black,Jackets/Blazers,FS084-BLK-M,True,1,Nike Men Track Black Jacket
+ao-khoac-coach-everyday-084,/assets/products/myntra-sample/jackets-adidas-men-chrome-white-jacket-6501.jpg,Jackets,White,Jackets/Blazers,FS084-WHT-L,False,2,ADIDAS Men Chrome White Jacket
+ao-khoac-coach-everyday-084,/assets/products/myntra-sample/jackets-forever-new-women-long-blue-jacket-6878.jpg,Jackets,Blue,Jackets/Blazers,FS084-NVY-XL,False,3,Forever New Women Long Blue Jacket
+ao-khoac-denim-079,/assets/products/myntra-sample/jackets-puma-women-solid-black-jackets-12532.jpg,Jackets,Black,Jackets/Blazers,FS079-BLK-M,True,1,Puma Women Solid Black Jackets
+ao-khoac-denim-079,/assets/products/myntra-sample/jackets-adidas-men-white-jacket-15008.jpg,Jackets,White,Jackets/Blazers,FS079-WHT-L,False,2,ADIDAS Men White Jacket
+ao-khoac-denim-079,/assets/products/myntra-sample/jackets-forever-new-women-washed-blue-jacket-8477.jpg,Jackets,Blue,Jackets/Blazers,FS079-NVY-XL,False,3,Forever New Women Washed Blue Jacket
+ao-khoac-puffer-nh-classic-085,/assets/products/myntra-sample/jackets-nike-women-solid-black-jackets-13996.jpg,Jackets,Black,Jackets/Blazers,FS085-BLK-M,True,1,Nike Women Solid Black Jackets
+ao-khoac-puffer-nh-classic-085,/assets/products/myntra-sample/jackets-elle-women-white-jacket-57063.jpg,Jackets,White,Jackets/Blazers,FS085-WHT-L,False,2,Elle Women White Jacket
+ao-khoac-puffer-nh-classic-085,/assets/products/myntra-sample/jackets-adidas-men-torment-blue-jackets-9947.jpg,Jackets,Blue,Jackets/Blazers,FS085-NVY-XL,False,3,ADIDAS Men Torment Blue Jackets
+ao-khoac-running-091,/assets/products/myntra-sample/jackets-puma-men-ferrari-black-fleece-jacket-1528.jpg,Jackets,Black,Running Jacket,FS091-BLK-S,True,1,Puma Men Ferrari Black Fleece Jacket
+ao-khoac-running-091,/assets/products/myntra-sample/jackets-domyos-unisex-feather-light-jacket-1584.jpg,Jackets,White,Running Jacket,FS091-WHT-M,False,2,Domyos Unisex Feather-light Jacket
+ao-khoac-running-091,/assets/products/myntra-sample/jackets-reebok-navy-jacket-1610.jpg,Jackets,Navy Blue,Running Jacket,FS091-NVY-L,False,3,Reebok Navy Jacket
+ao-khoac-running-091,/assets/products/myntra-sample/jackets-nike-men-track-black-jacket-4462.jpg,Jackets,Black,Running Jacket,FS091-BLK-XL,False,4,Nike Men Track Black Jacket
+ao-khoac-utility-premium-082,/assets/products/myntra-sample/jackets-puma-men-heroes-wind-black-jackets-15462.jpg,Jackets,Black,Jackets/Blazers,FS082-BLK-M,True,1,Puma Men Heroes Wind Black Jackets
+ao-khoac-utility-premium-082,/assets/products/myntra-sample/jackets-nike-men-blue-jacket-11273.jpg,Jackets,Blue,Jackets/Blazers,FS082-NVY-XL,False,2,Nike Men  Blue Jacket
+ao-khoac-varsity-081,/assets/products/myntra-sample/jackets-nike-men-football-soccer-black-jackets-15603.jpg,Jackets,Black,Jackets/Blazers,FS081-BLK-M,True,1,Nike Men Football Soccer Black Jackets
+ao-khoac-varsity-081,/assets/products/myntra-sample/jackets-status-quo-men-printed-blue-jackets-14960.jpg,Jackets,Blue,Jackets/Blazers,FS081-NVY-XL,False,2,Status Quo Men Printed Blue Jackets
+ao-khoac-windbreaker-080,/assets/products/myntra-sample/jackets-fila-men-solid-black-jacket-16719.jpg,Jackets,Black,Jackets/Blazers,FS080-BLK-M,True,1,Fila Men Solid Black Jacket
+ao-khoac-windbreaker-080,/assets/products/myntra-sample/jackets-puma-men-heroes-navy-blue-jackets-16190.jpg,Jackets,Navy Blue,Jackets/Blazers,FS080-NVY-XL,False,2,Puma Men Heroes Navy Blue Jackets
+ao-knit-polo-040,/assets/products/myntra-sample/sweaters-united-colors-of-benetton-men-light-wintersweater-black-sweaters-11397.jpg,Sweaters,Black,Sweaters,FS040-BLK-S,True,1,United Colors of Benetton Men Light WinterSweater Black Sweaters
+ao-knit-polo-040,/assets/products/myntra-sample/sweaters-scullers-women-knit-white-sweaters-11093.jpg,Sweaters,White,Sweaters,FS040-WHT-M,False,2,Scullers Women Knit White Sweaters
+ao-knit-polo-040,/assets/products/myntra-sample/sweaters-adidas-men-stadium-fz-po-blue-sweaters-13099.jpg,Sweaters,Blue,Sweaters,FS040-NVY-L,False,3,ADIDAS Men Stadium Fz Po Blue Sweaters
+ao-knit-polo-040,/assets/products/myntra-sample/sweaters-arrow-men-black-sweater-23071.jpg,Sweaters,Black,Sweaters,FS040-BLK-XL,False,4,Arrow Men Black Sweater
+ao-len-c-l-modern-038,/assets/products/myntra-sample/sweaters-united-colors-of-benetton-women-solid-black-sweaters-14582.jpg,Sweaters,Black,Sweaters,FS038-BLK-S,True,1,United Colors of Benetton Women Solid Black Sweaters
+ao-len-c-l-modern-038,/assets/products/myntra-sample/sweaters-united-colors-of-benetton-women-light-winter-white-sweater-11447.jpg,Sweaters,White,Sweaters,FS038-WHT-M,False,2,United Colors of Benetton Women Light Winter White Sweater
+ao-len-c-l-modern-038,/assets/products/myntra-sample/sweaters-proline-blue-patterned-sleeveless-sweater-13803.jpg,Sweaters,Navy Blue,Sweaters,FS038-NVY-L,False,3,Proline Blue Patterned Sleeveless Sweater
+ao-len-c-tron-035,/assets/products/myntra-sample/sweaters-turtle-stripes-men-black-sweaters-16000.jpg,Sweaters,Black,Sweaters,FS035-BLK-S,True,1,Turtle Stripes Men Black Sweaters
+ao-len-c-tron-035,/assets/products/myntra-sample/sweaters-nike-men-white-sweater-22627.jpg,Sweaters,White,Sweaters,FS035-WHT-M,False,2,Nike Men White Sweater
+ao-len-c-tron-035,/assets/products/myntra-sample/sweaters-flying-machine-men-solid-blue-sweaters-14082.jpg,Sweaters,Blue,Sweaters,FS035-NVY-L,False,3,Flying Machine Men Solid Blue Sweaters
+ao-len-g-n-037,/assets/products/myntra-sample/sweaters-u-s-polo-assn-men-solid-black-sweater-17198.jpg,Sweaters,Black,Sweaters,FS037-BLK-S,True,1,U.S. Polo Assn. Men Solid Black Sweater
+ao-len-g-n-037,/assets/products/myntra-sample/sweaters-united-colors-of-benetton-women-pink-sweater-43311.jpg,Sweaters,White,Sweaters,FS037-WHT-M,False,2,United Colors of Benetton Women Pink Sweater
+ao-len-g-n-037,/assets/products/myntra-sample/sweaters-adidas-men-stripes-blue-sweaters-14996.jpg,Sweaters,Blue,Sweaters,FS037-NVY-L,False,3,ADIDAS Men Stripes Blue Sweaters
+ao-ng-satin-093,/assets/products/myntra-sample/shorts-ant-kids-boy-s-black-dungree-kidswear-5412.jpg,Shorts,Black,Homewear,FS093-BLK-S,True,1,Ant Kids Boy's Black Dungree Kidswear
+ao-ng-satin-093,/assets/products/myntra-sample/shorts-gini-and-jony-boys-boxer-white-shorts-41994.jpg,Shorts,White,Homewear,FS093-WHT-M,False,2,Gini and Jony Boys Boxer White Shorts
+ao-ng-satin-093,/assets/products/myntra-sample/track-pants-jealous-21-women-dark-blue-jegging-7182.jpg,Track Pants,Blue,Homewear,FS093-NVY-L,False,3,Jealous 21 Women Dark Blue Jegging
+ao-ng-satin-093,/assets/products/myntra-sample/shorts-puma-men-black-shorts-44919.jpg,Shorts,Black,Homewear,FS093-BLK-XL,False,4,Puma Men Black Shorts
+ao-polo-classic-021,/assets/products/myntra-sample/tshirts-adidas-mens-polo-black-polo-t-shirt-2090.jpg,Tshirts,Black,Polo,FS021-BLK-S,True,1,ADIDAS Mens Polo Black Polo T-shirt
+ao-polo-classic-021,/assets/products/myntra-sample/tshirts-u-s-polo-assn-men-stripes-blue-polo-tshirt-17239.jpg,Tshirts,Blue,Polo,FS021-NVY-L,False,2,U.S. Polo Assn. Men Stripes Blue  Polo Tshirt
+ao-polo-contrast-024,/assets/products/myntra-sample/tshirts-puma-men-s-foundation-limea-black-polo-t-shirt-2481.jpg,Tshirts,Black,Polo,FS024-BLK-S,True,1,Puma Men's Foundation limea Black Polo T-shirt
+ao-polo-contrast-024,/assets/products/myntra-sample/tshirts-u-s-polo-assn-men-striped-navy-blue-tshirt-19793.jpg,Tshirts,Navy Blue,Polo,FS024-NVY-L,False,2,U.S. Polo Assn. Men Striped Navy Blue Tshirt
+ao-polo-knit-premium-025,/assets/products/myntra-sample/tshirts-adidas-men-s-force-polo-white-t-shirt-4756.jpg,Tshirts,White,Polo,FS025-BLK-S,True,1,ADIDAS Men's Force Polo White T-shirt
+ao-polo-knit-premium-025,/assets/products/myntra-sample/tshirts-proline-men-blue-polo-tshirt-34208.jpg,Tshirts,Blue,Polo,FS025-NVY-L,False,2,Proline Men Blue Polo Tshirt
+ao-polo-minimal-023,/assets/products/myntra-sample/tshirts-proline-men-charcoal-grey-polo-t-shirt-7785.jpg,Tshirts,Charcoal,Polo,FS023-BLK-S,True,1,Proline Men Charcoal Grey Polo T-shirt
+ao-polo-pique-022,/assets/products/myntra-sample/tshirts-classic-polo-men-navy-blue-polo-tshirts-9759.jpg,Tshirts,Navy Blue,Polo,FS022-BLK-S,True,1,Classic Polo Men Navy Blue Polo Tshirts
+ao-polo-premium-classic-028,/assets/products/myntra-sample/tshirts-flying-machine-men-yellow-polo-tshirts-10469.jpg,Tshirts,Yellow,Polo,FS028-BLK-S,True,1,Flying Machine Men Yellow Polo Tshirts
+ao-polo-slim-everyday-027,/assets/products/myntra-sample/tshirts-basics-men-grey-striped-polo-t-shirt-14679.jpg,Tshirts,Grey,Polo,FS027-BLK-S,True,1,Basics Men Grey Striped Polo T-shirt
+ao-polo-sport-026,/assets/products/myntra-sample/tshirts-facit-men-polo-tee-red-tshirt-16647.jpg,Tshirts,Red,Polo,FS026-BLK-S,True,1,Facit Men Polo Tee Red Tshirt
+ao-so-mi-c-tau-classic-018,/assets/products/myntra-sample/shirts-scullers-for-her-women-rivited-check-black-shirts-7151.jpg,Shirts,Black,Shirts,FS018-BLK-S,True,1,Scullers For Her Women Rivited Check Black Shirts
+ao-so-mi-c-tau-classic-018,/assets/products/myntra-sample/shirts-mark-taylor-men-white-red-striped-shirt-12030.jpg,Shirts,White,Shirts,FS018-WHT-M,False,2,Mark Taylor Men White Red Striped Shirt
+ao-so-mi-c-tau-classic-018,/assets/products/myntra-sample/shirts-belmonte-men-check-navy-blue-shirts-13761.jpg,Shirts,Navy Blue,Shirts,FS018-NVY-L,False,3,Belmonte Men Check Navy Blue Shirts
+ao-so-mi-cong-s-modern-019,/assets/products/myntra-sample/shirts-mark-taylor-men-black-white-striped-shirt-17564.jpg,Shirts,Black,Shirts,FS019-BLK-S,True,1,Mark Taylor Men Black & White Striped Shirt
+ao-so-mi-cong-s-modern-019,/assets/products/myntra-sample/shirts-john-miller-men-check-white-shirts-13964.jpg,Shirts,White,Shirts,FS019-WHT-M,False,2,John Miller Men Check White Shirts
+ao-so-mi-cong-s-modern-019,/assets/products/myntra-sample/shirts-quiksilver-men-blue-shirt-19425.jpg,Shirts,Blue,Shirts,FS019-NVY-L,False,3,Quiksilver Men Blue Shirt
+ao-so-mi-cuban-014,/assets/products/myntra-sample/shirts-john-miller-men-striped-black-shirt-26103.jpg,Shirts,Black,Shirts,FS014-BLK-S,True,1,John Miller Men Striped Black Shirt
+ao-so-mi-cuban-014,/assets/products/myntra-sample/shirts-mark-taylor-men-striped-white-shirt-22402.jpg,Shirts,White,Shirts,FS014-WHT-M,False,2,Mark Taylor Men Striped White Shirt
+ao-so-mi-cuban-014,/assets/products/myntra-sample/shirts-united-colors-of-benetton-men-navy-blue-striped-shirt-20027.jpg,Shirts,Navy Blue,Shirts,FS014-NVY-L,False,3,United Colors of Benetton Men Navy Blue Striped Shirt
+ao-so-mi-denim-016,/assets/products/myntra-sample/shirts-highlander-men-white-green-checked-slim-fit-shirt-6017.jpg,Shirts,White,Shirts,FS016-BLK-S,True,1,Highlander Men White & Green Checked Slim Fit Shirt
+ao-so-mi-denim-016,/assets/products/myntra-sample/shirts-arrow-men-white-striped-shirt-23031.jpg,Shirts,White,Shirts,FS016-WHT-M,False,2,Arrow Men White Striped Shirt
+ao-so-mi-denim-016,/assets/products/myntra-sample/shirts-wrangler-women-cory-blue-shirt-25524.jpg,Shirts,Blue,Shirts,FS016-NVY-L,False,3,Wrangler Women Cory Blue Shirt
+ao-so-mi-flannel-premium-020,/assets/products/myntra-sample/shirts-indigo-nation-men-price-catch-blue-shirts-8777.jpg,Shirts,Blue,Shirts,FS020-BLK-S,True,1,Indigo Nation Men Price catch Blue Shirts
+ao-so-mi-flannel-premium-020,/assets/products/myntra-sample/shirts-wrangler-men-adino-stripe-white-shirt-29286.jpg,Shirts,White,Shirts,FS020-WHT-M,False,2,Wrangler Men Adino Stripe White Shirt
+ao-so-mi-flannel-premium-020,/assets/products/myntra-sample/shirts-indigo-nation-men-striped-blue-shirt-31611.jpg,Shirts,Blue,Shirts,FS020-NVY-L,False,3,Indigo Nation Men Striped Blue Shirt
+ao-so-mi-k-s-c-013,/assets/products/myntra-sample/shirts-mark-taylor-men-blue-striped-shirt-9065.jpg,Shirts,Blue,Shirts,FS013-BLK-S,True,1,Mark Taylor Men Blue Striped Shirt
+ao-so-mi-k-s-c-013,/assets/products/myntra-sample/shirts-john-players-men-blue-check-shirt-37731.jpg,Shirts,White,Shirts,FS013-WHT-M,False,2,John Players Men Blue Check Shirt
+ao-so-mi-k-s-c-013,/assets/products/myntra-sample/shirts-arrow-men-blue-check-shirt-38980.jpg,Shirts,Blue,Shirts,FS013-NVY-L,False,3,Arrow Men Blue Check Shirt
+ao-so-mi-linen-012,/assets/products/myntra-sample/shirts-john-miller-men-stripes-white-red-shirts-9451.jpg,Shirts,Red,Shirts,FS012-BLK-S,True,1,John Miller Men Stripes White Red Shirts
+ao-so-mi-linen-012,/assets/products/myntra-sample/shirts-peter-england-men-navy-blue-formal-shirts-39800.jpg,Shirts,Navy Blue,Shirts,FS012-NVY-L,False,2,Peter England Men Navy Blue Formal Shirts
+ao-so-mi-oversize-everyday-017,/assets/products/myntra-sample/shirts-indigo-nation-men-stripes-purple-shirts-9607.jpg,Shirts,Purple,Shirts,FS017-BLK-S,True,1,Indigo Nation Men Stripes Purple Shirts
+ao-so-mi-oversize-everyday-017,/assets/products/myntra-sample/shirts-indian-terrain-men-blue-check-shirt-44293.jpg,Shirts,Blue,Shirts,FS017-NVY-L,False,2,Indian Terrain Men Blue Check Shirt
+ao-so-mi-oxford-011,/assets/products/myntra-sample/shirts-indigo-nation-men-stripes-blue-shirt-11107.jpg,Shirts,Blue,Shirts,FS011-BLK-S,True,1,Indigo Nation Men Stripes Blue Shirt
+ao-so-mi-poplin-015,/assets/products/myntra-sample/shirts-lee-men-solid-grey-shirts-11711.jpg,Shirts,Grey,Shirts,FS015-BLK-S,True,1,Lee Men Solid Grey Shirts
+ao-th-thao-quick-dry-086,/assets/products/myntra-sample/tshirts-adidas-mens-polo-black-polo-t-shirt-2090.jpg,Tshirts,Black,Sports Tshirt,FS086-BLK-S,True,1,ADIDAS Mens Polo Black Polo T-shirt
+ao-th-thao-quick-dry-086,/assets/products/myntra-sample/tshirts-adidas-men-s-force-polo-white-t-shirt-4756.jpg,Tshirts,White,Sports Tshirt,FS086-WHT-M,False,2,ADIDAS Men's Force Polo White T-shirt
+ao-th-thao-quick-dry-086,/assets/products/myntra-sample/tshirts-nike-sahara-team-india-fanwear-round-neck-jersey-1163.jpg,Tshirts,Blue,Sports Tshirt,FS086-NVY-L,False,3,Nike Sahara Team India Fanwear Round Neck Jersey
+ao-th-thao-quick-dry-086,/assets/products/myntra-sample/tshirts-adidas-women-s-black-t-shirt-3502.jpg,Tshirts,Black,Sports Tshirt,FS086-BLK-XL,False,4,ADIDAS Women's Black T-shirt
+ao-thun-basic-005,/assets/products/myntra-sample/tshirts-adidas-mens-polo-black-polo-t-shirt-2090.jpg,Tshirts,Black,Tshirts,FS005-BLK-S,True,1,ADIDAS Mens Polo Black Polo T-shirt
+ao-thun-basic-005,/assets/products/myntra-sample/tshirts-guerrilla-men-s-ace-of-spades-white-t-shirt-3281.jpg,Tshirts,White,Tshirts,FS005-WHT-M,False,2,Guerrilla Men's Ace Of Spades White T-shirt
+ao-thun-basic-005,/assets/products/myntra-sample/tshirts-nike-sahara-team-india-fanwear-round-neck-jersey-1163.jpg,Tshirts,Blue,Tshirts,FS005-NVY-L,False,3,Nike Sahara Team India Fanwear Round Neck Jersey
+ao-thun-basic-005,/assets/products/myntra-sample/tshirts-adidas-men-black-t-shirt-42109.jpg,Tshirts,Black,Tshirts,FS005-BLK-XL,False,4,ADIDAS Men Black T-shirt
+ao-thun-boxy-everyday-007,/assets/products/myntra-sample/tshirts-puma-men-s-foundation-limea-black-polo-t-shirt-2481.jpg,Tshirts,Black,Tshirts,FS007-BLK-S,True,1,Puma Men's Foundation limea Black Polo T-shirt
+ao-thun-boxy-everyday-007,/assets/products/myntra-sample/tshirts-superman-men-s-drip-shield-white-t-shirt-4379.jpg,Tshirts,White,Tshirts,FS007-WHT-M,False,2,Superman Men's Drip Shield White T-shirt
+ao-thun-boxy-everyday-007,/assets/products/myntra-sample/tshirts-nike-men-blue-t20-indian-cricket-jersey-1164.jpg,Tshirts,Blue,Tshirts,FS007-NVY-L,False,3,Nike Men Blue T20 Indian Cricket Jersey
+ao-thun-boxy-everyday-007,/assets/products/myntra-sample/tshirts-spykar-men-black-t-shirt-51370.jpg,Tshirts,Black,Tshirts,FS007-BLK-XL,False,4,Spykar Men Black T-shirt
+ao-thun-cotton-premium-classic-008,/assets/products/myntra-sample/tshirts-adidas-women-s-black-t-shirt-3502.jpg,Tshirts,Black,Tshirts,FS008-BLK-S,True,1,ADIDAS Women's Black T-shirt
+ao-thun-cotton-premium-classic-008,/assets/products/myntra-sample/tshirts-adidas-men-s-force-polo-white-t-shirt-4756.jpg,Tshirts,White,Tshirts,FS008-WHT-M,False,2,ADIDAS Men's Force Polo White T-shirt
+ao-thun-cotton-premium-classic-008,/assets/products/myntra-sample/tshirts-adidas-men-crew-neck-blue-t-shirt-2242.jpg,Tshirts,Blue,Tshirts,FS008-NVY-L,False,3,ADIDAS Men Crew Neck Blue T-shirt
+ao-thun-essential-001,/assets/products/myntra-sample/tshirts-nike-men-s-as-swoosh-t-shirt-7538.jpg,Tshirts,Black,Tshirts,FS001-BLK-S,True,1,Nike Men's As Swoosh T-Shirt
+ao-thun-essential-001,/assets/products/myntra-sample/tshirts-lee-men-s-striper-white-green-t-shirt-6174.jpg,Tshirts,White,Tshirts,FS001-WHT-M,False,2,Lee Men's Striper White Green T-shirt
+ao-thun-essential-001,/assets/products/myntra-sample/tshirts-tantra-men-s-instant-blue-t-shirt-5659.jpg,Tshirts,Blue,Tshirts,FS001-NVY-L,False,3,Tantra Men's Instant Blue T-shirt
+ao-thun-graphic-002,/assets/products/myntra-sample/tshirts-manchester-united-men-printed-black-tshirt-18232.jpg,Tshirts,Black,Tshirts,FS002-BLK-S,True,1,Manchester United Men Printed Black Tshirt
+ao-thun-graphic-002,/assets/products/myntra-sample/tshirts-nike-women-white-casual-t-shirt-10711.jpg,Tshirts,White,Tshirts,FS002-WHT-M,False,2,Nike Women White Casual T-shirt
+ao-thun-graphic-002,/assets/products/myntra-sample/tshirts-tantra-men-s-destination-sky-blue-t-shirt-6936.jpg,Tshirts,Blue,Tshirts,FS002-NVY-L,False,3,Tantra Men's Destination Sky Blue T-shirt
+ao-thun-lounge-premium-096,/assets/products/myntra-sample/tshirts-adidas-originals-men-black-tshirt-18990.jpg,Tshirts,Black,Tshirts,FS096-BLK-S,True,1,ADIDAS Originals Men Black Tshirt
+ao-thun-lounge-premium-096,/assets/products/myntra-sample/tshirts-peter-england-men-printed-white-tshirt-16317.jpg,Tshirts,White,Tshirts,FS096-WHT-M,False,2,Peter England Men Printed White TShirt
+ao-thun-lounge-premium-096,/assets/products/myntra-sample/tshirts-puma-men-s-graphic-mood-indigo-navy-t-shirt-7961.jpg,Tshirts,Blue,Tshirts,FS096-NVY-L,False,3,Puma Men's Graphic Mood Indigo Navy T-shirt
+ao-thun-minimal-premium-010,/assets/products/myntra-sample/tshirts-jimi-hendrix-men-black-printed-t-shirt-23642.jpg,Tshirts,Black,Tshirts,FS010-BLK-S,True,1,Jimi Hendrix Men Black Printed T-Shirt
+ao-thun-minimal-premium-010,/assets/products/myntra-sample/tshirts-adidas-men-white-t-shirt-24134.jpg,Tshirts,White,Tshirts,FS010-WHT-M,False,2,ADIDAS Men White T-shirt
+ao-thun-minimal-premium-010,/assets/products/myntra-sample/tshirts-doodle-boy-s-route-66-biker-blue-kidswear-8321.jpg,Tshirts,Blue,Tshirts,FS010-NVY-L,False,3,Doodle Boy's Route 66 Biker Blue Kidswear
+ao-thun-oversize-003,/assets/products/myntra-sample/tshirts-puma-men-black-t-shirt-26462.jpg,Tshirts,Black,Tshirts,FS003-BLK-S,True,1,Puma Men Black T-shirt
+ao-thun-oversize-003,/assets/products/myntra-sample/tshirts-scullers-men-white-t-shirt-27584.jpg,Tshirts,White,Tshirts,FS003-WHT-M,False,2,Scullers  Men White T-shirt
+ao-thun-oversize-003,/assets/products/myntra-sample/tshirts-classic-polo-men-navy-blue-polo-tshirts-9759.jpg,Tshirts,Navy Blue,Tshirts,FS003-NVY-L,False,3,Classic Polo Men Navy Blue Polo Tshirts
+ao-thun-pocket-006,/assets/products/myntra-sample/tshirts-angry-birds-men-printed-black-t-shirt-32962.jpg,Tshirts,Black,Tshirts,FS006-BLK-S,True,1,Angry Birds Men Printed Black T-shirt
+ao-thun-pocket-006,/assets/products/myntra-sample/tshirts-nike-men-training-white-t-shirt-28511.jpg,Tshirts,White,Tshirts,FS006-WHT-M,False,2,Nike Men Training White T-shirt
+ao-thun-pocket-006,/assets/products/myntra-sample/tshirts-disney-kids-girl-blue-minnie-blue-t-shirt-9951.jpg,Tshirts,Blue,Tshirts,FS006-NVY-L,False,3,Disney Kids Girl Blue Minnie Blue T-shirt
+ao-thun-raglan-modern-009,/assets/products/myntra-sample/tshirts-mr-men-boys-wonderful-black-t-shirt-36311.jpg,Tshirts,Black,Tshirts,FS009-BLK-S,True,1,Mr.Men Boys Wonderful Black T-shirt
+ao-thun-raglan-modern-009,/assets/products/myntra-sample/tshirts-basics-men-pack-of-3-t-shirts-29788.jpg,Tshirts,White,Tshirts,FS009-WHT-M,False,2,Basics Men Pack of 3 T-shirts
+ao-thun-raglan-modern-009,/assets/products/myntra-sample/tshirts-wrangler-men-all-the-way-photo-print-navy-blue-t-shirts-10880.jpg,Tshirts,Navy Blue,Tshirts,FS009-NVY-L,False,3,Wrangler Men All The Way Photo Print Navy Blue T-Shirts
+ao-thun-rib-004,/assets/products/myntra-sample/tshirts-nike-men-printed-cruis-black-t-shirt-38610.jpg,Tshirts,Black,Tshirts,FS004-BLK-S,True,1,Nike Men Printed Cruis Black T-shirt
+ao-thun-rib-004,/assets/products/myntra-sample/tshirts-wrangler-women-sunset-beach-white-t-shirt-33566.jpg,Tshirts,White,Tshirts,FS004-WHT-M,False,2,Wrangler Women Sunset Beach White T-shirt
+ao-thun-rib-004,/assets/products/myntra-sample/tshirts-tantra-unisex-printed-blue-tshirts-12588.jpg,Tshirts,Blue,Tshirts,FS004-NVY-L,False,3,Tantra Unisex Printed Blue Tshirts
+b-m-c-nha-cotton-092,/assets/products/myntra-sample/shorts-gini-and-jony-kids-boys-solid-black-shorts-13284.jpg,Shorts,Black,Homewear,FS092-BLK-S,True,1,Gini and Jony Kids Boys Solid Black Shorts
+b-m-c-nha-cotton-092,/assets/products/myntra-sample/tshirts-guerrilla-men-s-ace-of-spades-white-t-shirt-3281.jpg,Tshirts,White,Homewear,FS092-WHT-M,False,2,Guerrilla Men's Ace Of Spades White T-shirt
+b-m-c-nha-cotton-092,/assets/products/myntra-sample/shorts-disney-kids-boy-s-denim-mickey-surf-kidswear-2722.jpg,Shorts,Blue,Homewear,FS092-NVY-L,False,3,Disney Kids Boy's Denim Mickey Surf Kidswear
+b-m-c-nha-cotton-092,/assets/products/myntra-sample/tshirts-puma-men-s-foundation-limea-black-polo-t-shirt-2481.jpg,Tshirts,Black,Homewear,FS092-BLK-XL,False,4,Puma Men's Foundation limea Black Polo T-shirt
+b-pijama-s-c-modern-095,/assets/products/myntra-sample/shorts-only-women-black-shorts-32587.jpg,Shorts,Black,Homewear,FS095-BLK-S,True,1,Only  Women Black Shorts
+b-pijama-s-c-modern-095,/assets/products/myntra-sample/tshirts-superman-men-s-drip-shield-white-t-shirt-4379.jpg,Tshirts,White,Homewear,FS095-WHT-M,False,2,Superman Men's Drip Shield White T-shirt
+b-pijama-s-c-modern-095,/assets/products/myntra-sample/shorts-adidas-men-ess-3s-hsj-navy-blue-shorts-9673.jpg,Shorts,Navy Blue,Homewear,FS095-NVY-L,False,3,ADIDAS Men Ess 3s Hsj Navy Blue Shorts
+b-pijama-s-c-modern-095,/assets/products/myntra-sample/tshirts-manchester-united-men-printed-black-tshirt-18232.jpg,Tshirts,Black,Homewear,FS095-BLK-XL,False,4,Manchester United Men Printed Black Tshirt
+balo-everyday-109,/assets/products/myntra-sample/handbags-geonaute-women-black-outdoor-bag-1597.jpg,Handbags,Black,Bags,FS109-BLK-OS,True,1,Geonaute Women Black Outdoor Bag
+blazer-casual-083,/assets/products/myntra-sample/jackets-u-s-polo-assn-men-solid-black-jacket-17152.jpg,Jackets,Black,Jackets/Blazers,FS083-BLK-M,True,1,U.S. Polo Assn. Men Solid Black Jacket
+blazer-casual-083,/assets/products/myntra-sample/jackets-urban-yoga-women-solid-blue-jacket-20376.jpg,Jackets,Blue,Jackets/Blazers,FS083-NVY-XL,False,2,Urban Yoga Women Solid Blue Jacket
+cardigan-knit-036,/assets/products/myntra-sample/sweaters-arrow-woman-lara-black-sweater-18724.jpg,Sweaters,Black,Sweaters,FS036-BLK-S,True,1,Arrow Woman Lara Black Sweater
+cardigan-knit-036,/assets/products/myntra-sample/sweaters-adidas-women-stripes-navy-blue-sweaters-15034.jpg,Sweaters,Navy Blue,Sweaters,FS036-NVY-L,False,2,ADIDAS Women Stripes Navy Blue Sweaters
+cardigan-nut-premium-039,/assets/products/myntra-sample/sweaters-united-colors-of-benetton-men-solid-black-sweater-19539.jpg,Sweaters,Black,Sweaters,FS039-BLK-S,True,1,United Colors of Benetton Men Solid Black Sweater
+cardigan-nut-premium-039,/assets/products/myntra-sample/sweaters-arrow-sport-men-solid-blue-sweater-15209.jpg,Sweaters,Blue,Sweaters,FS039-NVY-L,False,2,Arrow Sport Men Solid Blue Sweater
+ch-n-vay-ch-a-063,/assets/products/myntra-sample/skirts-forever-new-women-cameo-skirt-cream-skirts-8497.jpg,Skirts,Cream,Skirts,FS063-BLK-S,True,1,Forever New Women Cameo Skirt Cream Skirts
+ch-n-vay-denim-065,/assets/products/myntra-sample/skirts-fabindia-women-grey-skirt-30929.jpg,Skirts,Grey,Skirts,FS065-BLK-S,True,1,Fabindia Women Grey Skirt
+ch-n-vay-linen-premium-067,/assets/products/myntra-sample/skirts-gini-and-jony-girls-navy-blue-skirts-38504.jpg,Skirts,Navy Blue,Skirts,FS067-BLK-S,True,1,Gini and Jony Girls Navy Blue Skirts
+ch-n-vay-midi-064,/assets/products/myntra-sample/skirts-forever-new-women-cameo-skirt-cream-skirts-8497.jpg,Skirts,Cream,Skirts,FS064-BLK-S,True,1,Forever New Women Cameo Skirt Cream Skirts
+ch-n-vay-mini-everyday-069,/assets/products/myntra-sample/skirts-forever-new-women-cameo-skirt-cream-skirts-8497.jpg,Skirts,Cream,Skirts,FS069-BLK-S,True,1,Forever New Women Cameo Skirt Cream Skirts
+ch-n-vay-pleated-modern-066,/assets/products/myntra-sample/skirts-forever-new-women-cameo-skirt-cream-skirts-8497.jpg,Skirts,Cream,Skirts,FS066-BLK-S,True,1,Forever New Women Cameo Skirt Cream Skirts
+ch-n-vay-wrap-068,/assets/products/myntra-sample/skirts-forever-new-women-cameo-skirt-cream-skirts-8497.jpg,Skirts,Cream,Skirts,FS068-BLK-S,True,1,Forever New Women Cameo Skirt Cream Skirts
+dam-babydoll-075,/assets/products/myntra-sample/dresses-gini-and-jony-girl-s-veata-white-black-pink-infants-kidswear-4936.jpg,Dresses,Black,Dresses,FS075-BLK-S,True,1,Gini and Jony Girl's Veata White Black Pink Infants Kidswear
+dam-babydoll-075,/assets/products/myntra-sample/dresses-disney-kids-girl-s-white-pooh-kidswear-2704.jpg,Dresses,White,Dresses,FS075-WHT-M,False,2,Disney Kids Girl's White Pooh Kidswear
+dam-babydoll-075,/assets/products/myntra-sample/dresses-disney-kids-girl-s-blue-pooh-kidswear-2697.jpg,Dresses,Blue,Dresses,FS075-NVY-L,False,3,Disney Kids Girl's Blue Pooh Kidswear
+dam-babydoll-075,/assets/products/myntra-sample/dresses-femella-women-black-tiered-dress-39226.jpg,Dresses,Black,Dresses,FS075-BLK-XL,False,4,Femella Women Black Tiered Dress
+dam-knit-everyday-076,/assets/products/myntra-sample/dresses-forever-new-women-s-lacy-black-dress-6872.jpg,Dresses,Black,Dresses,FS076-BLK-S,True,1,Forever New Women's Lacy Black Dress
+dam-knit-everyday-076,/assets/products/myntra-sample/dresses-disney-kids-girl-s-white-dress-pooh-kidswear-2708.jpg,Dresses,White,Dresses,FS076-WHT-M,False,2,Disney Kids Girl's White Dress Pooh Kidswear
+dam-knit-everyday-076,/assets/products/myntra-sample/dresses-disney-kids-girl-s-blue-pooh-blouse-kidswear-2705.jpg,Dresses,Blue,Dresses,FS076-NVY-L,False,3,Disney Kids Girl's Blue Pooh Blouse Kidswear
+dam-knit-everyday-076,/assets/products/myntra-sample/dresses-remanika-women-black-dress-41786.jpg,Dresses,Black,Dresses,FS076-BLK-XL,False,4,Remanika Women Black Dress
+dam-linen-everyday-071,/assets/products/myntra-sample/dresses-united-colors-of-benetton-women-short-black-dresses-10365.jpg,Dresses,Black,Dresses,FS071-BLK-S,True,1,United Colors of Benetton Women Short Black Dresses
+dam-linen-everyday-071,/assets/products/myntra-sample/dresses-disney-kids-girl-s-white-daisy-kidswear-2710.jpg,Dresses,White,Dresses,FS071-WHT-M,False,2,Disney Kids Girl's White Daisy Kidswear
+dam-linen-everyday-071,/assets/products/myntra-sample/dresses-disney-kids-girl-s-halter-neck-blue-kidswear-2712.jpg,Dresses,Blue,Dresses,FS071-NVY-L,False,3,Disney Kids Girl's Halter Neck Blue Kidswear
+dam-linen-everyday-071,/assets/products/myntra-sample/dresses-sepia-women-black-dress-42216.jpg,Dresses,Black,Dresses,FS071-BLK-XL,False,4,Sepia Women Black Dress
+dam-maxi-floral-classic-077,/assets/products/myntra-sample/dresses-and-women-solid-black-dresses-14197.jpg,Dresses,Black,Dresses,FS077-BLK-S,True,1,AND Women Solid Black Dresses
+dam-maxi-floral-classic-077,/assets/products/myntra-sample/dresses-palm-tree-girl-s-blenda-white-pink-kidswear-4983.jpg,Dresses,White,Dresses,FS077-WHT-M,False,2,Palm Tree Girl's Blenda White Pink Kidswear
+dam-maxi-floral-classic-077,/assets/products/myntra-sample/dresses-gini-and-jony-girl-s-valerie-blue-white-kidswear-4931.jpg,Dresses,Blue,Dresses,FS077-NVY-L,False,3,Gini and Jony Girl's Valerie Blue White Kidswear
+dam-maxi-floral-classic-077,/assets/products/myntra-sample/dresses-vero-moda-women-black-dress-43644.jpg,Dresses,Black,Dresses,FS077-BLK-XL,False,4,Vero Moda Women Black Dress
+dam-midi-minimal-070,/assets/products/myntra-sample/dresses-jealous-21-women-black-dress-26935.jpg,Dresses,Black,Dresses,FS070-BLK-S,True,1,Jealous 21 Women Black Dress
+dam-midi-minimal-070,/assets/products/myntra-sample/dresses-palm-tree-girls-beyonce-white-blue-dress-4984.jpg,Dresses,White,Dresses,FS070-WHT-M,False,2,Palm Tree Girls Beyonce White & Blue Dress
+dam-midi-minimal-070,/assets/products/myntra-sample/dresses-united-colors-of-benetton-women-blue-striped-dress-24876.jpg,Dresses,Blue,Dresses,FS070-NVY-L,False,3,United Colors of Benetton Women Blue Striped Dress
+dam-midi-minimal-070,/assets/products/myntra-sample/dresses-femella-women-black-printed-dress-47656.jpg,Dresses,Black,Dresses,FS070-BLK-XL,False,4,Femella Women Black Printed Dress
+dam-shirt-dress-072,/assets/products/myntra-sample/dresses-gini-and-jony-girls-black-dress-34065.jpg,Dresses,Black,Dresses,FS072-BLK-S,True,1,Gini and Jony Girls Black Dress
+dam-shirt-dress-072,/assets/products/myntra-sample/dresses-gini-and-jony-girl-s-viveca-white-floral-kidswear-4987.jpg,Dresses,White,Dresses,FS072-WHT-M,False,2,Gini and Jony Girl's Viveca White Floral Kidswear
+dam-shirt-dress-072,/assets/products/myntra-sample/dresses-gini-and-jony-girls-printed-teal-dress-31128.jpg,Dresses,Blue,Dresses,FS072-NVY-L,False,3,Gini and Jony Girls Printed Teal Dress
+dam-shirt-dress-072,/assets/products/myntra-sample/dresses-femella-women-black-animal-print-dress-47676.jpg,Dresses,Black,Dresses,FS072-BLK-XL,False,4,Femella Women Black Animal Print Dress
+dam-slip-premium-074,/assets/products/myntra-sample/dresses-tonga-women-printed-black-dress-34564.jpg,Dresses,Black,Dresses,FS074-BLK-S,True,1,Tonga Women Printed Black Dress
+dam-slip-premium-074,/assets/products/myntra-sample/dresses-forever-new-women-dye-crochet-white-dress-6885.jpg,Dresses,White,Dresses,FS074-WHT-M,False,2,Forever New Women Dye Crochet White Dress
+dam-slip-premium-074,/assets/products/myntra-sample/dresses-femella-women-check-navy-blue-dress-33976.jpg,Dresses,Navy Blue,Dresses,FS074-NVY-L,False,3,Femella Women Check Navy Blue Dress
+dam-slip-premium-074,/assets/products/myntra-sample/dresses-french-connection-women-black-dress-48466.jpg,Dresses,Black,Dresses,FS074-BLK-XL,False,4,French Connection Women Black Dress
+dam-wrap-073,/assets/products/myntra-sample/dresses-flying-machine-women-cotton-black-dress-35989.jpg,Dresses,Black,Dresses,FS073-BLK-S,True,1,Flying Machine Women Cotton Black Dress
+dam-wrap-073,/assets/products/myntra-sample/dresses-doodle-kids-girl-printed-white-dress-27224.jpg,Dresses,White,Dresses,FS073-WHT-M,False,2,Doodle Kids Girl Printed White Dress
+dam-wrap-073,/assets/products/myntra-sample/dresses-doodle-girls-printed-blue-dress-34114.jpg,Dresses,Blue,Dresses,FS073-NVY-L,False,3,Doodle Girls Printed Blue Dress
+dam-wrap-073,/assets/products/myntra-sample/dresses-french-connection-black-dress-48469.jpg,Dresses,Black,Dresses,FS073-BLK-XL,False,4,French Connection Black Dress
+dep-quai-ban-103,/assets/products/myntra-sample/casual-shoes-puma-men-basket-biz-sneaker-1543.jpg,Casual Shoes,Black,Footwear,FS103-BLK-38,True,1,Puma Men Basket-Biz Sneaker
+dep-quai-ban-103,/assets/products/myntra-sample/casual-shoes-puma-men-s-basket-bump-sneaker-1544.jpg,Casual Shoes,White,Footwear,FS103-WHT-39,False,2,Puma Men's Basket Bump Sneaker
+dep-quai-ban-103,/assets/products/myntra-sample/casual-shoes-puma-unisex-mid-pixles-navy-red-shoe-4119.jpg,Casual Shoes,Navy Blue,Footwear,FS103-NVY-40,False,3,Puma Unisex Mid Pixles Navy Red Shoe
+dep-quai-ban-103,/assets/products/myntra-sample/casual-shoes-adidas-originals-women-rekapi-black-casual-shoes-15260.jpg,Casual Shoes,Black,Footwear,FS103-BLK-41,False,4,ADIDAS Originals Women Rekapi Black Casual Shoes
+dep-quai-ban-103,/assets/products/myntra-sample/casual-shoes-puma-men-s-speed-cat-shoe-1545.jpg,Casual Shoes,White,Footwear,FS103-WHT-42,False,5,Puma Men's Speed Cat Shoe
+hoodie-essential-029,/assets/products/myntra-sample/sweatshirts-fifa-men-full-sleeves-hoody-sweatshirt-1895.jpg,Sweatshirts,Black,Sweatshirts,FS029-BLK-M,True,1,FIFA Men Full Sleeves Hoody Sweatshirt
+hoodie-essential-029,/assets/products/myntra-sample/sweatshirts-spykar-men-stripes-white-sweatshirts-13519.jpg,Sweatshirts,White,Sweatshirts,FS029-WHT-L,False,2,Spykar Men Stripes White Sweatshirts
+hoodie-essential-029,/assets/products/myntra-sample/sweatshirts-palm-tree-kids-boys-printed-blue-sweatshirts-13224.jpg,Sweatshirts,Blue,Sweatshirts,FS029-NVY-XL,False,3,Palm Tree Kids Boys Printed Blue Sweatshirts
+hoodie-fleece-034,/assets/products/myntra-sample/sweatshirts-puma-men-logo-crew-black-sweatshirt-16229.jpg,Sweatshirts,Black,Sweatshirts,FS034-BLK-M,True,1,Puma Men Logo Crew  Black SweatShirt
+hoodie-fleece-034,/assets/products/myntra-sample/sweatshirts-classic-polo-men-striped-white-sweatshirt-20786.jpg,Sweatshirts,White,Sweatshirts,FS034-WHT-L,False,2,Classic Polo Men Striped White Sweatshirt
+hoodie-fleece-034,/assets/products/myntra-sample/sweatshirts-adidas-men-solid-navy-blue-sweatshirts-14316.jpg,Sweatshirts,Navy Blue,Sweatshirts,FS034-NVY-XL,False,3,ADIDAS Men Solid Navy Blue Sweatshirts
+hoodie-oversize-modern-032,/assets/products/myntra-sample/sweatshirts-status-quo-men-solid-black-sweatshirt-16908.jpg,Sweatshirts,Black,Sweatshirts,FS032-BLK-M,True,1,Status Quo Men Solid Black Sweatshirt
+hoodie-oversize-modern-032,/assets/products/myntra-sample/sweatshirts-proline-men-blue-printed-sweatshirt-15585.jpg,Sweatshirts,Blue,Sweatshirts,FS032-NVY-XL,False,2,Proline Men Blue Printed Sweatshirt
+hoodie-zip-030,/assets/products/myntra-sample/sweatshirts-united-colors-of-benetton-men-solid-black-sweatshirt-19550.jpg,Sweatshirts,Black,Sweatshirts,FS030-BLK-M,True,1,United Colors of Benetton Men Solid Black SweatShirt
+hoodie-zip-030,/assets/products/myntra-sample/sweatshirts-puma-men-logo-hooded-blue-sweatshirt-16203.jpg,Sweatshirts,Blue,Sweatshirts,FS030-NVY-XL,False,2,Puma Men Logo Hooded Blue SweatShirt
+kh-n-choang-nh-premium-114,/assets/products/myntra-sample/belts-united-colors-of-benetton-men-stripes-black-belt-14836.jpg,Belts,Black,Accessories,FS114-BLK-OS,True,1,United Colors of Benetton Men Stripes Black Belt
+legging-active-088,/assets/products/myntra-sample/leggings-myntra-women-cream-patiala-salwar-22466.jpg,Leggings,Cream,Leggings,FS088-BLK-S,True,1,Myntra Women Cream Patiala Salwar
+legging-active-088,/assets/products/myntra-sample/leggings-fabindia-women-white-leggings-30813.jpg,Leggings,White,Leggings,FS088-WHT-M,False,2,Fabindia Women White Leggings
+legging-active-088,/assets/products/myntra-sample/leggings-aurelia-women-navy-blue-leggings-41315.jpg,Leggings,Navy Blue,Leggings,FS088-NVY-L,False,3,Aurelia Women Navy Blue Leggings
+loafer-minimal-modern-101,/assets/products/myntra-sample/casual-shoes-lotto-unisex-canvas-black-white-shoe-6428.jpg,Casual Shoes,Black,Footwear,FS101-BLK-38,True,1,Lotto Unisex Canvas Black White Shoe
+loafer-minimal-modern-101,/assets/products/myntra-sample/casual-shoes-adidas-women-s-agashae-white-shoe-5939.jpg,Casual Shoes,White,Footwear,FS101-WHT-39,False,2,ADIDAS Women's Agashae White Shoe
+loafer-minimal-modern-101,/assets/products/myntra-sample/casual-shoes-converse-men-s-chuck-slip-navy-canvas-shoe-7778.jpg,Casual Shoes,Navy Blue,Footwear,FS101-NVY-40,False,3,Converse Men's Chuck Slip Navy Canvas Shoe
+loafer-minimal-modern-101,/assets/products/myntra-sample/casual-shoes-puma-women-soleil-cat-black-casual-shoes-18483.jpg,Casual Shoes,Black,Footwear,FS101-BLK-41,False,4,Puma Women Soleil Cat Black Casual Shoes
+loafer-minimal-modern-101,/assets/products/myntra-sample/casual-shoes-nike-men-air-endurance-white-casual-shoes-25453.jpg,Casual Shoes,White,Footwear,FS101-WHT-42,False,5,Nike Men Air Endurance White Casual Shoes
+m-bucket-115,/assets/products/myntra-sample/belts-new-hide-men-solid-black-belts-14977.jpg,Belts,Black,Accessories,FS115-BLK-OS,True,1,New Hide Men Solid Black Belts
+m-lu-i-trai-111,/assets/products/myntra-sample/belts-french-connection-men-black-belt-42960.jpg,Belts,Black,Accessories,FS111-BLK-OS,True,1,French Connection Men Black Belt
+quan-cargo-045,/assets/products/myntra-sample/trousers-john-miller-men-reglur-black-trousers-10259.jpg,Trousers,Black,Trousers,FS045-BLK-28,True,1,John Miller Men Reglur Black Trousers
+quan-cargo-045,/assets/products/myntra-sample/trousers-arrow-sport-men-white-trousers-33300.jpg,Trousers,White,Trousers,FS045-WHT-30,False,2,Arrow Sport Men White Trousers
+quan-cargo-045,/assets/products/myntra-sample/trousers-van-heusen-men-travelite-pleated-navy-blue-trousers-33817.jpg,Trousers,Navy Blue,Trousers,FS045-NVY-32,False,3,Van Heusen Men Travelite Pleated Navy Blue Trousers
+quan-chinos-046,/assets/products/myntra-sample/trousers-basics-men-solid-black-trousers-12220.jpg,Trousers,Black,Trousers,FS046-BLK-28,True,1,Basics Men Solid Black Trousers
+quan-chinos-046,/assets/products/myntra-sample/trousers-arrow-woman-navy-blue-trouser-39764.jpg,Trousers,Navy Blue,Trousers,FS046-NVY-32,False,2,Arrow Woman Navy Blue Trouser
+quan-denim-washed-modern-049,/assets/products/myntra-sample/jeans-united-colors-of-benetton-women-denim-black-jeans-11520.jpg,Jeans,Black,Jeans,FS049-BLK-28,True,1,United Colors of Benetton Women Denim Black Jeans
+quan-denim-washed-modern-049,/assets/products/myntra-sample/jeans-flying-machine-women-lowrise-blue-jeans-11243.jpg,Jeans,Blue,Jeans,FS049-NVY-32,False,2,Flying Machine Women Lowrise Blue Jeans
+quan-jean-baggy-044,/assets/products/myntra-sample/jeans-jealous-21-women-washed-black-jeans-26996.jpg,Jeans,Black,Jeans,FS044-BLK-28,True,1,Jealous 21 Women Washed Black Jeans
+quan-jean-baggy-044,/assets/products/myntra-sample/jeans-wrangler-men-blue-texas-jeans-11284.jpg,Jeans,Blue,Jeans,FS044-NVY-32,False,2,Wrangler Men Blue Texas Jeans
+quan-jean-slim-043,/assets/products/myntra-sample/jeans-gini-and-jony-boys-karnel-jeans-4940.jpg,Jeans,Blue,Jeans,FS043-BLK-28,True,1,Gini and Jony Boys Karnel Jeans
+quan-jean-slim-043,/assets/products/myntra-sample/jeans-wrangler-women-blue-custom-jeans-11305.jpg,Jeans,Blue,Jeans,FS043-NVY-32,False,2,Wrangler Women Blue Custom Jeans
+quan-jean-straight-041,/assets/products/myntra-sample/jeans-lee-women-mid-stone-blue-maxi-fit-jeans-9146.jpg,Jeans,Blue,Jeans,FS041-BLK-28,True,1,Lee Women Mid Stone Blue Maxi Fit Jeans
+quan-jean-straight-041,/assets/products/myntra-sample/jeans-united-colors-of-benetton-men-washed-blue-jeans-11331.jpg,Jeans,Blue,Jeans,FS041-NVY-32,False,2,United Colors of Benetton Men Washed Blue Jeans
+quan-jean-wide-leg-042,/assets/products/myntra-sample/jeans-locomotive-men-barney-grey-jeans-9176.jpg,Jeans,Grey,Jeans,FS042-BLK-28,True,1,Locomotive Men Barney Grey Jeans
+quan-jean-wide-leg-042,/assets/products/myntra-sample/jeans-flying-machine-men-washed-blue-jeans-14123.jpg,Jeans,Blue,Jeans,FS042-NVY-32,False,2,Flying Machine Men Washed Blue Jeans
+quan-jogger-everyday-047,/assets/products/myntra-sample/track-pants-kalenji-mens-essential-training-track-pants-1572.jpg,Track Pants,Black,Track Pants,FS047-BLK-28,True,1,Kalenji Mens Essential Training Track Pants
+quan-jogger-everyday-047,/assets/products/myntra-sample/track-pants-jealous-21-women-dark-blue-jegging-7182.jpg,Track Pants,Blue,Track Pants,FS047-NVY-32,False,2,Jealous 21 Women Dark Blue Jegging
+quan-jogger-training-087,/assets/products/myntra-sample/track-pants-nike-women-trainng-track-pants-black-track-pants-10714.jpg,Track Pants,Black,Track Pants,FS087-BLK-S,True,1,Nike Women Trainng track pants Black Track Pants
+quan-jogger-training-087,/assets/products/myntra-sample/track-pants-nike-men-navy-cricket-track-pants-15631.jpg,Track Pants,Navy Blue,Track Pants,FS087-NVY-L,False,2,Nike Men Navy Cricket Track Pants
+quan-kaki-straight-classic-048,/assets/products/myntra-sample/trousers-belmonte-men-solid-black-trousers-13782.jpg,Trousers,Black,Trousers,FS048-BLK-28,True,1,Belmonte Men Solid Black Trousers
+quan-lounge-094,/assets/products/myntra-sample/shorts-doodle-girls-washed-black-shorts-34118.jpg,Shorts,Black,Homewear,FS094-BLK-S,True,1,Doodle Girls Washed Black Shorts
+quan-lounge-094,/assets/products/myntra-sample/tshirts-lee-men-s-striper-white-green-t-shirt-6174.jpg,Tshirts,White,Homewear,FS094-WHT-M,False,2,Lee Men's Striper White Green T-shirt
+quan-lounge-094,/assets/products/myntra-sample/shorts-arrow-sport-men-blue-check-shorts-26521.jpg,Shorts,Blue,Homewear,FS094-NVY-L,False,3,Arrow Sport Men Blue Check Shorts
+quan-lounge-094,/assets/products/myntra-sample/tshirts-adidas-originals-men-black-tshirt-18990.jpg,Tshirts,Black,Homewear,FS094-BLK-XL,False,4,ADIDAS Originals Men Black Tshirt
+quan-short-cargo-modern-054,/assets/products/myntra-sample/shorts-artengo-men-training-shorts-1567.jpg,Shorts,Black,Shorts,FS054-BLK-S,True,1,Artengo Men Training Shorts
+quan-short-cargo-modern-054,/assets/products/myntra-sample/shorts-puma-men-s-long-logo-bermuda-white-short-7687.jpg,Shorts,White,Shorts,FS054-WHT-M,False,2,Puma Men's Long Logo Bermuda White Short
+quan-short-cargo-modern-054,/assets/products/myntra-sample/shorts-disney-kids-boy-s-denim-mickey-surf-kidswear-2722.jpg,Shorts,Blue,Shorts,FS054-NVY-L,False,3,Disney Kids Boy's Denim Mickey Surf Kidswear
+quan-short-cargo-modern-054,/assets/products/myntra-sample/shorts-puma-men-solid-black-shorts-17934.jpg,Shorts,Black,Shorts,FS054-BLK-XL,False,4,Puma Men Solid Black Shorts
+quan-short-denim-052,/assets/products/myntra-sample/shorts-artengo-men-black-tennis-shorts-1569.jpg,Shorts,Black,Shorts,FS052-BLK-S,True,1,Artengo Men Black Tennis Shorts
+quan-short-denim-052,/assets/products/myntra-sample/shorts-gini-and-jony-boys-boxer-white-shorts-41994.jpg,Shorts,White,Shorts,FS052-WHT-M,False,2,Gini and Jony Boys Boxer White Shorts
+quan-short-denim-052,/assets/products/myntra-sample/shorts-adidas-men-ess-3s-hsj-navy-blue-shorts-9673.jpg,Shorts,Navy Blue,Shorts,FS052-NVY-L,False,3,ADIDAS Men Ess 3s Hsj Navy Blue Shorts
+quan-short-denim-052,/assets/products/myntra-sample/shorts-urban-yoga-women-black-shorts-28463.jpg,Shorts,Black,Shorts,FS052-BLK-XL,False,4,Urban Yoga Women Black Shorts
+quan-short-kaki-051,/assets/products/myntra-sample/shorts-adidas-men-s-ap-st-black-white-shorts-4815.jpg,Shorts,Black,Shorts,FS051-BLK-S,True,1,ADIDAS Men's AP ST Black White Shorts
+quan-short-kaki-051,/assets/products/myntra-sample/shorts-arrow-sport-men-blue-check-shorts-26521.jpg,Shorts,Blue,Shorts,FS051-NVY-L,False,2,Arrow Sport Men Blue Check Shorts
+quan-short-kaki-051,/assets/products/myntra-sample/shorts-nike-boys-basketball-black-shorts-30602.jpg,Shorts,Black,Shorts,FS051-BLK-XL,False,3,Nike Boys Basketball Black Shorts
+quan-short-linen-053,/assets/products/myntra-sample/shorts-ant-kids-boy-s-black-dungree-kidswear-5412.jpg,Shorts,Black,Shorts,FS053-BLK-S,True,1,Ant Kids Boy's Black Dungree Kidswear
+quan-short-linen-053,/assets/products/myntra-sample/shorts-united-colors-of-benetton-boys-blue-shorts-29177.jpg,Shorts,Blue,Shorts,FS053-NVY-L,False,2,United Colors of Benetton Boys Blue Shorts
+quan-short-linen-053,/assets/products/myntra-sample/shorts-adidas-men-black-3-4-length-pants-32446.jpg,Shorts,Black,Shorts,FS053-BLK-XL,False,3,ADIDAS Men Black 3/4 Length Pants
+quan-short-lounge-097,/assets/products/myntra-sample/shorts-adidas-men-m-rsp-black-shorts-9950.jpg,Shorts,Black,Shorts,FS097-BLK-S,True,1,ADIDAS Men M Rsp Black Shorts
+quan-short-lounge-097,/assets/products/myntra-sample/shorts-nike-boys-running-blue-shorts-31448.jpg,Shorts,Blue,Shorts,FS097-NVY-L,False,2,Nike Boys Running Blue Shorts
+quan-short-lounge-097,/assets/products/myntra-sample/shorts-only-women-black-shorts-32587.jpg,Shorts,Black,Shorts,FS097-BLK-XL,False,3,Only  Women Black Shorts
+quan-short-relaxed-056,/assets/products/myntra-sample/shorts-nike-men-football-soccer-black-shorts-12812.jpg,Shorts,Black,Shorts,FS056-BLK-S,True,1,Nike Men Football/Soccer Black Shorts
+quan-short-relaxed-056,/assets/products/myntra-sample/shorts-gini-and-jony-boys-blue-shorts-33144.jpg,Shorts,Blue,Shorts,FS056-NVY-L,False,2,Gini and Jony Boys Blue Shorts
+quan-short-relaxed-056,/assets/products/myntra-sample/shorts-doodle-girls-washed-black-shorts-34118.jpg,Shorts,Black,Shorts,FS056-BLK-XL,False,3,Doodle Girls Washed Black Shorts
+quan-short-sport-premium-055,/assets/products/myntra-sample/shorts-gini-and-jony-kids-boys-solid-black-shorts-13284.jpg,Shorts,Black,Shorts,FS055-BLK-S,True,1,Gini and Jony Kids Boys Solid Black Shorts
+quan-short-sport-premium-055,/assets/products/myntra-sample/shorts-adidas-men-blue-reversible-shorts-40035.jpg,Shorts,Blue,Shorts,FS055-NVY-L,False,2,ADIDAS Men Blue Reversible Shorts
+quan-short-sport-premium-055,/assets/products/myntra-sample/shorts-puma-men-black-shorts-44919.jpg,Shorts,Black,Shorts,FS055-BLK-XL,False,3,Puma Men Black Shorts
+quan-t-y-office-062,/assets/products/myntra-sample/trousers-john-miller-men-black-trousers-26157.jpg,Trousers,Black,Trousers,FS062-BLK-28,True,1,John Miller Men Black Trousers
+quan-t-y-pleated-059,/assets/products/myntra-sample/trousers-scullers-men-scul-cream-trousers-8846.jpg,Trousers,Cream,Trousers,FS059-BLK-28,True,1,Scullers Men Scul Cream Trousers
+quan-t-y-slim-057,/assets/products/myntra-sample/trousers-indigo-nation-men-pv-stretch-brown-trousers-8954.jpg,Trousers,Brown,Trousers,FS057-BLK-28,True,1,Indigo Nation Men PV stretch Brown Trousers
+quan-t-y-wide-leg-modern-060,/assets/products/myntra-sample/trousers-probase-men-solid-lt-khaki-trousers-14659.jpg,Trousers,Khaki,Trousers,FS060-BLK-28,True,1,Probase Men Solid LT.Khaki Trousers
+quan-trousers-minimal-premium-061,/assets/products/myntra-sample/trousers-arrow-men-stripes-grey-trousers-15119.jpg,Trousers,Grey,Trousers,FS061-BLK-28,True,1,Arrow Men Stripes Grey Trousers
+quan-u-straight-058,/assets/products/myntra-sample/trousers-highlander-men-classic-chinos-khaki-trousers-15683.jpg,Trousers,Khaki,Trousers,FS058-BLK-28,True,1,Highlander Men Classic Chinos Khaki Trousers
+quan-utility-premium-050,/assets/products/myntra-sample/trousers-highlander-men-solid-beige-trouser-16060.jpg,Trousers,Beige,Trousers,FS050-BLK-28,True,1,Highlander Men Solid Beige Trouser
+sandal-quai-ngang-100,/assets/products/myntra-sample/casual-shoes-puma-men-benecio-canvas-black-casual-shoes-9216.jpg,Casual Shoes,Black,Footwear,FS100-BLK-38,True,1,Puma Men Benecio Canvas Black Casual Shoes
+sandal-quai-ngang-100,/assets/products/myntra-sample/casual-shoes-lotto-men-white-casual-shoes-39687.jpg,Casual Shoes,White,Footwear,FS100-WHT-39,False,2,Lotto Men White Casual Shoes
+sandal-quai-ngang-100,/assets/products/myntra-sample/casual-shoes-id-men-casual-blue-shoes-12921.jpg,Casual Shoes,Blue,Footwear,FS100-NVY-40,False,3,iD Men Casual Blue Shoes
+sandal-quai-ngang-100,/assets/products/myntra-sample/casual-shoes-puma-men-ei-vuelo-mid-leather-black-shoes-34753.jpg,Casual Shoes,Black,Footwear,FS100-BLK-41,False,4,Puma Men EI Vuelo Mid Leather Black Shoes
+sandal-quai-ngang-100,/assets/products/myntra-sample/sports-shoes-puma-men-s-ballistic-spike-white-green-shoe-1541.jpg,Sports Shoes,White,Footwear,FS100-WHT-42,False,5,Puma Men's Ballistic Spike White Green Shoe
+set-th-thao-basic-premium-090,/assets/products/myntra-sample/track-pants-kalenji-mens-essential-training-track-pants-1572.jpg,Track Pants,Black,Sports Set,FS090-BLK-S,True,1,Kalenji Mens Essential Training Track Pants
+set-th-thao-basic-premium-090,/assets/products/myntra-sample/shorts-puma-men-s-long-logo-bermuda-white-short-7687.jpg,Shorts,White,Sports Set,FS090-WHT-M,False,2,Puma Men's Long Logo Bermuda White Short
+set-th-thao-basic-premium-090,/assets/products/myntra-sample/track-pants-nike-men-navy-cricket-track-pants-15631.jpg,Track Pants,Navy Blue,Sports Set,FS090-NVY-L,False,3,Nike Men Navy Cricket Track Pants
+set-th-thao-basic-premium-090,/assets/products/myntra-sample/track-pants-nike-women-trainng-track-pants-black-track-pants-10714.jpg,Track Pants,Black,Sports Set,FS090-BLK-XL,False,4,Nike Women Trainng track pants Black Track Pants
+slip-on-canvas-premium-102,/assets/products/myntra-sample/casual-shoes-clarks-men-rocco-fuse-black-leather-black-casual-shoes-10267.jpg,Casual Shoes,Black,Footwear,FS102-BLK-38,True,1,Clarks Men Rocco Fuse Black Leather Black Casual Shoes
+slip-on-canvas-premium-102,/assets/products/myntra-sample/sports-shoes-puma-men-s-ballistic-rubber-shoe-1542.jpg,Sports Shoes,White,Footwear,FS102-WHT-39,False,2,Puma Men's Ballistic Rubber Shoe
+slip-on-canvas-premium-102,/assets/products/myntra-sample/casual-shoes-warner-bros-tweety-girls-blue-and-white-casual-shoes-15892.jpg,Casual Shoes,Blue,Footwear,FS102-NVY-40,False,3,Warner Bros Tweety Girls Blue and White Casual Shoes
+slip-on-canvas-premium-102,/assets/products/myntra-sample/casual-shoes-u-s-polo-assn-men-black-shoes-35660.jpg,Casual Shoes,Black,Footwear,FS102-BLK-41,False,4,U.S. Polo Assn. Men Black Shoes
+slip-on-canvas-premium-102,/assets/products/myntra-sample/sports-shoes-fila-men-s-skills-white-navy-shoe-4337.jpg,Sports Shoes,White,Footwear,FS102-WHT-42,False,5,Fila Men's Skills White Navy Shoe
+sneaker-everyday-098,/assets/products/myntra-sample/casual-shoes-fila-men-black-stradd-shoes-13186.jpg,Casual Shoes,Black,Footwear,FS098-BLK-38,True,1,Fila Men Black Stradd Shoes
+sneaker-everyday-098,/assets/products/myntra-sample/sports-shoes-adidas-men-s-adi-montero-blue-4641.jpg,Sports Shoes,White,Footwear,FS098-WHT-39,False,2,ADIDAS Men's Adi Montero Blue
+sneaker-everyday-098,/assets/products/myntra-sample/sports-shoes-adidas-men-adizero-blue-sports-shoes-29265.jpg,Sports Shoes,Blue,Footwear,FS098-NVY-40,False,3,ADIDAS Men Adizero Blue Sports Shoes
+sneaker-everyday-098,/assets/products/myntra-sample/casual-shoes-spinn-men-abzorb-x-black-shoes-36415.jpg,Casual Shoes,Black,Footwear,FS098-BLK-41,False,4,Spinn Men Abzorb X Black Shoes
+sneaker-everyday-098,/assets/products/myntra-sample/sports-shoes-artengo-artengo-633d-man-5399.jpg,Sports Shoes,White,Footwear,FS098-WHT-42,False,5,Artengo Artengo 633d Man
+sneaker-retro-099,/assets/products/myntra-sample/casual-shoes-vans-men-rowley-style-99-s-black-casual-shoes-14570.jpg,Casual Shoes,Black,Footwear,FS099-BLK-38,True,1,Vans Men Rowley Style 99'S Black Casual Shoes
+sneaker-retro-099,/assets/products/myntra-sample/sports-shoes-reebok-men-empire-run-white-shoe-5589.jpg,Sports Shoes,White,Footwear,FS099-WHT-39,False,2,Reebok Men Empire Run White Shoe
+sneaker-retro-099,/assets/products/myntra-sample/flip-flops-disney-unisex-kids-pluto-navy-blue-flip-flops-10744.jpg,Flip Flops,Navy Blue,Footwear,FS099-NVY-40,False,3,Disney Unisex Kids Pluto Navy Blue Flip Flops
+sneaker-retro-099,/assets/products/myntra-sample/casual-shoes-quiksilver-men-black-blue-shoes-40791.jpg,Casual Shoes,Black,Footwear,FS099-BLK-41,False,4,Quiksilver Men Black & Blue Shoes
+sneaker-retro-099,/assets/products/myntra-sample/sports-shoes-adidas-men-s-spector-white-red-shoe-6632.jpg,Sports Shoes,White,Footwear,FS099-WHT-42,False,5,ADIDAS Men's Spector White Red Shoe
+sweatshirt-logo-031,/assets/products/myntra-sample/sweatshirts-quechua-women-fleece-black-sweatshirt-23147.jpg,Sweatshirts,Black,Sweatshirts,FS031-BLK-M,True,1,Quechua Women Fleece Black Sweatshirt
+sweatshirt-logo-031,/assets/products/myntra-sample/sweatshirts-batman-men-batman-navy-blue-sweatshirts-16276.jpg,Sweatshirts,Navy Blue,Sweatshirts,FS031-NVY-XL,False,2,Batman Men Batman Navy Blue Sweatshirts
+sweatshirt-minimal-premium-033,/assets/products/myntra-sample/sweatshirts-nike-men-as-squad-flc-navy-blue-sweatshirts-9992.jpg,Sweatshirts,Navy Blue,Sweatshirts,FS033-BLK-M,True,1,Nike Men As Squad Flc Navy Blue Sweatshirts
+sweatshirt-minimal-premium-033,/assets/products/myntra-sample/sweatshirts-nike-men-sptcas-blue-sweatshirt-17908.jpg,Sweatshirts,Blue,Sweatshirts,FS033-NVY-XL,False,2,Nike Men Sptcas Blue Sweatshirt
+tat-c-trung-modern-113,/assets/products/myntra-sample/belts-wrangler-men-black-square-ring-canvas-belt-48552.jpg,Belts,Black,Accessories,FS113-BLK-OS,True,1,Wrangler Men Black Square Ring Canvas Belt
+th-t-lung-basic-110,/assets/products/myntra-sample/caps-puma-unisex-logo-cap-1535.jpg,Caps,Black,Accessories,FS110-BLK-OS,True,1,Puma Unisex Logo Cap
+tui-bucket-premium-108,/assets/products/myntra-sample/handbags-murcia-women-black-hobo-handbag-3401.jpg,Handbags,Black,Bags,FS108-BLK-OS,True,1,Murcia Women Black Hobo Handbag
+tui-crossbody-106,/assets/products/myntra-sample/handbags-puma-unisex-core-shopper-black-bags-9906.jpg,Handbags,Black,Bags,FS106-BLK-OS,True,1,Puma Unisex Core Shopper Black Bags
+tui-deo-vai-mini-105,/assets/products/myntra-sample/handbags-murcia-women-black-black-handbags-10724.jpg,Handbags,Black,Bags,FS105-BLK-OS,True,1,Murcia Women Black Black Handbags
+tui-di-lam-minimal-modern-107,/assets/products/myntra-sample/handbags-united-colors-of-benetton-women-solid-black-handbags-14805.jpg,Handbags,Black,Bags,FS107-BLK-OS,True,1,United Colors of Benetton Women Solid Black Handbags
+tui-tote-canvas-104,/assets/products/myntra-sample/handbags-fastrack-women-polyester-black-handbag-20929.jpg,Handbags,Black,Bags,FS104-BLK-OS,True,1,Fastrack Women Polyester Black HandBag
+vi-gap-minimal-112,/assets/products/myntra-sample/caps-artengo-men-black-cap-1566.jpg,Caps,Black,Accessories,FS112-BLK-OS,True,1,Artengo Men Black Cap

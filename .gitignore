@@ -47,5 +47,6 @@ mvn_*summary*.txt
 !src/main/resources/auth-otp-migration.sql
 !database/seed.sql
 !database/seed_vietnamese_catalog.sql
+!database/seed-image-map.sql
 *.lnk
 *.class
