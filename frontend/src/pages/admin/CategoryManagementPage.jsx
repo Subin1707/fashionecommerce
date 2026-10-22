@@ -59,7 +59,7 @@ export function CategoryManagementPage({ setNotice }) {
   // Đếm số danh mục con của từng category cha
   const childrenMap = useMemo(() => {
     return categories.reduce((acc, cat) => {
-      const parentId = cat.parent?.id
+      const parentId = getCategoryParentId(cat)
       if (parentId) {
         acc[parentId] = (acc[parentId] || 0) + 1
       }
@@ -84,7 +84,7 @@ export function CategoryManagementPage({ setNotice }) {
           || (statusFilter === 'ACTIVE' && cat.isActive)
           || (statusFilter === 'INACTIVE' && !cat.isActive)
 
-        const isChild = Boolean(cat.parent?.id)
+        const isChild = Boolean(getCategoryParentId(cat))
         const matchesHierarchy = hierarchyFilter === 'ALL'
           || (hierarchyFilter === 'ROOT' && !isChild)
           || (hierarchyFilter === 'CHILD' && isChild)
@@ -102,7 +102,7 @@ export function CategoryManagementPage({ setNotice }) {
     total: categories.length,
     active: categories.filter((c) => c.isActive).length,
     inactive: categories.filter((c) => !c.isActive).length,
-    rootCount: categories.filter((c) => !c.parent?.id).length,
+    rootCount: categories.filter((c) => !getCategoryParentId(c)).length,
     withProducts: categories.filter((c) => Number(categoryStats[c.id]?.total || 0) > 0).length,
   }), [categories, categoryStats])
 
@@ -123,7 +123,7 @@ export function CategoryManagementPage({ setNotice }) {
       name: cat.name || '',
       slug: cat.slug || '',
       description: cat.description || '',
-      parentId: cat.parent?.id ? String(cat.parent.id) : '',
+      parentId: getCategoryParentId(cat) ? String(getCategoryParentId(cat)) : '',
       isActive: Boolean(cat.isActive),
     })
   }
@@ -189,7 +189,7 @@ export function CategoryManagementPage({ setNotice }) {
   // Danh sách các danh mục có thể chọn làm cha (loại trừ chính nó và các con của nó)
   const availableParents = useMemo(() => {
     if (!editingCategory?.id) return categories
-    return categories.filter((c) => c.id !== editingCategory.id && c.parent?.id !== editingCategory.id)
+    return categories.filter((c) => c.id !== editingCategory.id && getCategoryParentId(c) !== editingCategory.id)
   }, [categories, editingCategory])
 
   return (
@@ -306,6 +306,8 @@ function CategoryCard({
   onRemove,
 }) {
   const icon = getCategoryIcon(category.name, category.slug)
+  const parentId = getCategoryParentId(category)
+  const parentName = category.parent?.name || category.parentName
 
   return (
     <article className={`category-admin-card ${selected ? 'selected' : ''}`}>
@@ -325,9 +327,9 @@ function CategoryCard({
         </div>
 
         <div className="category-admin-card-badges">
-          {category.parent?.name ? (
-            <span className="category-admin-badge parent" title={`Thuộc danh mục #${category.parent.id}`}>
-              ↳ {category.parent.name}
+          {parentName ? (
+            <span className="category-admin-badge parent" title={`Thuộc danh mục #${parentId}`}>
+              ↳ {parentName}
             </span>
           ) : (
             <span className="category-admin-badge">📁 Danh mục gốc</span>
@@ -469,8 +471,12 @@ function toCategoryPayload(cat) {
     slug: slugify(cat.slug || cat.name),
     description: cat.description?.trim() || null,
     isActive: Boolean(cat.isActive),
-    parent: cat.parentId ? { id: Number(cat.parentId) } : null,
+    parentId: cat.parentId ? Number(cat.parentId) : null,
   }
+}
+
+function getCategoryParentId(category) {
+  return category?.parent?.id ?? category?.parentId
 }
 
 function slugify(value) {

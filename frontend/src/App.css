@@ -10463,7 +10463,7 @@ pre,
   pointer-events: none;
 }
 .dashboard-hero-panel > div:first-child { position: relative; z-index: 1; }
-.dashboard-hero-panel h1 { margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(30px, 4vw, 46px); letter-spacing: -.04em; }
+.dashboard-hero-panel h1 { margin: 0; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(30px, 4vw, 46px); line-height: 1.2; letter-spacing: 0; }
 .dashboard-hero-panel p:not(.eyebrow) { max-width: 620px; margin: 12px 0 0; line-height: 1.6; }
 .dashboard-hero-revenue { position: relative; z-index: 1; border-radius: 14px; backdrop-filter: blur(8px); }
 .dashboard-hero-revenue strong { letter-spacing: -.04em; }

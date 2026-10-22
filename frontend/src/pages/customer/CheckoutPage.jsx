@@ -252,9 +252,10 @@ export function CheckoutPage({ setNotice, setRoute }) {
 
 function PaymentInstructions({ order, paymentMethod, customer }) {
   const isBankTransfer = paymentMethod === 'BANK_TRANSFER'
-  const bankCode = import.meta.env.VITE_PAYMENT_BANK_CODE
-  const accountNumber = import.meta.env.VITE_PAYMENT_ACCOUNT_NUMBER
-  const accountName = import.meta.env.VITE_PAYMENT_ACCOUNT_NAME
+  const bankCode = import.meta.env.VITE_PAYMENT_BANK_CODE || 'VCB'
+  const accountNumber = import.meta.env.VITE_PAYMENT_ACCOUNT_NUMBER || '1035636313'
+  const accountName = import.meta.env.VITE_PAYMENT_ACCOUNT_NAME || 'NGUYEN MANH QUYEN'
+  const bankBranch = import.meta.env.VITE_PAYMENT_BANK_BRANCH || 'PGD Vĩnh Trụ'
   const transferContent = `DH${order.id}`
   const qrUrl = isBankTransfer && bankCode && accountNumber
     ? `https://img.vietqr.io/image/${encodeURIComponent(bankCode)}-${encodeURIComponent(accountNumber)}-qr_only.png?amount=${Math.round(Number(order.finalAmount || 0))}&addInfo=${encodeURIComponent(transferContent)}&accountName=${encodeURIComponent(accountName || '')}`
@@ -283,6 +284,7 @@ function PaymentInstructions({ order, paymentMethod, customer }) {
               <div><dt>Ngân hàng</dt><dd>{bankCode}</dd></div>
               <div><dt>Số tài khoản</dt><dd>{accountNumber}</dd></div>
               <div><dt>Chủ tài khoản</dt><dd>{accountName || 'Vui lòng xác nhận với cửa hàng'}</dd></div>
+              {bankBranch && <div><dt>Chi nhánh</dt><dd>{bankBranch}</dd></div>}
               <div><dt>Nội dung chuyển khoản</dt><dd>{transferContent}</dd></div>
             </dl>
           ) : (

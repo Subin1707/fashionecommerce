@@ -91,7 +91,12 @@ export function CheckoutForm({
             <label className="checkout-wide-field">Địa chỉ giao hàng
               <textarea
                 value={checkout.shippingAddress}
-                onChange={(event) => onChange({ ...checkout, shippingAddress: event.target.value })}
+                onChange={(event) => onChange({
+                  ...checkout,
+                  shippingAddress: event.target.value,
+                  shippingLat: null,
+                  shippingLng: null,
+                })}
                 placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành"
               />
             </label>
@@ -105,7 +110,7 @@ export function CheckoutForm({
                 maxLength={300}
                 aria-describedby="shipping-address-detail-help"
               />
-              <small id="shipping-address-detail-help">Nhập số nhà, căn hộ, tầng hoặc hướng dẫn tìm nhà. Địa chỉ nhập tay được lưu nguyên văn; bản đồ bên dưới chỉ bổ sung vị trí ghim.</small>
+              <small id="shipping-address-detail-help">Nhập số nhà, căn hộ, tầng hoặc hướng dẫn tìm nhà. Địa chỉ này sẽ được nối vào địa chỉ giao hàng đã xác nhận trên bản đồ.</small>
             </label>
             <div className="checkout-wide-field">
               {showLocationPicker ? (
@@ -114,7 +119,12 @@ export function CheckoutForm({
                     latitude={checkout.shippingLat}
                     longitude={checkout.shippingLng}
                     address={checkout.shippingAddress}
-                    onChange={(shippingLat, shippingLng) => onChange({ ...checkout, shippingLat, shippingLng })}
+                    onChange={(shippingLat, shippingLng, confirmedAddress) => onChange({
+                      ...checkout,
+                      shippingLat,
+                      shippingLng,
+                      ...(confirmedAddress ? { shippingAddress: confirmedAddress } : {}),
+                    })}
                   />
                 </Suspense>
               ) : (

@@ -17,22 +17,30 @@ export async function getCategoryById(id) {
 
 function normalizeCategory(category) {
   const repaired = repairCategory(category)
-  if (!repaired || repaired.parent || repaired.parentId == null) return repaired
-  return { ...repaired, parent: { id: repaired.parentId, name: repairCategory({ name: repaired.parentName }).name } }
+  if (!repaired) return repaired
+
+  const parentId = repaired.parent?.id ?? repaired.parentId
+  if (parentId == null) return { ...repaired, parent: null }
+
+  const parentName = repaired.parent?.name ?? repaired.parentName
+  return {
+    ...repaired,
+    parent: repairCategory({ ...(repaired.parent || {}), id: parentId, name: parentName }),
+  }
 }
 
 export function createCategory(payload) {
   return apiRequest('/api/categories', {
     method: 'POST',
     body: JSON.stringify(payload),
-  })
+  }).then(normalizeCategory)
 }
 
 export function updateCategory(id, payload) {
   return apiRequest(`/api/categories/${id}`, {
     method: 'PUT',
     body: JSON.stringify(payload),
-  })
+  }).then(normalizeCategory)
 }
 
 export function deleteCategory(id) {

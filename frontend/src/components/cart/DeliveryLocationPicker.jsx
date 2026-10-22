@@ -61,6 +61,12 @@ export function DeliveryLocationPicker({ latitude, longitude, address, onChange 
   const confirmed = draft && latitude === draft.latitude && longitude === draft.longitude
 
   useEffect(() => {
+    if (confirmed && draft.displayName && address !== draft.displayName) {
+      onChange(latitude, longitude, draft.displayName)
+    }
+  }, [address, confirmed, draft, latitude, longitude, onChange])
+
+  useEffect(() => {
     mounted.current = true
     return () => {
       mounted.current = false
