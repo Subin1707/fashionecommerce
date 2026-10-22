@@ -46,7 +46,7 @@ INSERT INTO vietnamese_traditional_seed VALUES
 ('khan-van-truyen-thong-demo','phu-kien-viet-truyen-thong-demo','Khăn vấn truyền thống','Phụ kiện demo để phối áo dài và Việt phục; màu có thể khác ảnh tham khảo.',320000,289000,'Vải dệt','Một cỡ','FEMALE','one'),
 ('khan-dong-nam-demo','phu-kien-viet-truyen-thong-demo','Khăn đóng nam','Phụ kiện demo phối áo dài nam hoặc áo ngũ thân.',350000,319000,'Vải dệt','Một cỡ','MALE','one'),
 ('khan-ran-nam-bo-demo','phu-kien-viet-truyen-thong-demo','Khăn rằn Nam Bộ','Khăn demo lấy cảm hứng khăn rằn, dùng làm phụ kiện phối đồ.',180000,159000,'Cotton','Một cỡ','UNISEX','one'),
-('guoc-go-truyen-thong-demo','phu-kien-viet-truyen-thong-demo','Guốc gỗ kiểu truyền thống','Guốc demo lấy cảm hứng phụ kiện xưa; kích cỡ chọn theo bảng size.',490000,449000,'Gỗ, quai vải','Đế thấp','UNISEX','footwear'),
+('guoc-go-truyen-thong-demo','phu-k \m ien-viet-truyen-thong-demo','Guốc gỗ kiểu truyền thống','Guốc demo lấy cảm hứng phụ kiện xưa; kích cỡ chọn theo bảng size.',490000,449000,'Gỗ, quai vải','Đế thấp','UNISEX','footwear'),
 ('dai-vai-phoi-viet-phuc-demo','phu-kien-viet-truyen-thong-demo','Đai vải phối Việt phục','Đai vải demo phối áo dài, áo tấc hoặc trang phục lấy cảm hứng truyền thống.',260000,229000,'Vải dệt','Có thể điều chỉnh','UNISEX','one');
 
 -- Remove the previously retired item only when no cart/order references it.

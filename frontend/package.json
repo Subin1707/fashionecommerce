@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "check:product-images": "python ../scripts/check-product-image-urls.py",
     "lint": "oxlint",
     "test:e2e": "playwright test",
     "test:e2e:report": "playwright show-report",

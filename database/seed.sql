@@ -1,9 +1,13 @@
-BEGIN;
+﻿BEGIN;
 
-INSERT INTO roles (name) VALUES
-    ('ADMIN'),
-    ('CUSTOMER')
-ON CONFLICT (name) DO NOTHING;
+INSERT INTO roles (name)
+SELECT role_name
+FROM (VALUES ('ADMIN'), ('CUSTOMER')) AS roles_to_seed(role_name)
+WHERE NOT EXISTS (
+    SELECT 1
+    FROM roles
+    WHERE roles.name = roles_to_seed.role_name
+);
 
 INSERT INTO brands (name, slug, description, logo_url, is_active) VALUES
     ('Urban Vogue', 'urban-vogue', 'Streetwear hien dai, de mac hang ngay.', '/assets/brands/urban-vogue.jpg', TRUE),
@@ -33,7 +37,6 @@ VALUES
     ((SELECT id FROM brands WHERE slug = 'dataset-sample-myntra'), (SELECT id FROM categories WHERE slug = 'ao-thun'), 'Basics Men T-shirt (White / Black)', 'ao-thun-basic', 'Mẫu áo thun Basic trắng và đen từ dataset.', 'Ảnh trắng/đen khớp với hai biến thể. Giá và tồn kho là dữ liệu demo, không phải giá gốc từ nguồn.', 320000, 280000, NULL, NULL, 'UNISEX', 'ACTIVE', TRUE, TRUE),
     ((SELECT id FROM brands WHERE slug = 'dataset-sample-myntra'), (SELECT id FROM categories WHERE slug = 'quan'), 'Peter England Men Party Blue Jeans', 'quan-jean-relaxed', 'Quần jean nam màu xanh từ dataset.', 'Tên và ảnh lấy từ cùng bản ghi dataset. Giá và tồn kho là dữ liệu demo, không phải giá gốc từ nguồn.', 620000, 560000, NULL, NULL, 'MALE', 'ACTIVE', TRUE, FALSE),
     ((SELECT id FROM brands WHERE slug = 'dataset-sample-myntra'), (SELECT id FROM categories WHERE slug = 'ao-khoac'), 'Nike Men Solid Black Jacket', 'ao-khoac-bomber', 'Áo khoác nam màu đen từ dataset.', 'Tên và ảnh lấy từ cùng bản ghi dataset. Giá và tồn kho là dữ liệu demo, không phải giá gốc từ nguồn.', 780000, 690000, NULL, NULL, 'MALE', 'ACTIVE', TRUE, TRUE),
-    ((SELECT id FROM brands WHERE slug = 'dataset-sample-myntra'), (SELECT id FROM categories WHERE slug = 'dam'), 'Arrow Woman Solid Cream Dress', 'dam-midi-linen', 'Đầm nữ màu kem từ dataset.', 'Tên và ảnh lấy từ cùng bản ghi dataset. Giá và tồn kho là dữ liệu demo, không phải giá gốc từ nguồn.', 760000, 670000, NULL, NULL, 'FEMALE', 'ACTIVE', TRUE, TRUE),
     ((SELECT id FROM brands WHERE slug = 'dataset-sample-myntra'), (SELECT id FROM categories WHERE slug = 'ao-khoac'), 'Basics Men Blue Washed Jacket', 'ao-khoac-denim-lightwash', 'Áo khoác nam xanh washed từ dataset.', 'Tên và ảnh lấy từ cùng bản ghi dataset. Giá và tồn kho là dữ liệu demo, không phải giá gốc từ nguồn.', 860000, 749000, NULL, NULL, 'MALE', 'ACTIVE', FALSE, TRUE),
     ((SELECT id FROM brands WHERE slug = 'dataset-sample-myntra'), (SELECT id FROM categories WHERE slug = 'ao-thun'), 'Jockey Women White Racerback Tank Top', 'ao-knit-tank-ivory', 'Áo tank nữ racerback màu trắng từ dataset.', 'Tên và ảnh lấy từ cùng bản ghi dataset. Giá và tồn kho là dữ liệu demo, không phải giá gốc từ nguồn.', 390000, 339000, NULL, NULL, 'FEMALE', 'ACTIVE', FALSE, TRUE),
     ((SELECT id FROM brands WHERE slug = 'dataset-sample-myntra'), (SELECT id FROM categories WHERE slug = 'phu-kien'), 'Murcia Women Casual Black Handbag', 'tui-mini-crescent', 'Túi xách nữ màu đen từ dataset.', 'Tên và ảnh lấy từ cùng bản ghi dataset. Giá và tồn kho là dữ liệu demo, không phải giá gốc từ nguồn.', 520000, 459000, NULL, NULL, 'FEMALE', 'ACTIVE', TRUE, FALSE),
@@ -93,7 +96,6 @@ FROM (VALUES
     ('ao-thun-basic', 'ATB-001-BLK-M', '/assets/products/seed-catalog/tshirts-black-basics-men-black-t-shirt-21219.jpg', 'Basics Men Black T-shirt - Tshirts (Black)', FALSE, 2),
     ('quan-jean-relaxed', 'QJR-001-BLU-30', '/assets/products/seed-catalog/jeans-blue-peter-england-men-party-blue-jeans-39386.jpg', 'Peter England Men Party Blue Jeans - Jeans (Blue)', TRUE, 1),
     ('ao-khoac-bomber', 'AKB-001-BLK-M', '/assets/products/seed-catalog/jackets-black-nike-men-solid-black-jacket-15322.jpg', 'Nike Men Solid Black Jacket - Jackets (Black)', TRUE, 1),
-    ('dam-midi-linen', 'DML-001-SND-M', '/assets/products/seed-catalog/dresses-cream-arrow-woman-solid-cream-dress-18896.jpg', 'Arrow Woman Solid Cream Dress - Dresses (Cream)', TRUE, 1),
     ('ao-khoac-denim-lightwash', 'ADL-001-BLU-M', '/assets/products/seed-catalog/jackets-blue-basics-men-blue-washed-jacket-20790.jpg', 'Basics Men Blue Washed Jacket - Jackets (Blue)', TRUE, 1),
     ('ao-knit-tank-ivory', 'AKT-001-IVR-M', '/assets/products/seed-catalog/tops-white-jockey-women-white-racerback-tank-top-27441.jpg', 'Jockey Women White Racerback Tank Top - Tops (White)', TRUE, 1),
     ('tui-mini-crescent', 'TMC-001-BLK-OS', '/assets/products/seed-catalog/handbags-black-murcia-women-casual-black-handbag-21946.jpg', 'Murcia Women Casual Black Handbag - Handbags (Black)', TRUE, 1),

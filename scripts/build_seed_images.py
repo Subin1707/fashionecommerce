@@ -24,7 +24,6 @@ BASE = {
     "ao-thun-basic-secondary": ("ao-thun-basic", "ATB-001-BLK-M", False),
     "quan-jean-relaxed": ("quan-jean-relaxed", "QJR-001-BLU-30", True),
     "ao-khoac-bomber": ("ao-khoac-bomber", "AKB-001-BLK-M", True),
-    "dam-midi-linen": ("dam-midi-linen", "DML-001-SND-M", True),
     "ao-khoac-denim-lightwash": ("ao-khoac-denim-lightwash", "ADL-001-BLU-M", True),
     "ao-knit-tank-ivory": ("ao-knit-tank-ivory", "AKT-001-IVR-M", True),
     "tui-mini-crescent": ("tui-mini-crescent", "TMC-001-BLK-OS", True),

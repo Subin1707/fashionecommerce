@@ -113,7 +113,7 @@ public class CatalogInitializer implements CommandLineRunner {
                 hity,
                 dresses,
                 "Đầm linen cổ tim dáng midi Hity",
-                "dam-midi-linen",
+                "dam-midi-linen-hity",
                 "Đầm linen màu cát, cổ tim và dáng midi chữ A.",
                 "Đầm Hity may từ linen pha cotton, có bề mặt thoáng nhẹ và độ rủ tự nhiên. Cổ tim, tay ngắn và dáng midi chữ A tạo vẻ thanh lịch; hai cỡ S và M phù hợp mặc đi làm hoặc dạo phố. Giặt nhẹ và phơi trong bóng râm để giữ màu vải.",
                 BigDecimal.valueOf(760000),

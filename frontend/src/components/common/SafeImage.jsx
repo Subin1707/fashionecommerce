@@ -68,6 +68,7 @@ export function SafeImage({ src, alt = '', fallbackLabel = 'Fashion', className 
       width="640"
       height="800"
       onError={() => {
+        console.warn(`[SafeImage] Failed to load image; using fallback. URL: ${src}`, { attemptedUrl: displaySrc })
         if (displaySrc !== src) setUnoptimizedSource(optimizedSrc)
         else setFailedSource(optimizedSrc)
       }}
