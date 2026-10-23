@@ -1,0 +1,15 @@
+.git
+.github
+.idea
+.vscode
+.env
+.env.*
+!.env.example
+target
+uploads
+*.log
+hs_err_pid*
+replay_pid*
+tmp
+.tmp
+bin
