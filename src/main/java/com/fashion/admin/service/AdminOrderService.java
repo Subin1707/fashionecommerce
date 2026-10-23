@@ -45,7 +45,8 @@ public class AdminOrderService {
     }
 
     public AdminOrderDto updateOrderStatus(Long orderId, UpdateOrderStatusRequest request) {
-        Order order = orderRepository.findForUpdate(orderId)
+        Order order = orderRepository.findById(orderId)
+                .or(() -> orderRepository.findForUpdate(orderId))
                 .orElseThrow(() -> new RuntimeException("Order not found"));
 
         String normalizedStatus = com.fashion.order.enums.OrderStatus.fromString(request.getOrderStatus()).name();

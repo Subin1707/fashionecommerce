@@ -32,6 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 .env
+*.dump
+*.log
 
 ### Runtime logs and JVM crash reports ###
 *.log
@@ -42,6 +44,7 @@ replay_pid*.log
 test_output.txt
 mvn_*summary*.txt
 *.sql
+!src/main/resources/base-schema.sql
 !src/main/resources/review-migration.sql
 !src/main/resources/shipping-migration.sql
 !src/main/resources/order-completion-migration.sql
