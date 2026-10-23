@@ -7,7 +7,8 @@ COPY src ./src
 COPY frontend/public/assets ./frontend/public/assets
 
 RUN mvn -B -DskipTests package \
-    && jar tf target/fashion-0.0.1-SNAPSHOT.jar | grep -q '^BOOT-INF/classes/review-migration.sql$'
+    && jar tf target/fashion-0.0.1-SNAPSHOT.jar > /tmp/fashion-jar-contents.txt \
+    && grep -Fx 'BOOT-INF/classes/review-migration.sql' /tmp/fashion-jar-contents.txt
 
 FROM eclipse-temurin:21-jre-alpine
 
