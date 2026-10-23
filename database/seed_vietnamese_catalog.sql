@@ -75,7 +75,7 @@ UPDATE products SET status='INACTIVE', is_featured=FALSE, is_new=FALSE, updated_
 WHERE slug='viet-phuc-tu-than-demo';
 
 INSERT INTO products (brand_id,category_id,name,slug,short_description,description,base_price,sale_price,material,fit,gender,status,is_featured,is_new)
-SELECT b.id,c.id,s.name,s.slug,s.description,s.description,s.base_price,s.sale_price,s.material,s.fit,s.gender,'ACTIVE',FALSE,TRUE
+SELECT b.id,c.id,s.name,s.slug,s.description,s.description,round(s.base_price * 0.7 / 1000) * 1000,round(s.sale_price * 0.7 / 1000) * 1000,s.material,s.fit,s.gender,'ACTIVE',FALSE,TRUE
 FROM vietnamese_traditional_seed s JOIN brands b ON b.slug='di-san-viet-demo' JOIN categories c ON c.slug=s.category_slug
 ON CONFLICT (slug) DO UPDATE SET name=EXCLUDED.name,category_id=EXCLUDED.category_id,short_description=EXCLUDED.short_description,description=EXCLUDED.description,base_price=EXCLUDED.base_price,sale_price=EXCLUDED.sale_price,material=EXCLUDED.material,fit=EXCLUDED.fit,gender=EXCLUDED.gender,status='ACTIVE';
 

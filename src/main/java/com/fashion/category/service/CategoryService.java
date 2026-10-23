@@ -80,10 +80,14 @@ public class CategoryService {
     @Transactional
     @CacheEvict(cacheNames = {"categories", "categoryList"}, allEntries = true)
     public void deleteCategory(Long id) {
-        if (!categoryRepository.existsById(id)) {
-            throw new RuntimeException("Category not found with id: " + id);
-        }
-        categoryRepository.deleteById(id);
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
+
+        // Preserve child categories as top-level categories when their parent is removed.
+        List<Category> children = categoryRepository.findByParent_Id(id);
+        children.forEach(child -> child.setParent(category.getParent()));
+        categoryRepository.saveAll(children);
+        categoryRepository.delete(category);
     }
 
     public CategoryService(final CategoryRepository categoryRepository) {

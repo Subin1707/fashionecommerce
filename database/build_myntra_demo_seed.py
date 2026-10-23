@@ -81,7 +81,7 @@ def stable_price(dataset_id: str, category: str) -> int:
         "accessories": (79_000, 700_000),
     }
     low, span = limits.get(category, (149_000, 1_000_000))
-    return low + digest % span
+    return round((low + digest % span) * 0.7 / 1_000) * 1_000
 
 
 def load_rows(archive: zipfile.ZipFile) -> list[dict[str, str]]:

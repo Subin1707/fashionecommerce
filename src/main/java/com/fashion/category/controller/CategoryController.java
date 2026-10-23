@@ -2,6 +2,7 @@ package com.fashion.category.controller;
 
 import com.fashion.category.entity.Category;
 import com.fashion.category.dto.CategoryResponse;
+import com.fashion.category.dto.CategoryRequest;
 import com.fashion.category.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,14 +35,14 @@ public class CategoryController {
 
     @PostMapping
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Category> createCategory(@RequestBody Category category) {
-        return ResponseEntity.ok(categoryService.createCategory(category));
+    public ResponseEntity<CategoryResponse> createCategory(@RequestBody CategoryRequest request) {
+        return ResponseEntity.ok(CategoryResponse.from(categoryService.createCategory(request.toCategory())));
     }
 
     @PutMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Category> updateCategory(@PathVariable Long id, @RequestBody Category category) {
-        return ResponseEntity.ok(categoryService.updateCategory(id, category));
+    public ResponseEntity<CategoryResponse> updateCategory(@PathVariable Long id, @RequestBody CategoryRequest request) {
+        return ResponseEntity.ok(CategoryResponse.from(categoryService.updateCategory(id, request.toCategory())));
     }
 
     @DeleteMapping("/{id}")
