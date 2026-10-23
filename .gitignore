@@ -42,6 +42,11 @@ replay_pid*.log
 test_output.txt
 mvn_*summary*.txt
 *.sql
+!src/main/resources/review-migration.sql
+!src/main/resources/shipping-migration.sql
+!src/main/resources/order-completion-migration.sql
+!src/main/resources/product-size-chart-migration.sql
+!src/main/resources/campaign-event-migration.sql
 !src/main/resources/return-request-migration.sql
 !src/main/resources/vat-migration.sql
 !src/main/resources/auth-otp-migration.sql
