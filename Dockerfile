@@ -6,7 +6,8 @@ COPY pom.xml .
 COPY src ./src
 COPY frontend/public/assets ./frontend/public/assets
 
-RUN mvn -B -DskipTests package
+RUN mvn -B -DskipTests package \
+    && jar tf target/fashion-0.0.1-SNAPSHOT.jar | grep -q '^BOOT-INF/classes/review-migration.sql$'
 
 FROM eclipse-temurin:21-jre-alpine
 
@@ -18,6 +19,6 @@ COPY --from=build /workspace/target/fashion-0.0.1-SNAPSHOT.jar app.jar
 
 USER spring:spring
 
-EXPOSE 8080
+EXPOSE 8081
 
 ENTRYPOINT ["java", "-jar", "/app/app.jar"]
