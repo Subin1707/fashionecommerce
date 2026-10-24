@@ -14,6 +14,8 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -32,6 +34,8 @@ public class StaticAssetController {
             throw notFound();
         }
         String normalized = decodedPath.replace('\\', '/');
+        // Spring's catch-all path variable includes one leading slash for nested asset paths.
+        if (normalized.startsWith("/") && !normalized.startsWith("//")) normalized = normalized.substring(1);
         if (decodedPath.isBlank() || decodedPath.contains("\\") || decodedPath.indexOf('\0') >= 0
                 || decodedPath.toLowerCase(java.util.Locale.ROOT).contains("%2e")
                 || decodedPath.toLowerCase(java.util.Locale.ROOT).contains("%5c")
@@ -50,9 +54,15 @@ public class StaticAssetController {
         };
 
         String classpathPath = "static/assets/" + normalized;
-        ClassPathResource resource = new ClassPathResource(classpathPath);
+        Resource resource = new ClassPathResource(classpathPath);
         if (!resource.exists() || !resource.isReadable()) {
-            throw notFound();
+            Path frontendAsset = Path.of("frontend", "public", "assets").resolve(normalized).normalize();
+            Path assetRoot = Path.of("frontend", "public", "assets").toAbsolutePath().normalize();
+            if (!frontendAsset.toAbsolutePath().normalize().startsWith(assetRoot)
+                    || !Files.isRegularFile(frontendAsset) || !Files.isReadable(frontendAsset)) {
+                throw notFound();
+            }
+            resource = new org.springframework.core.io.FileSystemResource(frontendAsset);
         }
 
         long lastModified;

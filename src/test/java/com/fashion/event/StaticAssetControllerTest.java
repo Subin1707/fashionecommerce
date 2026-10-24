@@ -16,6 +16,7 @@ class StaticAssetControllerTest {
 
     @BeforeEach
     void setUp() {
+        System.setProperty("spring.test.context.cache.maxSize", "0");
         mockMvc = MockMvcBuilders.standaloneSetup(new StaticAssetController()).build();
     }
 

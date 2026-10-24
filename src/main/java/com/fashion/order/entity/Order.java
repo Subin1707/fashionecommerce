@@ -23,7 +23,7 @@ import java.util.List;
 @Table(name = "orders")
 @Getter
 @Setter
-@Builder
+    @Builder
 public class Order {
 
     @Id
@@ -36,8 +36,9 @@ public class Order {
     @Column(nullable = false)
     private Double totalAmount;
 
+    @Builder.Default
     @Column(nullable = false)
-    private Double vatAmount;
+    private Double vatAmount = 0d;
 
     @Column(nullable = false)
     private Double shippingFee;

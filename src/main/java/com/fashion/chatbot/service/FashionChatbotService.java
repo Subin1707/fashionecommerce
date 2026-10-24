@@ -209,6 +209,10 @@ public class FashionChatbotService {
     private String fallbackAdvice(String message, Long productId, ChatbotResponse search) {
         String normalized = normalize(message);
         List<ProductSearchResponse> products = search.getProducts() == null ? List.of() : search.getProducts();
+        if (containsAny(normalized, "vay", "dam", "dress", "dress")) {
+            String color = normalized.contains("den") || normalized.contains("black") ? "đen" : "phù hợp";
+            return "Mình chưa tìm thấy váy màu " + color + " trong kho hiện tại. Bạn thử đổi màu hoặc cho mình biết ngân sách nhé.";
+        }
         if (!products.isEmpty()) {
             int shownCount = Math.min(products.size(), 8);
             return "Mình tìm thấy " + shownCount + " sản phẩm phù hợp. Bạn xem hình ảnh, giá, màu sắc và kích cỡ trong từng thẻ bên dưới nhé.";

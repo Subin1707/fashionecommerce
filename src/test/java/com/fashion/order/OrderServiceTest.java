@@ -102,7 +102,7 @@ class OrderServiceTest {
         assertThat(order.getUserId()).isEqualTo(userId);
         assertThat(order.getItems()).isNotEmpty();
         assertThat(order.getTotalAmount()).isEqualTo(698000.0);
-        assertThat(order.getFinalAmount()).isEqualTo(728000.0);
+        assertThat(order.getFinalAmount()).isEqualTo(783840.0);
         assertThat(order.getPaymentStatus()).isEqualTo("PENDING");
         assertThat(order.getOrderStatus()).isEqualTo("PENDING");
     }

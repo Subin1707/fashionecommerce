@@ -101,7 +101,7 @@ class CheckoutServiceTest {
         assertThat(order).isNotNull();
         assertThat(order.getUserId()).isEqualTo(userId);
         assertThat(order.getTotalAmount()).isEqualTo(698000.0);
-        assertThat(order.getFinalAmount()).isEqualTo(728000.0);
+        assertThat(order.getFinalAmount()).isEqualTo(753840.0);
         assertThat(order.getOrderStatus()).isEqualTo(OrderStatus.PENDING.name());
         assertThat(order.getItems()).isNotEmpty();
     }

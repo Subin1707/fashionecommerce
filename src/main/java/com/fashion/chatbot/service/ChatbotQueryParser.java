@@ -76,10 +76,10 @@ public class ChatbotQueryParser {
     }
 
     private String extractColor(String input) {
-        if (input.contains("den") || input.contains("black")) return "black";
-        if (input.contains("trang") || input.contains("white")) return "white";
-        if (input.contains("xanh") || input.contains("blue")) return "blue";
-        if (input.contains("do") || input.contains("red")) return "red";
+        if (input.contains("den") || input.contains("black")) return "BLACK";
+        if (input.contains("trang") || input.contains("white")) return "WHITE";
+        if (input.contains("xanh") || input.contains("blue")) return "BLUE";
+        if (input.contains("do") || input.contains("red")) return "RED";
         return null;
     }
 

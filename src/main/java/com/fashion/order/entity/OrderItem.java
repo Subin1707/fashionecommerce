@@ -55,7 +55,8 @@ public class OrderItem {
     private Double price;
 
     @Column(nullable = false)
-    private Double vatAmount;
+    @Builder.Default
+    private Double vatAmount = 0d;
 
     public OrderItem() {
     }

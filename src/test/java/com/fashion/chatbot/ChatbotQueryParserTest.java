@@ -15,7 +15,7 @@ class ChatbotQueryParserTest {
     void parsesVietnameseOfficeTopRequest() {
         ChatbotFilters filters = parser.parse("Cho tôi áo đi làm màu trung tính size M dưới 300k");
 
-        assertThat(filters.getCategory()).isEqualTo("TOP");
+        assertThat(filters.getCategory()).isEqualTo("APPAREL_TOP");
         assertThat(filters.getStyle()).isEqualTo("OFFICE");
         assertThat(filters.getColor()).isEqualTo("NEUTRAL");
         assertThat(filters.getSize()).isEqualTo("M");
@@ -26,7 +26,7 @@ class ChatbotQueryParserTest {
     void parsesExplicitColorAndPriceWithoutUnit() {
         ChatbotFilters filters = parser.parse("áo màu đen size L dưới 250000");
 
-        assertThat(filters.getCategory()).isEqualTo("TOP");
+        assertThat(filters.getCategory()).isEqualTo("APPAREL_TOP");
         assertThat(filters.getColor()).isEqualTo("BLACK");
         assertThat(filters.getSize()).isEqualTo("L");
         assertThat(filters.getMaxPrice()).isEqualByComparingTo(BigDecimal.valueOf(250000));

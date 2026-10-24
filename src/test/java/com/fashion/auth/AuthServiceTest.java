@@ -3,6 +3,9 @@ package com.fashion.auth;
 import com.fashion.auth.dto.LoginRequest;
 import com.fashion.auth.dto.LoginResponse;
 import com.fashion.auth.dto.RegisterRequest;
+import com.fashion.auth.dto.VerifyOtpRequest;
+import com.fashion.auth.entity.EmailOtp;
+import com.fashion.auth.repository.EmailOtpRepository;
 import com.fashion.auth.service.AuthService;
 import com.fashion.security.CustomUserDetailsService;
 import com.fashion.user.entity.Role;
@@ -25,6 +28,12 @@ class AuthServiceTest {
     private RoleRepository roleRepository;
 
     @Autowired
+    private EmailOtpRepository emailOtpRepository;
+
+    @Autowired
+    private org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+
+    @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
     @Test
@@ -40,6 +49,12 @@ class AuthServiceTest {
         registerRequest.setAddress("Hanoi");
 
         authService.register(registerRequest);
+
+        EmailOtp otp = emailOtpRepository.findByEmail("alice@example.com").orElseThrow();
+        otp.setCodeHash(passwordEncoder.encode("123456"));
+        otp.setExpiresAt(java.time.LocalDateTime.now().plusMinutes(1));
+        emailOtpRepository.save(otp);
+        authService.verifyOtp(new VerifyOtpRequest("alice@example.com", "123456"));
 
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setEmail("alice@example.com");
