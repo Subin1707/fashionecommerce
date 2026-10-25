@@ -18,6 +18,8 @@ Tài liệu dự án được tập hợp từ các hướng dẫn thiết lập
 - [Vietnamese Catalog Missing Images](#vietnamese-catalog-missing-images)
 - [Arrow Image Repair Migration](#arrow-image-repair-migration)
 - [Frontend README](#frontend-readme)
+
+> **Phạm vi triển khai:** Các bước dưới đây chạy hệ thống demo trên máy local bằng Docker Compose và Spring Boot/Vite. Repo hiện chưa có cấu hình triển khai production (ví dụ: image backend/frontend, TLS/reverse proxy, secrets manager hoặc domain).
 ## HELP
 
 _Source: `HELP.md`_
@@ -533,12 +535,11 @@ Thu muc nay chua tai lieu va tep cau hinh mau de cai dat, chay va trien khai he 
 
 ## Trinh tu trien khai nhanh
 
-1. Cai dat cac cong cu trong `YEU_CAU_MOI_TRUONG.md`.
-2. Sao chep `.env.example` thanh `.env` neu can cau hinh bang bien moi truong.
-3. Khoi dong dich vu phu tro bang Docker Compose.
-4. Chay backend Spring Boot.
-5. Chay frontend Vite.
-6. Chay kiem thu bang `mvn test`.
+1. Cài các công cụ trong phần [Yêu cầu môi trường](#yêu-cầu-môi-trường).
+2. Khởi động các dịch vụ phụ trợ bằng Compose từ thư mục `03_Deployment`.
+3. Cấu hình biến backend bằng environment variables; file `.env.example` trong `03_Deployment` là mẫu tham khảo và Docker Compose không tự nạp nó cho tiến trình Spring Boot.
+4. Chạy backend Spring Boot và frontend Vite theo các bước bên dưới.
+5. Chạy kiểm thử bằng `.\mvnw.cmd test` từ thư mục gốc.
 
 Khong dua mat khau that, JWT secret that, VNPay secret that hoac thong tin nhay cam vao thu muc nop.
 
@@ -572,26 +573,26 @@ Neu da co source code, mo terminal tai thu muc goc du an.
 
 ## 3. Cau hinh moi truong
 
-Tham khao cac tep mau:
+Tham khảo các tệp mẫu:
 
-- `03_Deployment/.env.example`
-- `03_Deployment/config/application-example.properties`
+- `03_Deployment/.env.example` (mẫu tham khảo; không được Compose tự nạp)
+- `03_Deployment/config/application-example.properties` (mẫu thuộc tính; Spring Boot không tự đọc tệp này)
 - `03_Deployment/config/frontend-env.example`
 
-Khong su dung secret that trong tep nop. Khi chay that, tao tep cau hinh rieng tren may trien khai va thay cac gia tri placeholder.
+Không dùng secret thật trong tệp mẫu hoặc commit secret. Ứng dụng đọc cấu hình database qua `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`; JWT qua `FASHION_JWT_SECRET`; và các cấu hình khác qua biến `SPRING_*`/`FASHION_*` tương ứng. `DB_*` trong `.env.example` không phải tên biến mà cấu hình Spring hiện tại đọc.
 
 ## 4. Khoi dong cac dich vu Docker
 
-Tai thu muc goc du an hoac thu muc co `docker-compose.yml`:
+Compose file nằm trong `03_Deployment`. Chạy các lệnh sau từ thư mục gốc:
 
 ```powershell
-docker compose up -d --wait
+docker compose -f 03_Deployment/docker-compose.yml up -d --wait
 ```
 
 Kiem tra trang thai:
 
 ```powershell
-docker compose ps
+docker compose -f 03_Deployment/docker-compose.yml ps
 ```
 
 He thong Docker khoi dong cac dich vu phu tro:
@@ -601,9 +602,11 @@ He thong Docker khoi dong cac dich vu phu tro:
 - Elasticsearch
 - RabbitMQ
 
+Compose dùng thông tin PostgreSQL demo `fashion/fashion`, tạo schema từ `database/schema.sql` khi volume database được khởi tạo lần đầu. Giá trị này không dành cho production. `spring.cache.type` mặc định là `simple`, nên Redis hiện không cần cho đường chạy mặc định; RabbitMQ được kết nối bởi ứng dụng.
+
 ## 5. Chay Backend
 
-Tai checkout hien tai `E:\fashionecommerce` de backend nap dung Event API va migration moi nhat:
+Từ thư mục gốc, đặt `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME`, `SPRING_DATASOURCE_PASSWORD`, và `FASHION_JWT_SECRET` trong môi trường. Dùng mật khẩu admin/customer riêng cho môi trường cần triển khai. Nếu dùng đăng ký email, cấu hình thêm `MAIL_HOST`, `MAIL_PORT`, `MAIL_USERNAME`, `MAIL_PASSWORD` trong `.env` (script bên dưới chỉ nạp các biến `MAIL_*` từ `.env`). Sau đó chạy:
 
 ```powershell
 .\scripts\run-backend-current.ps1
@@ -612,8 +615,8 @@ Tai checkout hien tai `E:\fashionecommerce` de backend nap dung Event API va mig
 Neu dung Maven cai san:
 
 ```powershell
-Set-Location E:\fashionecommerce
-mvn.cmd spring-boot:run
+Set-Location <project-root>
+.\mvnw.cmd spring-boot:run
 ```
 
 Backend mac dinh chay tai:
@@ -661,13 +664,13 @@ Skipped: 0
 BUILD SUCCESS
 ```
 
-## 9. Dung he thong Docker
+## 9. Dừng hệ thống Docker
 
 ```powershell
-docker compose down
+docker compose -f 03_Deployment/docker-compose.yml down
 ```
 
-Lenh nay dung va xoa container, giu lai volume du lieu Docker.
+Lệnh này dừng và xóa container, giữ lại volume dữ liệu Docker. Không dùng `down -v` trừ khi chủ động muốn xóa dữ liệu demo.
 
 
 ---
